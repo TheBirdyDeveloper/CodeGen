@@ -35,7 +35,6 @@ public class FunctionEnvironment {
 		this.commands = ((Function)f).getDefinition().getCommands();
 		isfunction = true;
 
-		System.out.println("Symboles de "+name+" :\n"+variableList.toString());
 
 	}
 	

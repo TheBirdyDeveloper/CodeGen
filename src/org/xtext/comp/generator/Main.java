@@ -24,19 +24,9 @@ import com.google.inject.Provider;
 
 public class Main {
 	
-	private static final short DEFAULT_IF_INDENT = 4;
-	private static final short DEFAULT_COMMAND_INDENT = 4;
-	private static final short DEFAULT_WHILE_INDENT = 4;
-	private static final short DEFAULT_FOR_INDENT = 4;
-	
-	private static short IF_INDENT = DEFAULT_IF_INDENT;
-	private static short COMMAND_INDENT = DEFAULT_COMMAND_INDENT;
-	private static short WHILE_INDENT = DEFAULT_WHILE_INDENT;
-	private static short FOR_INDENT = DEFAULT_FOR_INDENT;
-	
-	private static final String DEFAULT_NAME = "f.whpp";
-	private static String inputFileName = "test.wh";
-	private static String outputFileName = DEFAULT_NAME;
+	private static final String DEFAULT_NAME = "f.lua";
+	private static String inputFileName;
+	private static String outputFileName;
 	
 	private static final CommandLineParser parser = new GnuParser();
 	private static final HelpFormatter formatter = new HelpFormatter();
@@ -44,7 +34,8 @@ public class Main {
 	private static CommandLine cmd;
 	
 	public static void main(String[] args) {
-
+		outputFileName = DEFAULT_NAME;
+		
 		Injector injector = new WhStandaloneSetup().createInjectorAndDoEMFRegistration();
 		Main main = injector.getInstance(Main.class);
 		
@@ -53,18 +44,6 @@ public class Main {
 		
 		main.runGenerator();
 	}
-
-	@Inject
-	private Provider<ResourceSet> resourceSetProvider;
-
-	@Inject
-	private IResourceValidator validator;
-
-	@Inject
-	private GeneratorDelegate generator;
-
-	@Inject 
-	private JavaIoFileSystemAccess fileAccess;
 
 	protected void runGenerator() {
 		// Load the resource
@@ -80,6 +59,10 @@ public class Main {
 			return;
 		}
 
+
+		SymTable symtable = new SymTable(resource);
+		GenTable gentable = new GenTable(symtable);
+		
 		// Configure and start the generator
 		fileAccess.setOutputPath("./");
 
@@ -87,16 +70,14 @@ public class Main {
 		context.setCancelIndicator(CancelIndicator.NullImpl);
 		
 		WhGenerator wh = new WhGenerator();
-		wh.doGenerate(resource, fileAccess, context, outputFileName, IF_INDENT, COMMAND_INDENT, WHILE_INDENT, FOR_INDENT);
+		wh.doGenerate(gentable, fileAccess, outputFileName);
 	
-		SymTable symtable = new SymTable(resource);
-		System.out.println("\nTable des Symboles :\n"+symtable.toStringSymboles());
+		/*System.out.println("\nTable des Symboles :\n"+symtable.toStringSymboles());
 		System.out.println("\nTable des Appels :\n"+symtable.toStringAppels());
 		System.out.println("\nGestion des erreurs :\n");symtable.toStringError();
 		
-		System.out.println("\n-------------- GENCODE --------------");
-		GenTable gentable = new GenTable(symtable);
-		System.out.println(gentable.nomsToString());
+		/*System.out.println("\n-------------- GENCODE --------------");
+		System.out.println(gentable.nomsToString());*/
 		
 		
 	}
@@ -104,25 +85,25 @@ public class Main {
 	private static void printMan(){
 		String separation = "\n\n";
 		String man = "";
-		String NAME = "\twhpp - While Pretty Printer";
-		String SYNOPSIS = "\twhpp [OPTIONS]...";
-		String DESC = "\twhpp permet de pretty printer un fichier While";
-		String OPT = "\t\t-i, --input file\n\t\t\tfichier d'entrÃ©e Ã  pretty printer\n"
-				+ "\t\t-o, --output file\n\t\t\tnom du fichier de sortie\n"
-				+ "\t\t-h, --help\n\t\t\taffiche l'aide";
+		String NAME = "whc - While Compiler";
+		String SYNOPSIS = "whc -[io] file";
+		String DESC = "whc permet de compiler un fichier While en Lua";
+		String OPT = "\t-i, --input file\n\t\t\tnom du fichier d'entrée\n"
+				+ "\t-o, --output file\n\t\t\tnom du fichier de sortie\n"
+				+ "\t-h, --help\n\t\t\taffiche l'aide";
 		String BUGS = "";
-		String SEE = "";
-		String AUTHORS = "\tÃ‰crit par ClÃ©ment Guihaire - Pierre Marais - Mathieu Menuet - Marc Perret - Olivier Peurichard";
+		String SEE = "whpp";
+		String AUTHORS = "Écrit par Clément Guihaire - Pierre Marais - Mathieu Menuet - Marc Perret - Olivier Peurichard";
 		
-		man = "NOM\n"+NAME+separation+"SYNOPSIS\n"+SYNOPSIS+separation+"DESCRIPTION\n"+DESC+separation+"OPTIONS\n"+OPT+separation+"BUGS\n"
-				+BUGS+separation+"AUTEURS\n"+AUTHORS+separation+"VOIR AUSSI\n"+SEE;
+		man = "NOM\n\t"+NAME+separation+"SYNOPSIS\n\t"+SYNOPSIS+separation+"DESCRIPTION\n\t"+DESC+separation+"OPTIONS\n\t"+OPT+separation+"BUGS\n\t"
+				+BUGS+separation+"AUTEURS\n\t"+AUTHORS+separation+"VOIR AUSSI\n\t"+SEE;
 		System.out.println(man);
 	}
 	
 	/**
 	 * 
 	 * @param args arguments du Main
-	 * @return -1 si erreur d'arguments; 1 si affichage de l'aide; 0 si pas d'erreur
+	 * @return -1 si erreur d'arguments; 0 si pas d'erreur
 	 */
 	private static int optionManager(String[] args){
 		
@@ -132,16 +113,7 @@ public class Main {
 		Option output = new Option("o","output",true,"output file");
 		options.addOption(output);
 		Option input = new Option("i","input",true,"input file");
-		options.addOption(input);
-		Option cmdIndent = new Option("c","cmdIndent",true,"command Indentation");
-		options.addOption(cmdIndent);
-		Option ifIndent = new Option("if","ifIndent",true,"if Indentation");
-		options.addOption(ifIndent);
-		Option forIndent = new Option("for","forIndent",true,"for Indentation");
-		options.addOption(forIndent);
-		Option whIndent = new Option("wh","whIndent",true,"while Indentation");
-		options.addOption(whIndent);
-		
+		options.addOption(input);		
 		
 		
 		 try {
@@ -154,7 +126,7 @@ public class Main {
 		boolean helpParam = cmd.hasOption("help");
 		if(helpParam){
 			printMan();
-			return 1;
+			System.exit(0);
 		}
 		
 		boolean inputFile = cmd.hasOption("input");
@@ -170,37 +142,8 @@ public class Main {
 			outputFileName = outputFile;
 		}
 		
-		short returnedValue1 = checkIndentOptions("ifIndent");
-		short returnedValue2 = checkIndentOptions("forIndent");
-		short returnedValue3 = checkIndentOptions("whIndent");
-		short returnedValue4 = checkIndentOptions("cmdIndent");
-		
-		if( -1 == returnedValue1 || -1 == returnedValue2
-			|| -1 == returnedValue3  || -1 == returnedValue4 ){
-			
-			displayError("indentations must be >= 0");
-			return -1;
-		}
-		if(returnedValue1 != -2) IF_INDENT = returnedValue1;
-		if(returnedValue2 != -2) FOR_INDENT = returnedValue2;
-		if(returnedValue3 != -2) WHILE_INDENT = returnedValue3;
-		if(returnedValue4 != -2) COMMAND_INDENT = returnedValue4;
-
 		
 		return 0;
-	}
-	
-	private static short checkIndentOptions(String param){
-		if((param = cmd.getOptionValue(param)) != null){
-			short intValue;
-			if((intValue = Short.parseShort(param)) < 0){
-				return -1;
-			} else {
-				return intValue;
-			}
-		}
-		
-		return -2;
 	}
 	
 	private static void displayError(String msg){
@@ -208,4 +151,17 @@ public class Main {
 		formatter.printHelp("whpp", options);
         System.exit(1);
 	}
+	
+
+	@Inject
+	private Provider<ResourceSet> resourceSetProvider;
+
+	@Inject
+	private IResourceValidator validator;
+
+	@Inject
+	private GeneratorDelegate generator;
+
+	@Inject 
+	private JavaIoFileSystemAccess fileAccess;
 }

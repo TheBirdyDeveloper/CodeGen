@@ -3,6 +3,7 @@ package org.xtext.comp.generator;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +13,6 @@ import org.xtext.comp.wh.Affect;
 import org.xtext.comp.wh.Command;
 import org.xtext.comp.wh.Commands;
 import org.xtext.comp.wh.For;
-import org.xtext.comp.wh.Function;
 import org.xtext.comp.wh.If;
 import org.xtext.comp.wh.Nop;
 import org.xtext.comp.wh.While;
@@ -28,7 +28,7 @@ public class GenTable {
 		table_m = table;
 		listFonctions=new LinkedList<String>();
 		funDecl = new LinkedList<Code>();
-		listCode3Adr = new HashMap<String,List<Instr>>();
+		listCode3Adr = new LinkedHashMap<String,List<Instr>>();
 		this.initialize();
 		this.parseFunDecl();
 	}
