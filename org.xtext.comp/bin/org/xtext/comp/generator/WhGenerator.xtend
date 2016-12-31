@@ -26,7 +26,7 @@ class WhGenerator extends AbstractGenerator {
     	fsa.generateFile(outputName, genTable.listCode3Adr.genCode3Adr)
 	}
 	
-	def String genCode3Adr(HashMap<String, List<Instr>> map)
+	def String genCode3Adr(HashMap<Code, List<Instr>> map)
 		'''
 		«FOR key : map.keySet()»
 			function «key»()
