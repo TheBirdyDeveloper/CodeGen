@@ -17,7 +17,9 @@ public class FunctionEnvironment {
 
 	boolean isfunction;
 	HashMap<String,Integer> inputList;
+	HashMap<String,Integer> outputList;
 	HashMap<String,Integer> variableList;
+	
 	int nbInput;
 	int nbOutput;
 	String name;
@@ -26,6 +28,8 @@ public class FunctionEnvironment {
 
 	public FunctionEnvironment(Function f, String name){
 		this.inputList = new HashMap<String,Integer>();
+		this.outputList = new HashMap<String,Integer>();
+
 		this.nbInput = 0;
 		this.nbOutput = 0;
 		this.createinputList(f);
@@ -34,8 +38,6 @@ public class FunctionEnvironment {
 		this.createVariableList(f);
 		this.commands = ((Function)f).getDefinition().getCommands();
 		isfunction = true;
-
-
 	}
 	
 	public boolean isFunction(){
@@ -66,10 +68,10 @@ public class FunctionEnvironment {
 			varListOutput = (f.getDefinition().getOutput().getVars());
 			for(int i = 0; i<(varListOutput.size()); i++){
 				String varName = varListOutput.get(i);
-				if(inputList.containsKey(varName)){
+				if(!outputList.containsKey(varName)){
+					outputList.put(varName, 1);
 					nbOutput++;
 				}else{
-					inputList.put(varName, 0);
 				}
 			}
 		}
@@ -122,6 +124,18 @@ public class FunctionEnvironment {
 
 	public Commands getCommands(){
 		return commands;
+	}
+	
+	public HashMap<String, Integer> getInputs(){
+		return inputList;
+	}
+	
+	public HashMap<String, Integer> getOutputs(){
+		return outputList;
+	}
+	
+	public HashMap<String, Integer> getVariables(){
+		return variableList;
 	}
 
 }

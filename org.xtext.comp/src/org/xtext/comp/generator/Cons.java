@@ -1,6 +1,8 @@
 package org.xtext.comp.generator;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+import java.util.ListIterator;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -12,42 +14,24 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.xtext.comp.wh.Command;
-import org.xtext.comp.wh.Commands;
 import org.xtext.comp.wh.Expr;
-import org.xtext.comp.wh.For;
-import org.xtext.comp.wh.If;
-import org.xtext.comp.wh.While;
+import org.xtext.comp.wh.ExprEq;
+import org.xtext.comp.wh.impl.ExprConsImpl;
 
-public class CommandIf implements CommandInstr,If{
+public class Cons implements Expr{
 
-	Commands commands1;
-	Commands commands2;
-	Expr expression;
-	
-	public CommandIf(Command c){
-		this.commands1 = (Commands) ((If) c).getCommands1();
-		this.commands2 = (Commands) ((If) c).getCommands2();
-		this.expression = ((If)c).getExpr();
+	EList<Expr> arg;
+	public Cons(EList<Expr> listExpr){
+		arg = listExpr;
 	}
-
 	
 	public String toString(){
-		return " if (expression du If)\n" + "then " + commands1.toString() +"\n else then  "+ commands2.toString();
+		return "Cons";
 	}
-
-	@Override
-	public EObject getCmd() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public EList<Expr> getArg(){
+		return arg;
 	}
-
-	@Override
-	public void setCmd(EObject value) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	@Override
 	public EClass eClass() {
 		// TODO Auto-generated method stub
@@ -163,6 +147,18 @@ public class CommandIf implements CommandInstr,If{
 	}
 
 	@Override
+	public ExprEq getExprEq() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setExprEq(ExprEq value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
 	public Expr getExpr() {
 		// TODO Auto-generated method stub
 		return null;
@@ -174,27 +170,7 @@ public class CommandIf implements CommandInstr,If{
 		
 	}
 
-	@Override
-	public Commands getCommands1() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public void setCommands1(Commands value) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
-	@Override
-	public Commands getCommands2() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setCommands2(Commands value) {
-		// TODO Auto-generated method stub
-		
-	}
 }

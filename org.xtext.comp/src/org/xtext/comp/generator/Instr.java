@@ -8,8 +8,9 @@ import org.xtext.comp.wh.If;
 
 public abstract class Instr {
 
+	
 	List<Instr> instructions;
-	public Instr(Command codop, String var1, String var2, String var3){
+	public Instr(String codop, String var1, String var2, String var3){
 		instructions = new LinkedList<Instr>();
 	}
 	
@@ -24,4 +25,5 @@ public abstract class Instr {
 	public String toString(){
 		return instructions.toString();
 	}
+
 }

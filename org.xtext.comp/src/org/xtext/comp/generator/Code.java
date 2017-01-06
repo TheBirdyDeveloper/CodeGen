@@ -55,6 +55,6 @@ public class Code {
 	}
 	
 	public String toString(){
-		return "name : "+name+" | Nb inputs/outputs : "+inputs+outputs+ " | Code : "+code.toString()+"\n";
+		return "name : "+name+" | Nb inputs/outputs : "+inputs+"/"+outputs+"\n";
 	}
 }

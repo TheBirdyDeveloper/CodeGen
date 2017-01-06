@@ -82,13 +82,13 @@ public class SymTable {
 
 	public void toStringError(){
 		for (Paire current : appelTable){
-			if(symTable.get(current.getName()) != null){
-				if((current).getInputs().getVars().size() != symTable.get(current.getName()).nbInput){
-					System.out.println("La fonction "+current.getName()+" n'est pas appelée avec le bon nombre de paramètres ("+symTable.get(current.getName()).nbInput+" attendus)");
+			if(symTable.get(current.getLeft()) != null){
+				if(((Input) (current).getRight()).getVars().size() != symTable.get(current.getLeft()).nbInput){
+					System.out.println("La fonction "+current.getLeft()+" n'est pas appelée avec le bon nombre de paramètres ("+symTable.get(current.getLeft()).nbInput+" attendus)");
 				}
 			}
 			else{
-				throw new Error("La fonction "+current.getName()+" n'a pas été déclarée");
+				throw new Error("La fonction "+current.getLeft()+" n'a pas été déclarée");
 			}
 		}
 
@@ -100,7 +100,7 @@ public class SymTable {
 		result+="{";
 		if(!appelTable.isEmpty()){
 			for (Paire current : appelTable){
-				result+=current.getName() + " : "+ current.getInputs().getVars().toString()+" ";
+				result+=current.getLeft() + " : "+ ((Input) (current.getRight())).getVars().toString()+" ";
 			}
 		}
 		result+="}";

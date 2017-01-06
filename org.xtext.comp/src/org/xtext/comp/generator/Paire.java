@@ -1,34 +1,36 @@
 package org.xtext.comp.generator;
 
-import org.xtext.comp.wh.Input;
 
-public class Paire {
 
-	String name;
-	Input inputs;
+public class Paire<L,R> {
+
+	L left;
+	R right;
 	
-	public Paire (String s, Input inputs){
-		name = s;
-		this.inputs = inputs;
+	public Paire (L l, R r){
+		left = l;
+		this.right = r;
 	}
 	
-	public void setName(String s){
-		name=s;
+	public void setLeft(L left){
+		this.left=left;
 	}
 	
-	public void setInputs(Input inputs){
-		this.inputs=inputs;
+	public void setRight(R right){
+		this.right=right;
 	}
 	
-	public Input getInputs(){
-		return inputs;
+	public L getLeft(){
+		return left;
 	}
 	
-	public String getName(){
-		return name;
+	public R getRight(){
+		return right;
 	}
 	
-	public String toString(){
-		return name+" : "+inputs.getVars().toString();
+	public L getleft(){
+		return left;
 	}
+	
+	
 }
