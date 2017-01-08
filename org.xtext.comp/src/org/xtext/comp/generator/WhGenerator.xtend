@@ -30,18 +30,11 @@ class WhGenerator extends AbstractGenerator {
 		'''
 		«FOR key : map.keySet()»
 			function «key»()
-			«genExprs(map.get(key))»
+			«FOR instr : map.get(key)»
+				«IF instr instanceof InstrNop»
+				«ENDIF»
+			«ENDFOR»
 			end
-		«ENDFOR»
-		'''
-		
-		def String genExprs(List<Instr> exprs)
-		'''
-		«FOR expr : exprs»
-			«IF expr instanceof InstrNop»«ENDIF»
-			«IF expr instanceof InstrIf»
-			
-			«ENDIF»
 		«ENDFOR»
 		'''
 }

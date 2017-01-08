@@ -19,7 +19,6 @@ public class LocalEnvironment {
 		this.inputs = new HashMap<String,Expr>();
 		this.outputs = new HashMap<String,Expr>();
 		this.temp = new HashMap<String,Expr>();
-		this.initializeMap(this.inputs,inputs);
 		this.initializeMap(this.outputs,outputs);
 		this.initializeMap(temp,variables);
 	}
@@ -69,7 +68,14 @@ public class LocalEnvironment {
 		int indice = (this.temp.size());
 		String string =Integer.toString(indice); 
 		
-		this.temp.put(string, expr);
+		if(expr instanceof ExprSimple){
+			if(!temp.containsValue(expr)){
+				this.temp.put(string, expr);
+			}
+		}
+		else{
+			this.temp.put(string, expr);
+		}
 		
 		return string;
 	}
