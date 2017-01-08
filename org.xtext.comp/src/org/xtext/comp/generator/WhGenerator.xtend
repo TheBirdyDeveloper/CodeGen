@@ -28,13 +28,20 @@ class WhGenerator extends AbstractGenerator {
 	
 	def String genCodeLua(HashMap<Code, List<Instr>> map) //Fonctions
 		'''
-		«FOR key : map.keySet()»
-			function «key»()
-			«FOR instr : map.get(key)»
-				«IF instr instanceof InstrNop»
-				«ENDIF»
+		«FOR fun : map.keySet()»
+			function «fun.name»()
+			«FOR instr : map.get(fun)»
+			«genCommands(instr)»
 			«ENDFOR»
 			end
 		«ENDFOR»
 		'''
+		
+	def String genCommands(Instr instr)
+	'''
+	«IF instr instanceof InstrNop»«ENDIF»
+	«IF instr instanceof InstrIf»
+	if «instr.cond» then «instr.siVrai» else «instr.siFaux» end
+	«ENDIF»
+	'''
 }
