@@ -23,10 +23,10 @@ class WhGenerator extends AbstractGenerator {
 	
 	def void doGenerate(GenTable genTable, IFileSystemAccess2 fsa, String outputName) {
 		this.genTable = genTable;
-		fsa.generateFile(outputName, genTable.listCode3Adr.genCodeLua)
-    }
+    	fsa.generateFile(outputName, genTable.listCode3Adr.genCode3Adr)
+	}
 	
-	def String genCodeLua(HashMap<Code, List<Instr>> map) //Fonctions
+	def String genCode3Adr(HashMap<Code, List<Instr>> map)
 		'''
 		«FOR key : map.keySet()»
 			function «key»()

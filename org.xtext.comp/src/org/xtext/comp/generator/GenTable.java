@@ -160,13 +160,23 @@ public class GenTable {
 				//Etiquette condEtiquette = new Etiquette();
 				//listEtiquettes.add(condEtiquette);
 				String place = this.evaluateExpr(functionName,expression, listInstr);
-				InstrIf instr = (new InstrIf(null, place, null, null));
+				
+				List<Instr> siVrai = new LinkedList<Instr>();
+				List<Instr> siFaux = new LinkedList<Instr>();
+				
+				this.parseCommands(functionName, ((If) nextCommand.getCmd()).getCommands1().getCommands(), siVrai );
+				if((((If) nextCommand.getCmd()).getCommands2())!=null)
+					this.parseCommands(functionName, ((If) nextCommand.getCmd()).getCommands2().getCommands(), siFaux );
+				
+				
+				List<List <Instr>> ifInstr = new LinkedList();
+				ifInstr.add(siVrai);
+				ifInstr.add(siFaux);
+				InstrIf instr = (new InstrIf(ifInstr, place, null, null));
 				listInstr.add(instr);
 				
-				this.parseCommands(functionName, ((If) nextCommand.getCmd()).getCommands1().getCommands(), listInstr );
-				if((((If) nextCommand.getCmd()).getCommands2())!=null)
-					this.parseCommands(functionName, ((If) nextCommand.getCmd()).getCommands2().getCommands(), listInstr );
 				
+					
 
 				
 			}    

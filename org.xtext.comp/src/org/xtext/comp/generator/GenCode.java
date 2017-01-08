@@ -24,8 +24,8 @@ public class GenCode{
 
 		//Instructions de base
 		List<Instr> listInstr0 = new LinkedList<Instr>();
-		listInstr0.add(new InstrNop("","","",""));
-		listInstr0.add(new InstrIf("L1","","L2","L3"));
+		//listInstr0.add(new InstrNop("","","",""));
+		//listInstr0.add(new InstrIf("L1","","L2","L3"));
 
 
 		//If condition
@@ -35,7 +35,7 @@ public class GenCode{
 		//If Vrai
 		List<Instr> listInstr2 = new LinkedList<Instr>();
 		listInstr2.add(new InstrNop("","","",""));
-		listInstr2.add(new InstrIf("L4","","L5","L6"));
+		//listInstr2.add(new InstrIf("L4","","L5","L6"));
 
 		//If Faux
 		List<Instr> listInstr3 = new LinkedList<Instr>();
