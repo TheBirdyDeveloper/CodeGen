@@ -3,7 +3,7 @@
  */
 package org.xtext.comp.wh;
 
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,66 +14,29 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.xtext.comp.wh.ExprCons#getArg1 <em>Arg1</em>}</li>
- *   <li>{@link org.xtext.comp.wh.ExprCons#getArg2 <em>Arg2</em>}</li>
+ *   <li>{@link org.xtext.comp.wh.ExprCons#getArg <em>Arg</em>}</li>
  * </ul>
  *
  * @see org.xtext.comp.wh.WhPackage#getExprCons()
  * @model
  * @generated
  */
-public interface ExprCons extends EObject
+public interface ExprCons extends Expr
 {
   /**
-   * Returns the value of the '<em><b>Arg1</b></em>' containment reference.
+   * Returns the value of the '<em><b>Arg</b></em>' containment reference list.
+   * The list contents are of type {@link org.xtext.comp.wh.Expr}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Arg1</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Arg</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Arg1</em>' containment reference.
-   * @see #setArg1(Expr)
-   * @see org.xtext.comp.wh.WhPackage#getExprCons_Arg1()
+   * @return the value of the '<em>Arg</em>' containment reference list.
+   * @see org.xtext.comp.wh.WhPackage#getExprCons_Arg()
    * @model containment="true"
    * @generated
    */
-  Expr getArg1();
-
-  /**
-   * Sets the value of the '{@link org.xtext.comp.wh.ExprCons#getArg1 <em>Arg1</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Arg1</em>' containment reference.
-   * @see #getArg1()
-   * @generated
-   */
-  void setArg1(Expr value);
-
-  /**
-   * Returns the value of the '<em><b>Arg2</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Arg2</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Arg2</em>' containment reference.
-   * @see #setArg2(Expr)
-   * @see org.xtext.comp.wh.WhPackage#getExprCons_Arg2()
-   * @model containment="true"
-   * @generated
-   */
-  Expr getArg2();
-
-  /**
-   * Sets the value of the '{@link org.xtext.comp.wh.ExprCons#getArg2 <em>Arg2</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Arg2</em>' containment reference.
-   * @see #getArg2()
-   * @generated
-   */
-  void setArg2(Expr value);
+  EList<Expr> getArg();
 
 } // ExprCons

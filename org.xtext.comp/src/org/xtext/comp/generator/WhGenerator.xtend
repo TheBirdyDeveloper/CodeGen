@@ -5,6 +5,7 @@ package org.xtext.comp.generator
 
 import java.util.HashMap
 import java.util.List
+import java.util.Set
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
@@ -17,6 +18,7 @@ import org.eclipse.xtext.generator.IGeneratorContext
  */
 class WhGenerator extends AbstractGenerator {
 	private GenTable genTable;
+	private final int globalIndent = 3;
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		//N'est pas utilisÃ©e
 	}
@@ -29,19 +31,61 @@ class WhGenerator extends AbstractGenerator {
 	def String genCode3Adr(HashMap<Code, List<Instr>> map)
 		'''
 		«FOR fun : map.keySet()»
-			function «fun.name»()
-			«FOR instr : map.get(fun)»
-			«genCommands(instr)»
-			«ENDFOR»
+			function «fun.name»(«printList(genTable.environmentFonctions.get(fun.name).getInputs().keySet(),", ")»)
+			«genCommands(map.get(fun),globalIndent)»
+			
+			return «printList(genTable.environmentFonctions.get(fun.name).getOutputs().keySet(),", ")»
 			end
 		«ENDFOR»
 		'''
+	
+	
+	def String genCommands(List<Instr> instrs, int indent)
+		'''
+		«FOR instr : instrs»
+		«genCommand(instr, indent)»
+		«ENDFOR»
+		'''
+	
+	def String genCommand(Instr instr, int pIndent)
+	{
+		if(instr instanceof InstrNop)	return "";
+		if(instr instanceof InstrIf)    return genIf(instr,pIndent);
+	}
+
+	
+	def String genIf(InstrIf instr, int pIndent){
+		var parentIndent = makeIndent(pIndent)
+	    var indent = pIndent + globalIndent
+		'''
+		«parentIndent»if «instr.getCond» then 
+		«genCommands(instr.getSiVrai(), indent)»
+		«IF !instr.getSiFaux().empty»
+		«parentIndent»else 
+		«genCommands(instr.getSiFaux(),indent)»
+		«ENDIF»
+		«parentIndent»end
+		'''
+	}
+	
+	
+	def String printList(Set<String> list, String delim){
 		
-	def String genCommands(Instr instr)
-	'''
-	«IF instr instanceof InstrNop»«ENDIF»
-	«IF instr instanceof InstrIf»
-	if «instr.cond» then «instr.siVrai» else «instr.siFaux» end
-	«ENDIF»
-	'''
+		var res = ""
+    	if(list.size > 1){
+    		for(i:0..list.size-2){
+    			res+= list.get(i)+delim
+    		}
+    		res += list.get(list.size-1)
+    	}    	
+    	return res
+	}
+	
+	 def String makeIndent(int indent){
+    	var res = ""
+    	for(i:0..indent){
+    		if(i<indent) res+=" ";
+    	}
+    	return res
+    }
 }

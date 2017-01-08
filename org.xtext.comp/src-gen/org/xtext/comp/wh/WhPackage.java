@@ -504,22 +504,22 @@ public interface WhPackage extends EPackage
   int EXPR = 13;
 
   /**
-   * The feature id for the '<em><b>Expr</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXPR__EXPR = 0;
-
-  /**
    * The feature id for the '<em><b>Expr Eq</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EXPR__EXPR_EQ = 1;
+  int EXPR__EXPR_EQ = 0;
+
+  /**
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPR__EXPR = 1;
 
   /**
    * The number of structural features of the '<em>Expr</em>' class.
@@ -541,13 +541,31 @@ public interface WhPackage extends EPackage
   int EXPR_SIMPLE = 14;
 
   /**
+   * The feature id for the '<em><b>Expr Eq</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPR_SIMPLE__EXPR_EQ = EXPR__EXPR_EQ;
+
+  /**
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPR_SIMPLE__EXPR = EXPR__EXPR;
+
+  /**
    * The feature id for the '<em><b>Str</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EXPR_SIMPLE__STR = 0;
+  int EXPR_SIMPLE__STR = EXPR_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Var Simple</b></em>' attribute.
@@ -556,7 +574,7 @@ public interface WhPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXPR_SIMPLE__VAR_SIMPLE = 1;
+  int EXPR_SIMPLE__VAR_SIMPLE = EXPR_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Sym</b></em>' attribute.
@@ -565,7 +583,7 @@ public interface WhPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXPR_SIMPLE__SYM = 2;
+  int EXPR_SIMPLE__SYM = EXPR_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Name Function</b></em>' attribute.
@@ -574,7 +592,7 @@ public interface WhPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXPR_SIMPLE__NAME_FUNCTION = 3;
+  int EXPR_SIMPLE__NAME_FUNCTION = EXPR_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Vars</b></em>' containment reference.
@@ -583,7 +601,7 @@ public interface WhPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXPR_SIMPLE__VARS = 4;
+  int EXPR_SIMPLE__VARS = EXPR_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>Expr Simple</em>' class.
@@ -592,7 +610,7 @@ public interface WhPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXPR_SIMPLE_FEATURE_COUNT = 5;
+  int EXPR_SIMPLE_FEATURE_COUNT = EXPR_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link org.xtext.comp.wh.impl.ExprAndImpl <em>Expr And</em>}' class.
@@ -605,13 +623,31 @@ public interface WhPackage extends EPackage
   int EXPR_AND = 15;
 
   /**
+   * The feature id for the '<em><b>Expr Eq</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPR_AND__EXPR_EQ = EXPR__EXPR_EQ;
+
+  /**
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPR_AND__EXPR = EXPR__EXPR;
+
+  /**
    * The feature id for the '<em><b>Arg1</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EXPR_AND__ARG1 = 0;
+  int EXPR_AND__ARG1 = EXPR_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Arg2</b></em>' containment reference.
@@ -620,7 +656,7 @@ public interface WhPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXPR_AND__ARG2 = 1;
+  int EXPR_AND__ARG2 = EXPR_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Expr And</em>' class.
@@ -629,7 +665,7 @@ public interface WhPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXPR_AND_FEATURE_COUNT = 2;
+  int EXPR_AND_FEATURE_COUNT = EXPR_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link org.xtext.comp.wh.impl.ExprOrImpl <em>Expr Or</em>}' class.
@@ -642,13 +678,31 @@ public interface WhPackage extends EPackage
   int EXPR_OR = 16;
 
   /**
+   * The feature id for the '<em><b>Expr Eq</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPR_OR__EXPR_EQ = EXPR__EXPR_EQ;
+
+  /**
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPR_OR__EXPR = EXPR__EXPR;
+
+  /**
    * The feature id for the '<em><b>Arg1</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EXPR_OR__ARG1 = 0;
+  int EXPR_OR__ARG1 = EXPR_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Arg2</b></em>' containment reference.
@@ -657,7 +711,7 @@ public interface WhPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXPR_OR__ARG2 = 1;
+  int EXPR_OR__ARG2 = EXPR_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Expr Or</em>' class.
@@ -666,7 +720,7 @@ public interface WhPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXPR_OR_FEATURE_COUNT = 2;
+  int EXPR_OR_FEATURE_COUNT = EXPR_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link org.xtext.comp.wh.impl.ExprConsImpl <em>Expr Cons</em>}' class.
@@ -679,22 +733,31 @@ public interface WhPackage extends EPackage
   int EXPR_CONS = 17;
 
   /**
-   * The feature id for the '<em><b>Arg1</b></em>' containment reference.
+   * The feature id for the '<em><b>Expr Eq</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EXPR_CONS__ARG1 = 0;
+  int EXPR_CONS__EXPR_EQ = EXPR__EXPR_EQ;
 
   /**
-   * The feature id for the '<em><b>Arg2</b></em>' containment reference.
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EXPR_CONS__ARG2 = 1;
+  int EXPR_CONS__EXPR = EXPR__EXPR;
+
+  /**
+   * The feature id for the '<em><b>Arg</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPR_CONS__ARG = EXPR_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Expr Cons</em>' class.
@@ -703,7 +766,7 @@ public interface WhPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXPR_CONS_FEATURE_COUNT = 2;
+  int EXPR_CONS_FEATURE_COUNT = EXPR_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.xtext.comp.wh.impl.ExprListImpl <em>Expr List</em>}' class.
@@ -716,13 +779,31 @@ public interface WhPackage extends EPackage
   int EXPR_LIST = 18;
 
   /**
+   * The feature id for the '<em><b>Expr Eq</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPR_LIST__EXPR_EQ = EXPR__EXPR_EQ;
+
+  /**
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPR_LIST__EXPR = EXPR__EXPR;
+
+  /**
    * The feature id for the '<em><b>Arg</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EXPR_LIST__ARG = 0;
+  int EXPR_LIST__ARG = EXPR_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Expr List</em>' class.
@@ -731,7 +812,7 @@ public interface WhPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXPR_LIST_FEATURE_COUNT = 1;
+  int EXPR_LIST_FEATURE_COUNT = EXPR_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.xtext.comp.wh.impl.ExprHdImpl <em>Expr Hd</em>}' class.
@@ -744,13 +825,31 @@ public interface WhPackage extends EPackage
   int EXPR_HD = 19;
 
   /**
+   * The feature id for the '<em><b>Expr Eq</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPR_HD__EXPR_EQ = EXPR__EXPR_EQ;
+
+  /**
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPR_HD__EXPR = EXPR__EXPR;
+
+  /**
    * The feature id for the '<em><b>Arg</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EXPR_HD__ARG = 0;
+  int EXPR_HD__ARG = EXPR_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Expr Hd</em>' class.
@@ -759,7 +858,7 @@ public interface WhPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXPR_HD_FEATURE_COUNT = 1;
+  int EXPR_HD_FEATURE_COUNT = EXPR_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.xtext.comp.wh.impl.ExprTlImpl <em>Expr Tl</em>}' class.
@@ -772,13 +871,31 @@ public interface WhPackage extends EPackage
   int EXPR_TL = 20;
 
   /**
+   * The feature id for the '<em><b>Expr Eq</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPR_TL__EXPR_EQ = EXPR__EXPR_EQ;
+
+  /**
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPR_TL__EXPR = EXPR__EXPR;
+
+  /**
    * The feature id for the '<em><b>Arg</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EXPR_TL__ARG = 0;
+  int EXPR_TL__ARG = EXPR_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Expr Tl</em>' class.
@@ -787,7 +904,7 @@ public interface WhPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXPR_TL_FEATURE_COUNT = 1;
+  int EXPR_TL_FEATURE_COUNT = EXPR_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.xtext.comp.wh.impl.ExprSymImpl <em>Expr Sym</em>}' class.
@@ -800,13 +917,31 @@ public interface WhPackage extends EPackage
   int EXPR_SYM = 21;
 
   /**
+   * The feature id for the '<em><b>Expr Eq</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPR_SYM__EXPR_EQ = EXPR__EXPR_EQ;
+
+  /**
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPR_SYM__EXPR = EXPR__EXPR;
+
+  /**
    * The feature id for the '<em><b>Arg1</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EXPR_SYM__ARG1 = 0;
+  int EXPR_SYM__ARG1 = EXPR_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Arg2</b></em>' containment reference list.
@@ -815,7 +950,7 @@ public interface WhPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXPR_SYM__ARG2 = 1;
+  int EXPR_SYM__ARG2 = EXPR_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Expr Sym</em>' class.
@@ -824,7 +959,7 @@ public interface WhPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXPR_SYM_FEATURE_COUNT = 2;
+  int EXPR_SYM_FEATURE_COUNT = EXPR_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link org.xtext.comp.wh.impl.ExprNotImpl <em>Expr Not</em>}' class.
@@ -837,13 +972,31 @@ public interface WhPackage extends EPackage
   int EXPR_NOT = 22;
 
   /**
+   * The feature id for the '<em><b>Expr Eq</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPR_NOT__EXPR_EQ = EXPR__EXPR_EQ;
+
+  /**
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPR_NOT__EXPR = EXPR__EXPR;
+
+  /**
    * The feature id for the '<em><b>Arg1</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EXPR_NOT__ARG1 = 0;
+  int EXPR_NOT__ARG1 = EXPR_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Expr Not</em>' class.
@@ -852,7 +1005,7 @@ public interface WhPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXPR_NOT_FEATURE_COUNT = 1;
+  int EXPR_NOT_FEATURE_COUNT = EXPR_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.xtext.comp.wh.impl.ExprEqImpl <em>Expr Eq</em>}' class.
@@ -1264,17 +1417,6 @@ public interface WhPackage extends EPackage
   EClass getExpr();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.xtext.comp.wh.Expr#getExpr <em>Expr</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Expr</em>'.
-   * @see org.xtext.comp.wh.Expr#getExpr()
-   * @see #getExpr()
-   * @generated
-   */
-  EReference getExpr_Expr();
-
-  /**
    * Returns the meta object for the containment reference '{@link org.xtext.comp.wh.Expr#getExprEq <em>Expr Eq</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1284,6 +1426,17 @@ public interface WhPackage extends EPackage
    * @generated
    */
   EReference getExpr_ExprEq();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.xtext.comp.wh.Expr#getExpr <em>Expr</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Expr</em>'.
+   * @see org.xtext.comp.wh.Expr#getExpr()
+   * @see #getExpr()
+   * @generated
+   */
+  EReference getExpr_Expr();
 
   /**
    * Returns the meta object for class '{@link org.xtext.comp.wh.ExprSimple <em>Expr Simple</em>}'.
@@ -1425,26 +1578,15 @@ public interface WhPackage extends EPackage
   EClass getExprCons();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.xtext.comp.wh.ExprCons#getArg1 <em>Arg1</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.xtext.comp.wh.ExprCons#getArg <em>Arg</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Arg1</em>'.
-   * @see org.xtext.comp.wh.ExprCons#getArg1()
+   * @return the meta object for the containment reference list '<em>Arg</em>'.
+   * @see org.xtext.comp.wh.ExprCons#getArg()
    * @see #getExprCons()
    * @generated
    */
-  EReference getExprCons_Arg1();
-
-  /**
-   * Returns the meta object for the containment reference '{@link org.xtext.comp.wh.ExprCons#getArg2 <em>Arg2</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Arg2</em>'.
-   * @see org.xtext.comp.wh.ExprCons#getArg2()
-   * @see #getExprCons()
-   * @generated
-   */
-  EReference getExprCons_Arg2();
+  EReference getExprCons_Arg();
 
   /**
    * Returns the meta object for class '{@link org.xtext.comp.wh.ExprList <em>Expr List</em>}'.
@@ -1926,20 +2068,20 @@ public interface WhPackage extends EPackage
     EClass EXPR = eINSTANCE.getExpr();
 
     /**
-     * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference EXPR__EXPR = eINSTANCE.getExpr_Expr();
-
-    /**
      * The meta object literal for the '<em><b>Expr Eq</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EReference EXPR__EXPR_EQ = eINSTANCE.getExpr_ExprEq();
+
+    /**
+     * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference EXPR__EXPR = eINSTANCE.getExpr_Expr();
 
     /**
      * The meta object literal for the '{@link org.xtext.comp.wh.impl.ExprSimpleImpl <em>Expr Simple</em>}' class.
@@ -2054,20 +2196,12 @@ public interface WhPackage extends EPackage
     EClass EXPR_CONS = eINSTANCE.getExprCons();
 
     /**
-     * The meta object literal for the '<em><b>Arg1</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Arg</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference EXPR_CONS__ARG1 = eINSTANCE.getExprCons_Arg1();
-
-    /**
-     * The meta object literal for the '<em><b>Arg2</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference EXPR_CONS__ARG2 = eINSTANCE.getExprCons_Arg2();
+    EReference EXPR_CONS__ARG = eINSTANCE.getExprCons_Arg();
 
     /**
      * The meta object literal for the '{@link org.xtext.comp.wh.impl.ExprListImpl <em>Expr List</em>}' class.

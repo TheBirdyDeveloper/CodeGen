@@ -10,7 +10,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.xtext.comp.wh.Expr;
 import org.xtext.comp.wh.ExprAnd;
@@ -31,7 +30,7 @@ import org.xtext.comp.wh.WhPackage;
  *
  * @generated
  */
-public class ExprAndImpl extends MinimalEObjectImpl.Container implements ExprAnd
+public class ExprAndImpl extends ExprImpl implements ExprAnd
 {
   /**
    * The cached value of the '{@link #getArg1() <em>Arg1</em>}' containment reference.

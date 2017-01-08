@@ -175,6 +175,7 @@ public class WhSwitch<T> extends Switch<T>
       {
         ExprSimple exprSimple = (ExprSimple)theEObject;
         T result = caseExprSimple(exprSimple);
+        if (result == null) result = caseExpr(exprSimple);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -182,6 +183,7 @@ public class WhSwitch<T> extends Switch<T>
       {
         ExprAnd exprAnd = (ExprAnd)theEObject;
         T result = caseExprAnd(exprAnd);
+        if (result == null) result = caseExpr(exprAnd);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -189,6 +191,7 @@ public class WhSwitch<T> extends Switch<T>
       {
         ExprOr exprOr = (ExprOr)theEObject;
         T result = caseExprOr(exprOr);
+        if (result == null) result = caseExpr(exprOr);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -196,6 +199,7 @@ public class WhSwitch<T> extends Switch<T>
       {
         ExprCons exprCons = (ExprCons)theEObject;
         T result = caseExprCons(exprCons);
+        if (result == null) result = caseExpr(exprCons);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -203,6 +207,7 @@ public class WhSwitch<T> extends Switch<T>
       {
         ExprList exprList = (ExprList)theEObject;
         T result = caseExprList(exprList);
+        if (result == null) result = caseExpr(exprList);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -210,6 +215,7 @@ public class WhSwitch<T> extends Switch<T>
       {
         ExprHd exprHd = (ExprHd)theEObject;
         T result = caseExprHd(exprHd);
+        if (result == null) result = caseExpr(exprHd);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -217,6 +223,7 @@ public class WhSwitch<T> extends Switch<T>
       {
         ExprTl exprTl = (ExprTl)theEObject;
         T result = caseExprTl(exprTl);
+        if (result == null) result = caseExpr(exprTl);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -224,6 +231,7 @@ public class WhSwitch<T> extends Switch<T>
       {
         ExprSym exprSym = (ExprSym)theEObject;
         T result = caseExprSym(exprSym);
+        if (result == null) result = caseExpr(exprSym);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -231,6 +239,7 @@ public class WhSwitch<T> extends Switch<T>
       {
         ExprNot exprNot = (ExprNot)theEObject;
         T result = caseExprNot(exprNot);
+        if (result == null) result = caseExpr(exprNot);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }

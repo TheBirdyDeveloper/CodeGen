@@ -3,14 +3,17 @@
  */
 package org.xtext.comp.wh.impl;
 
-import org.eclipse.emf.common.notify.Notification;
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.xtext.comp.wh.Expr;
 import org.xtext.comp.wh.ExprCons;
@@ -24,33 +27,22 @@ import org.xtext.comp.wh.WhPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.xtext.comp.wh.impl.ExprConsImpl#getArg1 <em>Arg1</em>}</li>
- *   <li>{@link org.xtext.comp.wh.impl.ExprConsImpl#getArg2 <em>Arg2</em>}</li>
+ *   <li>{@link org.xtext.comp.wh.impl.ExprConsImpl#getArg <em>Arg</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ExprConsImpl extends MinimalEObjectImpl.Container implements ExprCons
+public class ExprConsImpl extends ExprImpl implements ExprCons
 {
   /**
-   * The cached value of the '{@link #getArg1() <em>Arg1</em>}' containment reference.
+   * The cached value of the '{@link #getArg() <em>Arg</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getArg1()
+   * @see #getArg()
    * @generated
    * @ordered
    */
-  protected Expr arg1;
-
-  /**
-   * The cached value of the '{@link #getArg2() <em>Arg2</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getArg2()
-   * @generated
-   * @ordered
-   */
-  protected Expr arg2;
+  protected EList<Expr> arg;
 
   /**
    * <!-- begin-user-doc -->
@@ -78,95 +70,13 @@ public class ExprConsImpl extends MinimalEObjectImpl.Container implements ExprCo
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expr getArg1()
+  public EList<Expr> getArg()
   {
-    return arg1;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetArg1(Expr newArg1, NotificationChain msgs)
-  {
-    Expr oldArg1 = arg1;
-    arg1 = newArg1;
-    if (eNotificationRequired())
+    if (arg == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, WhPackage.EXPR_CONS__ARG1, oldArg1, newArg1);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      arg = new EObjectContainmentEList<Expr>(Expr.class, this, WhPackage.EXPR_CONS__ARG);
     }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setArg1(Expr newArg1)
-  {
-    if (newArg1 != arg1)
-    {
-      NotificationChain msgs = null;
-      if (arg1 != null)
-        msgs = ((InternalEObject)arg1).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - WhPackage.EXPR_CONS__ARG1, null, msgs);
-      if (newArg1 != null)
-        msgs = ((InternalEObject)newArg1).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - WhPackage.EXPR_CONS__ARG1, null, msgs);
-      msgs = basicSetArg1(newArg1, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, WhPackage.EXPR_CONS__ARG1, newArg1, newArg1));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Expr getArg2()
-  {
-    return arg2;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetArg2(Expr newArg2, NotificationChain msgs)
-  {
-    Expr oldArg2 = arg2;
-    arg2 = newArg2;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, WhPackage.EXPR_CONS__ARG2, oldArg2, newArg2);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setArg2(Expr newArg2)
-  {
-    if (newArg2 != arg2)
-    {
-      NotificationChain msgs = null;
-      if (arg2 != null)
-        msgs = ((InternalEObject)arg2).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - WhPackage.EXPR_CONS__ARG2, null, msgs);
-      if (newArg2 != null)
-        msgs = ((InternalEObject)newArg2).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - WhPackage.EXPR_CONS__ARG2, null, msgs);
-      msgs = basicSetArg2(newArg2, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, WhPackage.EXPR_CONS__ARG2, newArg2, newArg2));
+    return arg;
   }
 
   /**
@@ -179,10 +89,8 @@ public class ExprConsImpl extends MinimalEObjectImpl.Container implements ExprCo
   {
     switch (featureID)
     {
-      case WhPackage.EXPR_CONS__ARG1:
-        return basicSetArg1(null, msgs);
-      case WhPackage.EXPR_CONS__ARG2:
-        return basicSetArg2(null, msgs);
+      case WhPackage.EXPR_CONS__ARG:
+        return ((InternalEList<?>)getArg()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -197,10 +105,8 @@ public class ExprConsImpl extends MinimalEObjectImpl.Container implements ExprCo
   {
     switch (featureID)
     {
-      case WhPackage.EXPR_CONS__ARG1:
-        return getArg1();
-      case WhPackage.EXPR_CONS__ARG2:
-        return getArg2();
+      case WhPackage.EXPR_CONS__ARG:
+        return getArg();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -210,16 +116,15 @@ public class ExprConsImpl extends MinimalEObjectImpl.Container implements ExprCo
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case WhPackage.EXPR_CONS__ARG1:
-        setArg1((Expr)newValue);
-        return;
-      case WhPackage.EXPR_CONS__ARG2:
-        setArg2((Expr)newValue);
+      case WhPackage.EXPR_CONS__ARG:
+        getArg().clear();
+        getArg().addAll((Collection<? extends Expr>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -235,11 +140,8 @@ public class ExprConsImpl extends MinimalEObjectImpl.Container implements ExprCo
   {
     switch (featureID)
     {
-      case WhPackage.EXPR_CONS__ARG1:
-        setArg1((Expr)null);
-        return;
-      case WhPackage.EXPR_CONS__ARG2:
-        setArg2((Expr)null);
+      case WhPackage.EXPR_CONS__ARG:
+        getArg().clear();
         return;
     }
     super.eUnset(featureID);
@@ -255,10 +157,8 @@ public class ExprConsImpl extends MinimalEObjectImpl.Container implements ExprCo
   {
     switch (featureID)
     {
-      case WhPackage.EXPR_CONS__ARG1:
-        return arg1 != null;
-      case WhPackage.EXPR_CONS__ARG2:
-        return arg2 != null;
+      case WhPackage.EXPR_CONS__ARG:
+        return arg != null && !arg.isEmpty();
     }
     return super.eIsSet(featureID);
   }

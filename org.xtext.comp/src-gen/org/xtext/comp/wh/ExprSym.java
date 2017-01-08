@@ -5,8 +5,6 @@ package org.xtext.comp.wh;
 
 import org.eclipse.emf.common.util.EList;
 
-import org.eclipse.emf.ecore.EObject;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Expr Sym</b></em>'.
@@ -24,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface ExprSym extends EObject
+public interface ExprSym extends Expr
 {
   /**
    * Returns the value of the '<em><b>Arg1</b></em>' attribute.

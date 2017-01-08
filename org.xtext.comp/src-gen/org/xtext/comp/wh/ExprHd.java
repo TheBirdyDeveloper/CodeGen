@@ -3,7 +3,6 @@
  */
 package org.xtext.comp.wh;
 
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -21,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface ExprHd extends EObject
+public interface ExprHd extends Expr
 {
   /**
    * Returns the value of the '<em><b>Arg</b></em>' containment reference.

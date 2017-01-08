@@ -65,12 +65,11 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Expr">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="exprEq" eType="#//ExprEq"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//Expr" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ExprSimple">
+  <eClassifiers xsi:type="ecore:EClass" name="ExprSimple" eSuperTypes="#//Expr">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="str" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="varSimple" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="sym" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -78,36 +77,36 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="vars" eType="#//Input"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ExprAnd">
+  <eClassifiers xsi:type="ecore:EClass" name="ExprAnd" eSuperTypes="#//Expr">
     <eStructuralFeatures xsi:type="ecore:EReference" name="arg1" eType="#//ExprSimple"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="arg2" eType="#//Expr" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ExprOr">
+  <eClassifiers xsi:type="ecore:EClass" name="ExprOr" eSuperTypes="#//Expr">
     <eStructuralFeatures xsi:type="ecore:EReference" name="arg1" eType="#//ExprSimple"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="arg2" eType="#//Expr" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ExprCons">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="arg1" eType="#//Expr" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="arg2" eType="#//Expr" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ExprList">
+  <eClassifiers xsi:type="ecore:EClass" name="ExprCons" eSuperTypes="#//Expr">
     <eStructuralFeatures xsi:type="ecore:EReference" name="arg" upperBound="-1" eType="#//Expr"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ExprHd">
+  <eClassifiers xsi:type="ecore:EClass" name="ExprList" eSuperTypes="#//Expr">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="arg" upperBound="-1" eType="#//Expr"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExprHd" eSuperTypes="#//Expr">
     <eStructuralFeatures xsi:type="ecore:EReference" name="arg" eType="#//Expr" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ExprTl">
+  <eClassifiers xsi:type="ecore:EClass" name="ExprTl" eSuperTypes="#//Expr">
     <eStructuralFeatures xsi:type="ecore:EReference" name="arg" eType="#//Expr" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ExprSym">
+  <eClassifiers xsi:type="ecore:EClass" name="ExprSym" eSuperTypes="#//Expr">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="arg1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="arg2" upperBound="-1" eType="#//Expr"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ExprNot">
+  <eClassifiers xsi:type="ecore:EClass" name="ExprNot" eSuperTypes="#//Expr">
     <eStructuralFeatures xsi:type="ecore:EReference" name="arg1" eType="#//ExprEq"
         containment="true"/>
   </eClassifiers>

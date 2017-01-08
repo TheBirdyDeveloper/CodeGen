@@ -170,7 +170,6 @@ public class GenTable {
 				//Etiquette condEtiquette = new Etiquette();
 				//listEtiquettes.add(condEtiquette);
 				String place = this.evaluateExpr(functionName,expression, listInstr);
-				
 				List<Instr> siVrai = new LinkedList<Instr>();
 				List<Instr> siFaux = new LinkedList<Instr>();
 				

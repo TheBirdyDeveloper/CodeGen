@@ -12,8 +12,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -34,7 +32,7 @@ import org.xtext.comp.wh.WhPackage;
  *
  * @generated
  */
-public class ExprListImpl extends MinimalEObjectImpl.Container implements ExprList
+public class ExprListImpl extends ExprImpl implements ExprList
 {
   /**
    * The cached value of the '{@link #getArg() <em>Arg</em>}' containment reference list.

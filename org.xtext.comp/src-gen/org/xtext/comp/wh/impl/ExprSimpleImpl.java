@@ -10,7 +10,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.xtext.comp.wh.ExprSimple;
 import org.xtext.comp.wh.Input;
@@ -33,7 +32,7 @@ import org.xtext.comp.wh.WhPackage;
  *
  * @generated
  */
-public class ExprSimpleImpl extends MinimalEObjectImpl.Container implements ExprSimple
+public class ExprSimpleImpl extends ExprImpl implements ExprSimple
 {
   /**
    * The default value of the '{@link #getStr() <em>Str</em>}' attribute.

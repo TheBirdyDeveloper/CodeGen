@@ -17,8 +17,6 @@ public class Code {
 		this.outputs = outputs;
 		if(code!=null)
 			this.code = code;
-		else
-			System.out.println("Ici c'est null");
 	}
 	
 	public void setName(String s){

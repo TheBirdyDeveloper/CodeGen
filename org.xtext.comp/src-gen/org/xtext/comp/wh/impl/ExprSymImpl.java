@@ -14,7 +14,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -37,7 +36,7 @@ import org.xtext.comp.wh.WhPackage;
  *
  * @generated
  */
-public class ExprSymImpl extends MinimalEObjectImpl.Container implements ExprSym
+public class ExprSymImpl extends ExprImpl implements ExprSym
 {
   /**
    * The default value of the '{@link #getArg1() <em>Arg1</em>}' attribute.

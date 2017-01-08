@@ -11,9 +11,15 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.generator.AbstractGenerator;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.generator.IGeneratorContext;
+import org.eclipse.xtext.xbase.lib.Conversions;
+import org.eclipse.xtext.xbase.lib.IntegerRange;
+import org.xtext.comp.generator.Code;
 import org.xtext.comp.generator.GenTable;
 import org.xtext.comp.generator.Instr;
+import org.xtext.comp.generator.InstrIf;
 import org.xtext.comp.generator.InstrNop;
+import org.xtext.comp.generator.LocalEnvironment;
+import org.xtext.comp.wh.Expr;
 
 /**
  * Generates code from your model files on save.
@@ -23,6 +29,8 @@ import org.xtext.comp.generator.InstrNop;
 @SuppressWarnings("all")
 public class WhGenerator extends AbstractGenerator {
   private GenTable genTable;
+  
+  private final int globalIndent = 3;
   
   @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
@@ -34,28 +42,132 @@ public class WhGenerator extends AbstractGenerator {
     fsa.generateFile(outputName, _genCode3Adr);
   }
   
-  public String genCode3Adr(final HashMap<String, List<Instr>> map) {
+  public String genCode3Adr(final HashMap<Code, List<Instr>> map) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      Set<String> _keySet = map.keySet();
-      for(final String key : _keySet) {
+      Set<Code> _keySet = map.keySet();
+      for(final Code fun : _keySet) {
         _builder.append("function ");
-        _builder.append(key, "");
-        _builder.append("()");
+        _builder.append(fun.name, "");
+        _builder.append("(");
+        LocalEnvironment _get = this.genTable.environmentFonctions.get(fun.name);
+        HashMap<String, Expr> _inputs = _get.getInputs();
+        Set<String> _keySet_1 = _inputs.keySet();
+        String _printList = this.printList(_keySet_1, ", ");
+        _builder.append(_printList, "");
+        _builder.append(")");
         _builder.newLineIfNotEmpty();
-        {
-          List<Instr> _get = map.get(key);
-          for(final Instr instr : _get) {
-            {
-              if ((instr instanceof InstrNop)) {
-              }
-            }
-          }
-        }
+        List<Instr> _get_1 = map.get(fun);
+        String _genCommands = this.genCommands(_get_1, this.globalIndent);
+        _builder.append(_genCommands, "");
+        _builder.newLineIfNotEmpty();
+        _builder.newLine();
+        _builder.append("return ");
+        LocalEnvironment _get_2 = this.genTable.environmentFonctions.get(fun.name);
+        HashMap<String, Expr> _outputs = _get_2.getOutputs();
+        Set<String> _keySet_2 = _outputs.keySet();
+        String _printList_1 = this.printList(_keySet_2, ", ");
+        _builder.append(_printList_1, "");
+        _builder.newLineIfNotEmpty();
         _builder.append("end");
         _builder.newLine();
       }
     }
     return _builder.toString();
+  }
+  
+  public String genCommands(final List<Instr> instrs, final int indent) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      for(final Instr instr : instrs) {
+        String _genCommand = this.genCommand(instr, indent);
+        _builder.append(_genCommand, "");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    return _builder.toString();
+  }
+  
+  public String genCommand(final Instr instr, final int pIndent) {
+    if ((instr instanceof InstrNop)) {
+      return "";
+    }
+    if ((instr instanceof InstrIf)) {
+      return this.genIf(((InstrIf)instr), pIndent);
+    }
+    return null;
+  }
+  
+  public String genIf(final InstrIf instr, final int pIndent) {
+    String _xblockexpression = null;
+    {
+      String parentIndent = this.makeIndent(pIndent);
+      int indent = (pIndent + this.globalIndent);
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append(parentIndent, "");
+      _builder.append("if ");
+      String _cond = instr.getCond();
+      _builder.append(_cond, "");
+      _builder.append(" then ");
+      _builder.newLineIfNotEmpty();
+      List<Instr> _siVrai = instr.getSiVrai();
+      String _genCommands = this.genCommands(_siVrai, indent);
+      _builder.append(_genCommands, "");
+      _builder.newLineIfNotEmpty();
+      {
+        List<Instr> _siFaux = instr.getSiFaux();
+        boolean _isEmpty = _siFaux.isEmpty();
+        boolean _not = (!_isEmpty);
+        if (_not) {
+          _builder.append(parentIndent, "");
+          _builder.append("else ");
+          _builder.newLineIfNotEmpty();
+          List<Instr> _siFaux_1 = instr.getSiFaux();
+          String _genCommands_1 = this.genCommands(_siFaux_1, indent);
+          _builder.append(_genCommands_1, "");
+          _builder.newLineIfNotEmpty();
+        }
+      }
+      _builder.append(parentIndent, "");
+      _builder.append("end");
+      _builder.newLineIfNotEmpty();
+      _xblockexpression = _builder.toString();
+    }
+    return _xblockexpression;
+  }
+  
+  public String printList(final Set<String> list, final String delim) {
+    String res = "";
+    int _size = list.size();
+    boolean _greaterThan = (_size > 1);
+    if (_greaterThan) {
+      int _size_1 = list.size();
+      int _minus = (_size_1 - 2);
+      IntegerRange _upTo = new IntegerRange(0, _minus);
+      for (final Integer i : _upTo) {
+        String _res = res;
+        String _get = ((String[])Conversions.unwrapArray(list, String.class))[(i).intValue()];
+        String _plus = (_get + delim);
+        res = (_res + _plus);
+      }
+      String _res_1 = res;
+      int _size_2 = list.size();
+      int _minus_1 = (_size_2 - 1);
+      String _get_1 = ((String[])Conversions.unwrapArray(list, String.class))[_minus_1];
+      res = (_res_1 + _get_1);
+    }
+    return res;
+  }
+  
+  public String makeIndent(final int indent) {
+    String res = "";
+    IntegerRange _upTo = new IntegerRange(0, indent);
+    for (final Integer i : _upTo) {
+      if (((i).intValue() < indent)) {
+        String _res = res;
+        res = (_res + " ");
+      }
+    }
+    return res;
   }
 }

@@ -5,8 +5,6 @@ package org.xtext.comp.wh;
 
 import org.eclipse.emf.common.util.EList;
 
-import org.eclipse.emf.ecore.EObject;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Expr List</b></em>'.
@@ -23,7 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface ExprList extends EObject
+public interface ExprList extends Expr
 {
   /**
    * Returns the value of the '<em><b>Arg</b></em>' containment reference list.

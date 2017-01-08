@@ -194,6 +194,7 @@ public class WhSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     Expr returns ExprAnd
 	 *     ExprAnd returns ExprAnd
 	 *
 	 * Constraint:
@@ -215,22 +216,14 @@ public class WhSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     Expr returns ExprCons
 	 *     ExprCons returns ExprCons
 	 *
 	 * Constraint:
-	 *     (arg1=Expr arg2=Expr)
+	 *     (arg+=Expr arg+=Expr*)
 	 */
 	protected void sequence_ExprCons(ISerializationContext context, ExprCons semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, WhPackage.Literals.EXPR_CONS__ARG1) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WhPackage.Literals.EXPR_CONS__ARG1));
-			if (transientValues.isValueTransient(semanticObject, WhPackage.Literals.EXPR_CONS__ARG2) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WhPackage.Literals.EXPR_CONS__ARG2));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getExprConsAccess().getArg1ExprParserRuleCall_2_0(), semanticObject.getArg1());
-		feeder.accept(grammarAccess.getExprConsAccess().getArg2ExprParserRuleCall_3_0(), semanticObject.getArg2());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -257,6 +250,7 @@ public class WhSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     Expr returns ExprHd
 	 *     ExprHd returns ExprHd
 	 *
 	 * Constraint:
@@ -275,6 +269,7 @@ public class WhSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     Expr returns ExprList
 	 *     ExprList returns ExprList
 	 *
 	 * Constraint:
@@ -287,6 +282,7 @@ public class WhSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     Expr returns ExprNot
 	 *     ExprNot returns ExprNot
 	 *
 	 * Constraint:
@@ -305,6 +301,7 @@ public class WhSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     Expr returns ExprOr
 	 *     ExprOr returns ExprOr
 	 *
 	 * Constraint:
@@ -326,6 +323,7 @@ public class WhSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     Expr returns ExprSimple
 	 *     ExprSimple returns ExprSimple
 	 *
 	 * Constraint:
@@ -338,6 +336,7 @@ public class WhSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     Expr returns ExprSym
 	 *     ExprSym returns ExprSym
 	 *
 	 * Constraint:
@@ -350,6 +349,7 @@ public class WhSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     Expr returns ExprTl
 	 *     ExprTl returns ExprTl
 	 *
 	 * Constraint:
@@ -371,19 +371,7 @@ public class WhSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Expr returns Expr
 	 *
 	 * Constraint:
-	 *     (
-	 *         expr=ExprAnd | 
-	 *         expr=ExprOr | 
-	 *         expr=ExprSimple | 
-	 *         expr=ExprCons | 
-	 *         expr=ExprList | 
-	 *         expr=ExprHd | 
-	 *         expr=ExprTl | 
-	 *         expr=ExprSym | 
-	 *         expr=ExprNot | 
-	 *         exprEq=ExprEq | 
-	 *         expr=Expr
-	 *     )
+	 *     (exprEq=ExprEq | expr=Expr)
 	 */
 	protected void sequence_Expr(ISerializationContext context, Expr semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

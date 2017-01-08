@@ -631,7 +631,7 @@ public class WhPackageImpl extends EPackageImpl implements WhPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getExpr_Expr()
+  public EReference getExpr_ExprEq()
   {
     return (EReference)exprEClass.getEStructuralFeatures().get(0);
   }
@@ -641,7 +641,7 @@ public class WhPackageImpl extends EPackageImpl implements WhPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getExpr_ExprEq()
+  public EReference getExpr_Expr()
   {
     return (EReference)exprEClass.getEStructuralFeatures().get(1);
   }
@@ -781,19 +781,9 @@ public class WhPackageImpl extends EPackageImpl implements WhPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getExprCons_Arg1()
+  public EReference getExprCons_Arg()
   {
     return (EReference)exprConsEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getExprCons_Arg2()
-  {
-    return (EReference)exprConsEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1014,8 +1004,8 @@ public class WhPackageImpl extends EPackageImpl implements WhPackage
     createEReference(whileEClass, WHILE__CMDS);
 
     exprEClass = createEClass(EXPR);
-    createEReference(exprEClass, EXPR__EXPR);
     createEReference(exprEClass, EXPR__EXPR_EQ);
+    createEReference(exprEClass, EXPR__EXPR);
 
     exprSimpleEClass = createEClass(EXPR_SIMPLE);
     createEAttribute(exprSimpleEClass, EXPR_SIMPLE__STR);
@@ -1033,8 +1023,7 @@ public class WhPackageImpl extends EPackageImpl implements WhPackage
     createEReference(exprOrEClass, EXPR_OR__ARG2);
 
     exprConsEClass = createEClass(EXPR_CONS);
-    createEReference(exprConsEClass, EXPR_CONS__ARG1);
-    createEReference(exprConsEClass, EXPR_CONS__ARG2);
+    createEReference(exprConsEClass, EXPR_CONS__ARG);
 
     exprListEClass = createEClass(EXPR_LIST);
     createEReference(exprListEClass, EXPR_LIST__ARG);
@@ -1086,6 +1075,15 @@ public class WhPackageImpl extends EPackageImpl implements WhPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    exprSimpleEClass.getESuperTypes().add(this.getExpr());
+    exprAndEClass.getESuperTypes().add(this.getExpr());
+    exprOrEClass.getESuperTypes().add(this.getExpr());
+    exprConsEClass.getESuperTypes().add(this.getExpr());
+    exprListEClass.getESuperTypes().add(this.getExpr());
+    exprHdEClass.getESuperTypes().add(this.getExpr());
+    exprTlEClass.getESuperTypes().add(this.getExpr());
+    exprSymEClass.getESuperTypes().add(this.getExpr());
+    exprNotEClass.getESuperTypes().add(this.getExpr());
 
     // Initialize classes and features; add operations and parameters
     initEClass(whEClass, Wh.class, "Wh", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1136,8 +1134,8 @@ public class WhPackageImpl extends EPackageImpl implements WhPackage
     initEReference(getWhile_Cmds(), this.getCommands(), null, "cmds", null, 0, 1, While.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(exprEClass, Expr.class, "Expr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getExpr_Expr(), ecorePackage.getEObject(), null, "expr", null, 0, 1, Expr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getExpr_ExprEq(), this.getExprEq(), null, "exprEq", null, 0, 1, Expr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpr_Expr(), this.getExpr(), null, "expr", null, 0, 1, Expr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(exprSimpleEClass, ExprSimple.class, "ExprSimple", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getExprSimple_Str(), ecorePackage.getEString(), "str", null, 0, 1, ExprSimple.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1155,8 +1153,7 @@ public class WhPackageImpl extends EPackageImpl implements WhPackage
     initEReference(getExprOr_Arg2(), this.getExpr(), null, "arg2", null, 0, 1, ExprOr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(exprConsEClass, ExprCons.class, "ExprCons", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getExprCons_Arg1(), this.getExpr(), null, "arg1", null, 0, 1, ExprCons.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getExprCons_Arg2(), this.getExpr(), null, "arg2", null, 0, 1, ExprCons.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExprCons_Arg(), this.getExpr(), null, "arg", null, 0, -1, ExprCons.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(exprListEClass, ExprList.class, "ExprList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getExprList_Arg(), this.getExpr(), null, "arg", null, 0, -1, ExprList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

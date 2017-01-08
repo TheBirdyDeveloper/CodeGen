@@ -54,8 +54,8 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Wh.ecore#//While/cmds"/>
     </genClasses>
     <genClasses ecoreClass="Wh.ecore#//Expr">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Wh.ecore#//Expr/expr"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Wh.ecore#//Expr/exprEq"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Wh.ecore#//Expr/expr"/>
     </genClasses>
     <genClasses ecoreClass="Wh.ecore#//ExprSimple">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Wh.ecore#//ExprSimple/str"/>
@@ -73,8 +73,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Wh.ecore#//ExprOr/arg2"/>
     </genClasses>
     <genClasses ecoreClass="Wh.ecore#//ExprCons">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Wh.ecore#//ExprCons/arg1"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Wh.ecore#//ExprCons/arg2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Wh.ecore#//ExprCons/arg"/>
     </genClasses>
     <genClasses ecoreClass="Wh.ecore#//ExprList">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Wh.ecore#//ExprList/arg"/>

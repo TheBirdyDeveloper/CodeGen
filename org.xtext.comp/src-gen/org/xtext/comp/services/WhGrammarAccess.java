@@ -492,24 +492,15 @@ public class WhGrammarAccess extends AbstractGrammarElementFinder {
 	public class ExprElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.comp.Wh.Expr");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Assignment cExprAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
-		private final RuleCall cExprExprAndParserRuleCall_0_0 = (RuleCall)cExprAssignment_0.eContents().get(0);
-		private final Assignment cExprAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
-		private final RuleCall cExprExprOrParserRuleCall_1_0 = (RuleCall)cExprAssignment_1.eContents().get(0);
-		private final Assignment cExprAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
-		private final RuleCall cExprExprSimpleParserRuleCall_2_0 = (RuleCall)cExprAssignment_2.eContents().get(0);
-		private final Assignment cExprAssignment_3 = (Assignment)cAlternatives.eContents().get(3);
-		private final RuleCall cExprExprConsParserRuleCall_3_0 = (RuleCall)cExprAssignment_3.eContents().get(0);
-		private final Assignment cExprAssignment_4 = (Assignment)cAlternatives.eContents().get(4);
-		private final RuleCall cExprExprListParserRuleCall_4_0 = (RuleCall)cExprAssignment_4.eContents().get(0);
-		private final Assignment cExprAssignment_5 = (Assignment)cAlternatives.eContents().get(5);
-		private final RuleCall cExprExprHdParserRuleCall_5_0 = (RuleCall)cExprAssignment_5.eContents().get(0);
-		private final Assignment cExprAssignment_6 = (Assignment)cAlternatives.eContents().get(6);
-		private final RuleCall cExprExprTlParserRuleCall_6_0 = (RuleCall)cExprAssignment_6.eContents().get(0);
-		private final Assignment cExprAssignment_7 = (Assignment)cAlternatives.eContents().get(7);
-		private final RuleCall cExprExprSymParserRuleCall_7_0 = (RuleCall)cExprAssignment_7.eContents().get(0);
-		private final Assignment cExprAssignment_8 = (Assignment)cAlternatives.eContents().get(8);
-		private final RuleCall cExprExprNotParserRuleCall_8_0 = (RuleCall)cExprAssignment_8.eContents().get(0);
+		private final RuleCall cExprAndParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cExprOrParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cExprSimpleParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cExprConsParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cExprListParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cExprHdParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cExprTlParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cExprSymParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cExprNotParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
 		private final Assignment cExprEqAssignment_9 = (Assignment)cAlternatives.eContents().get(9);
 		private final RuleCall cExprEqExprEqParserRuleCall_9_0 = (RuleCall)cExprEqAssignment_9.eContents().get(0);
 		private final Group cGroup_10 = (Group)cAlternatives.eContents().get(10);
@@ -519,67 +510,40 @@ public class WhGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_10_2 = (Keyword)cGroup_10.eContents().get(2);
 		
 		//Expr:
-		//	expr=ExprAnd | expr=ExprOr | expr=ExprSimple | expr=ExprCons | expr=ExprList | expr=ExprHd | expr=ExprTl |
-		//	expr=ExprSym | expr=ExprNot | exprEq=ExprEq | '(' expr=Expr ')';
+		//	ExprAnd | ExprOr | ExprSimple | ExprCons | ExprList | ExprHd | ExprTl | ExprSym | ExprNot | exprEq=ExprEq | '('
+		//	expr=Expr ')';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//expr=ExprAnd | expr=ExprOr | expr=ExprSimple | expr=ExprCons | expr=ExprList | expr=ExprHd | expr=ExprTl | expr=ExprSym
-		//| expr=ExprNot | exprEq=ExprEq | '(' expr=Expr ')'
+		//ExprAnd | ExprOr | ExprSimple | ExprCons | ExprList | ExprHd | ExprTl | ExprSym | ExprNot | exprEq=ExprEq | '('
+		//expr=Expr ')'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//expr=ExprAnd
-		public Assignment getExprAssignment_0() { return cExprAssignment_0; }
-		
 		//ExprAnd
-		public RuleCall getExprExprAndParserRuleCall_0_0() { return cExprExprAndParserRuleCall_0_0; }
-		
-		//expr=ExprOr
-		public Assignment getExprAssignment_1() { return cExprAssignment_1; }
+		public RuleCall getExprAndParserRuleCall_0() { return cExprAndParserRuleCall_0; }
 		
 		//ExprOr
-		public RuleCall getExprExprOrParserRuleCall_1_0() { return cExprExprOrParserRuleCall_1_0; }
-		
-		//expr=ExprSimple
-		public Assignment getExprAssignment_2() { return cExprAssignment_2; }
+		public RuleCall getExprOrParserRuleCall_1() { return cExprOrParserRuleCall_1; }
 		
 		//ExprSimple
-		public RuleCall getExprExprSimpleParserRuleCall_2_0() { return cExprExprSimpleParserRuleCall_2_0; }
-		
-		//expr=ExprCons
-		public Assignment getExprAssignment_3() { return cExprAssignment_3; }
+		public RuleCall getExprSimpleParserRuleCall_2() { return cExprSimpleParserRuleCall_2; }
 		
 		//ExprCons
-		public RuleCall getExprExprConsParserRuleCall_3_0() { return cExprExprConsParserRuleCall_3_0; }
-		
-		//expr=ExprList
-		public Assignment getExprAssignment_4() { return cExprAssignment_4; }
+		public RuleCall getExprConsParserRuleCall_3() { return cExprConsParserRuleCall_3; }
 		
 		//ExprList
-		public RuleCall getExprExprListParserRuleCall_4_0() { return cExprExprListParserRuleCall_4_0; }
-		
-		//expr=ExprHd
-		public Assignment getExprAssignment_5() { return cExprAssignment_5; }
+		public RuleCall getExprListParserRuleCall_4() { return cExprListParserRuleCall_4; }
 		
 		//ExprHd
-		public RuleCall getExprExprHdParserRuleCall_5_0() { return cExprExprHdParserRuleCall_5_0; }
-		
-		//expr=ExprTl
-		public Assignment getExprAssignment_6() { return cExprAssignment_6; }
+		public RuleCall getExprHdParserRuleCall_5() { return cExprHdParserRuleCall_5; }
 		
 		//ExprTl
-		public RuleCall getExprExprTlParserRuleCall_6_0() { return cExprExprTlParserRuleCall_6_0; }
-		
-		//expr=ExprSym
-		public Assignment getExprAssignment_7() { return cExprAssignment_7; }
+		public RuleCall getExprTlParserRuleCall_6() { return cExprTlParserRuleCall_6; }
 		
 		//ExprSym
-		public RuleCall getExprExprSymParserRuleCall_7_0() { return cExprExprSymParserRuleCall_7_0; }
-		
-		//expr=ExprNot
-		public Assignment getExprAssignment_8() { return cExprAssignment_8; }
+		public RuleCall getExprSymParserRuleCall_7() { return cExprSymParserRuleCall_7; }
 		
 		//ExprNot
-		public RuleCall getExprExprNotParserRuleCall_8_0() { return cExprExprNotParserRuleCall_8_0; }
+		public RuleCall getExprNotParserRuleCall_8() { return cExprNotParserRuleCall_8; }
 		
 		//exprEq=ExprEq
 		public Assignment getExprEqAssignment_9() { return cExprEqAssignment_9; }
@@ -734,17 +698,19 @@ public class WhGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cLeftParenthesisKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cConsKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cArg1Assignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cArg1ExprParserRuleCall_2_0 = (RuleCall)cArg1Assignment_2.eContents().get(0);
-		private final Assignment cArg2Assignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cArg2ExprParserRuleCall_3_0 = (RuleCall)cArg2Assignment_3.eContents().get(0);
+		private final Assignment cArgAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cArgExprParserRuleCall_2_0 = (RuleCall)cArgAssignment_2.eContents().get(0);
+		private final Assignment cArgAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cArgExprParserRuleCall_3_0 = (RuleCall)cArgAssignment_3.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//ExprCons:
-		//	'(' 'cons' arg1=Expr arg2=Expr ')';
+		//	'(' 'cons' arg+=Expr arg+=Expr* ')'
+		//	// ATTENTION MODIFICATION : LISTE D'ARGUMENTS  cons a doit marcher : liste d'arguments
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'(' 'cons' arg1=Expr arg2=Expr ')'
+		//'(' 'cons' arg+=Expr arg+=Expr* ')'
 		public Group getGroup() { return cGroup; }
 		
 		//'('
@@ -753,17 +719,17 @@ public class WhGrammarAccess extends AbstractGrammarElementFinder {
 		//'cons'
 		public Keyword getConsKeyword_1() { return cConsKeyword_1; }
 		
-		//arg1=Expr
-		public Assignment getArg1Assignment_2() { return cArg1Assignment_2; }
+		//arg+=Expr
+		public Assignment getArgAssignment_2() { return cArgAssignment_2; }
 		
 		//Expr
-		public RuleCall getArg1ExprParserRuleCall_2_0() { return cArg1ExprParserRuleCall_2_0; }
+		public RuleCall getArgExprParserRuleCall_2_0() { return cArgExprParserRuleCall_2_0; }
 		
-		//arg2=Expr
-		public Assignment getArg2Assignment_3() { return cArg2Assignment_3; }
+		//arg+=Expr*
+		public Assignment getArgAssignment_3() { return cArgAssignment_3; }
 		
 		//Expr
-		public RuleCall getArg2ExprParserRuleCall_3_0() { return cArg2ExprParserRuleCall_3_0; }
+		public RuleCall getArgExprParserRuleCall_3_0() { return cArgExprParserRuleCall_3_0; }
 		
 		//')'
 		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
@@ -1184,8 +1150,8 @@ public class WhGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Expr:
-	//	expr=ExprAnd | expr=ExprOr | expr=ExprSimple | expr=ExprCons | expr=ExprList | expr=ExprHd | expr=ExprTl |
-	//	expr=ExprSym | expr=ExprNot | exprEq=ExprEq | '(' expr=Expr ')';
+	//	ExprAnd | ExprOr | ExprSimple | ExprCons | ExprList | ExprHd | ExprTl | ExprSym | ExprNot | exprEq=ExprEq | '('
+	//	expr=Expr ')';
 	public ExprElements getExprAccess() {
 		return pExpr;
 	}
@@ -1227,7 +1193,9 @@ public class WhGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ExprCons:
-	//	'(' 'cons' arg1=Expr arg2=Expr ')';
+	//	'(' 'cons' arg+=Expr arg+=Expr* ')'
+	//	// ATTENTION MODIFICATION : LISTE D'ARGUMENTS  cons a doit marcher : liste d'arguments
+	//;
 	public ExprConsElements getExprConsAccess() {
 		return pExprCons;
 	}
