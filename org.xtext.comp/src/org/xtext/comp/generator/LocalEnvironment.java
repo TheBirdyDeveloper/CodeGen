@@ -39,16 +39,16 @@ public class LocalEnvironment {
 	}
 	
 	public String toString(){
-		String result = this.inputs.toString()+"\n";
+		String result = this.inputs.toString()+", ";
 				for(Entry<String,Expr> entry : temp.entrySet()){
 					result+= entry.getKey().toString()+"=";
 					if(entry.getValue() instanceof ExprSimple){
 						result+=((ExprSimple)entry.getValue()).getSym();
-						result+="\n";
+						result+=", ";
 					}
 					else{
 						result+=(entry.getValue().toString());
-						result+="\n";
+						result+=", ";
 					}
 						
 				}

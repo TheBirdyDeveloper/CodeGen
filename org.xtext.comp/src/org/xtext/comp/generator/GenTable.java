@@ -70,17 +70,17 @@ public class GenTable {
 	public String nomsToString(){
 		String code3AdrString = "";
 		for(Entry<Code, List<Instr>> entry : listCode3Adr.entrySet()){
-			Code functionName = entry.getKey();
+			Code functionCode = entry.getKey();
 			List<Instr> value = entry.getValue();
-			code3AdrString+=functionName.toString()+"{"+funDecl.get(functionName.getName()).getInputs()+"}"+"{"+funDecl.get(functionName.getName()).getOutputs()+"}";
-			code3AdrString+="Environnement :"+this.environmentFonctions.toString()+"\n";
-			
+			code3AdrString+=functionCode.toString();
+			code3AdrString+="Environnement :\n"+this.environmentFonctions.get(functionCode.getName()).toString()+"\n";
 			ListIterator ite = value.listIterator();
 			while(ite.hasNext()){
 				Object instr = ite.next();
 				code3AdrString +=instr.toString();
-				code3AdrString+="";
+				code3AdrString+="\n";
 			};
+			code3AdrString+="\n";
 		};
 		return code3AdrString;
 				
@@ -143,15 +143,25 @@ public class GenTable {
 					listInstr.add(new InstrNop(null, null, null, null));
 			}
 			else if(nextCommand.getCmd() instanceof Affect){
-				ListIterator<Expr> iteExpr = ((Affect)nextCommand.getCmd()).getExprs().listIterator();
-				ListIterator<String> iteVar = ((Affect)nextCommand.getCmd()).getVars().listIterator();
-				while(iteVar.hasNext() && iteExpr.hasNext() ) {
-					String var = iteVar.next();
-					String place = this.evaluateExpr(functionName, iteExpr.next(), listInstr);
-					listInstr.add(new InstrAffect(null, var, place, null));
+				List<Expr> expr = ((Affect)nextCommand.getCmd()).getExprs();
+				List<String> var = ((Affect)nextCommand.getCmd()).getVars();
+				
+				ListIterator<Expr> iteExpr = expr.listIterator();
+				ListIterator<String> iteVar = var.listIterator();
+				
+				List<Instr> instrAffect = new LinkedList<Instr>();
+				int cpt = 0;
+				while(iteExpr.hasNext()){
+					String place = this.evaluateExpr(functionName, iteExpr.next(), instrAffect);
+					instrAffect.add(new InstrAffect(null, iteVar.next(), place, null,false));
+					cpt++;
+				}
+				if(cpt>1)
+					listInstr.add(new InstrAffect(instrAffect,null,null,null,true));
+				else
+					listInstr.add(new InstrAffect(instrAffect,null,null,null,false));
 				}
 						
-			}
 			else if(nextCommand.getCmd() instanceof While){
 				listInstr.add(new InstrWhile(null, null, null, null));
 			}
@@ -160,17 +170,36 @@ public class GenTable {
 				//Etiquette condEtiquette = new Etiquette();
 				//listEtiquettes.add(condEtiquette);
 				String place = this.evaluateExpr(functionName,expression, listInstr);
-				InstrIf instr = (new InstrIf(null, place, null, null));
+				
+				List<Instr> siVrai = new LinkedList<Instr>();
+				List<Instr> siFaux = new LinkedList<Instr>();
+				
+				this.parseCommands(functionName, ((If) nextCommand.getCmd()).getCommands1().getCommands(), siVrai );
+				if((((If) nextCommand.getCmd()).getCommands2())!=null)
+					this.parseCommands(functionName, ((If) nextCommand.getCmd()).getCommands2().getCommands(), siFaux );
+				
+				
+				List<List <Instr>> ifInstr = new LinkedList();
+				ifInstr.add(siVrai);
+				ifInstr.add(siFaux);
+				InstrIf instr = (new InstrIf(ifInstr, place, null, null));
 				listInstr.add(instr);
 				
-				this.parseCommands(functionName, ((If) nextCommand.getCmd()).getCommands1().getCommands(), listInstr );
-				if((((If) nextCommand.getCmd()).getCommands2())!=null)
-					this.parseCommands(functionName, ((If) nextCommand.getCmd()).getCommands2().getCommands(), listInstr );
 				
+					
 
 				
 			}    
 			else if(nextCommand.getCmd() instanceof For){
+				For forCommand = ((For) (nextCommand.getCmd()));
+				
+				Expr expr = ((For)forCommand).getExpr();
+				Commands commandsFor = (forCommand).getCmds();
+				List<Instr> instrFor = new LinkedList<Instr>();
+				
+				this.parseCommands(functionName, commandsFor.getCommands(), instrFor);
+				String place = this.evaluateExpr(functionName, expr, listInstr);
+				listInstr.add(new InstrFor(instrFor,place,null,null));
 				
 			}
 		}
