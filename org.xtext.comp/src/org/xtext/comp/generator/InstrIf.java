@@ -47,6 +47,6 @@ public class InstrIf extends Instr{
 	
 	
 	public String toString(){
-		return "<If "+this.cond+","+this.cond+","+this.varLecture1+","+this.varLecture2+">" + siVrai.toString() + siFaux.toString();
+		return "<If,"+this.cond+","+this.varLecture1+","+this.varLecture2+">" + siVrai.toString() + siFaux.toString();
 	}
 }
