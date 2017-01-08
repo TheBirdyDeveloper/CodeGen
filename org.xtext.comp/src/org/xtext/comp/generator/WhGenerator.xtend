@@ -10,6 +10,7 @@ import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 
+//fsa.generateFile(outputName, genTable.listCode3Adr.genCode3Adr)
 /**
  * Generates code from your model files on save.
  * 
@@ -23,18 +24,24 @@ class WhGenerator extends AbstractGenerator {
 	
 	def void doGenerate(GenTable genTable, IFileSystemAccess2 fsa, String outputName) {
 		this.genTable = genTable;
-    	fsa.generateFile(outputName, genTable.listCode3Adr.genCode3Adr)
-	}
+    }
 	
-	def String genCode3Adr(HashMap<String, List<Instr>> map)
+	def String genCode3Adr(HashMap<String, List<Instr>> map) //Fonctions
 		'''
 		«FOR key : map.keySet()»
 			function «key»()
-			«FOR instr : map.get(key)»
-				«IF instr instanceof InstrNop»
-				«ENDIF»
-			«ENDFOR»
+			«genExprs(map.get(key))»
 			end
+		«ENDFOR»
+		'''
+		
+		def String genExprs(List<Instr> exprs)
+		'''
+		«FOR expr : exprs»
+			«IF expr instanceof InstrNop»«ENDIF»
+			«IF expr instanceof InstrIf»
+			
+			«ENDIF»
 		«ENDFOR»
 		'''
 }

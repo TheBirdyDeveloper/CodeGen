@@ -7,7 +7,7 @@ Wh :
   
  
 Program: 
-	 (functions+=Function)*
+	 (functions+=Function)+
 ;
 
 Function:
