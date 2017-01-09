@@ -55,24 +55,26 @@ While:
 ;
 
 Expr:
-	ExprAnd | ExprOr | ExprSimple | ExprCons | 
-	ExprList | ExprHd | ExprTl | ExprNot | ExprSym |ExprEq |'(' expr=Expr ')'
+	ExprSimple | ExprCons | 
+	ExprList | ExprHd | ExprTl | ExprNot | 
+	ExprCond | //Englobe le and, le or et le eq
+	'(' nameFunction=SYMBOLE vars=LExpr ')'//Correspond à ExprSym
+;
+
+LExpr:
+	expr1=Expr (expr2=LExpr)?
 ;
 
 ExprSimple:
-	=>str=NIL | varSimple=VARIABLE | sym=SYMBOLE //pas de fonction dans les param
+	=>str=NIL | varSimple=VARIABLE | sym=SYMBOLE
 ;
 
-ExprAnd:
-	arg1=ExprSimple 'and' arg2=Expr 
-;
-
-ExprOr:
-	arg1=ExprSimple 'or' arg2=Expr
+ExprCond:
+	'('arg1=Expr cond=('and'|'or'|'=?') arg2=Expr')'
 ;
 
 ExprCons:
-	'(''cons' arg+=Expr (arg+=Expr)*')' // ATTENTION MODIFICATION : LISTE D'ARGUMENTS  cons a doit marcher : liste d'arguments
+	'(''cons' arg=LExpr')' // ATTENTION MODIFICATION : LISTE D'ARGUMENTS  cons a doit marcher : liste d'arguments
 ;
 
 ExprList:
@@ -87,16 +89,8 @@ ExprTl:
 	'(' 'tl' arg=Expr')'
 ;
 
-ExprSym:
-	'(' arg1=SYMBOLE arg2+=Expr (arg2+=Expr)* ')'
-;
-
 ExprNot:
-	'not' arg1=ExprEq
-;
-
-ExprEq:
-	 arg1=ExprSimple '=?' arg2=ExprSimple
+	'(''not' arg1=ExprCond')'
 ;
 
 
