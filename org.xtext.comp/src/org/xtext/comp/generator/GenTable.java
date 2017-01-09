@@ -58,8 +58,8 @@ public class GenTable {
 		this.initialize();
 		this.parseFunDecl();
 	}
-	public Expr getExpr(String name, String key){
-		return this.environmentFonctions.get(name).getExpr(key);
+	public Instr getInstr(String name, String key){
+		return this.environmentFonctions.get(name).getInstr(key);
 	}
 	private void initialize() {
 		Iterator<String> ite = table_m.getNames().iterator();
@@ -156,10 +156,10 @@ public class GenTable {
 				ListIterator<String> iteVar = var.listIterator();
 				
 				List<Instr> instrAffect = new LinkedList<Instr>();
-
+				
 				while(iteExpr.hasNext()){
 					String place = this.evaluateExpr(functionName, iteExpr.next(), instrAffect);
-					instrAffect.add(new InstrAffect(null, this.environmentFonctions.get(functionName).getCorres(iteVar.next()), place, null,false));
+					instrAffect.add(new InstrAffect(null, this.environmentFonctions.get(functionName).getAdrVar(iteVar.next()) , place, null,false));
 				}
 				if(instrAffect.size()>1)
 					listInstr.add(new InstrAffect(instrAffect,null,null,null,true));

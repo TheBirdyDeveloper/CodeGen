@@ -30,9 +30,8 @@ public class LocalEnvironment {
 		this.initializeOutput(this.inputs,inputs);
 	}
 	
-	public Expr getExpr(String key){
-		return null;
-	
+	public Instr getInstr(String key){
+		return this.temp.get(key);
 	}
 	
 	private void initializeOutput(HashMap<String,Expr> map, HashMap<String, Integer> variables) {
@@ -47,7 +46,7 @@ public class LocalEnvironment {
 	private void initializeTemp(HashMap<String,Instr> map, HashMap<String, Integer> variables) {
 		for(Entry<String,Integer> entry : variables.entrySet()){
 			this.correspondances.put(entry.getKey(), "X"+Integer.toString(cpt));
-			map.put(Integer.toString(cpt), (Expr) new Nil());
+			this.putInstr(new InstrVar("X"+Integer.toString(cpt),null,null,null));
 			cpt++;
 		}
 		
@@ -85,6 +84,16 @@ public class LocalEnvironment {
 		return result;
 	}
 	
+	public String getAdrVar(String var){
+		String val = this.getCorres(var);
+		String res = null;
+		for(Entry<String,Instr> entry : temp.entrySet()){
+			if(entry.getValue() instanceof InstrVar && ((InstrVar) entry.getValue()).getVar().equals(val)){
+				res = entry.getKey();
+			}
+		}
+		return res;
+	}
 
 	
 	public String getCorres(String key){
@@ -109,26 +118,25 @@ public class LocalEnvironment {
 				string = "0"; 
 				found = true;
 			}
-			else if(((ExprSimple) expr).getVarSimple()!=null){
-				string = ((ExprSimple) expr).getVarSimple();
-				found = true;
-			}
-			else if(((ExprSimple) expr).getSym()!=null){
-				val =((ExprSimple) expr).getSym(); 
-			
+			else{
+				if(((ExprSimple) expr).getSym()!=null){
+					val =((ExprSimple) expr).getSym();
+				}
+				else if (((ExprSimple) expr).getVarSimple()!=null){
+					val = this.getCorres(((ExprSimple) expr).getVarSimple());
+				}
 				if(!found){
-					for(Entry<String, Instr> entry : temp.entrySet()){
-						if( (entry.getValue() instanceof InstrVar) && ((InstrVar)entry.getValue()).getVar() == val){
-							string = entry.getKey();
-							found=true;
-							System.out.println("Trouvé" + val);
+						for(Entry<String, Instr> entry : temp.entrySet()){
+							if( (entry.getValue() instanceof InstrVar) && ((InstrVar)entry.getValue()).getVar().equals(val)){
+								string = entry.getKey();
+								found=true;
+							}
 						}
 					}
+					if(!found){
+						this.temp.put(string, new InstrVar(val,null,null,null));
+					}
 				}
-				if(!found){
-					this.temp.put(string, new InstrVar(val,null,null,null));
-				}
-			}
 		}
 		return string;
 	}

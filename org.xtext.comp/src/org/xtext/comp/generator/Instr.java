@@ -14,7 +14,7 @@ public abstract class Instr {
 	String varLecture2= "_";
 
 	public Instr(String codop, String var1, String var2, String var3){
-		this.codop=null;
+		this.codop=codop;
 		if(var1!=null)
 			this.varEcriture = var1;
 		if(var2!=null)

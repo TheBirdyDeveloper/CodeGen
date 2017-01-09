@@ -13,4 +13,7 @@ public class InstrVar extends Instr {
 		return codop;
 	}
 
+	public String toString(){
+		return codop;
+	}
 }
