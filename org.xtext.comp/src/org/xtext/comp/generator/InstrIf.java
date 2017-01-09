@@ -10,13 +10,15 @@ public class InstrIf extends Instr{
 	
 	List<Instr> siVrai;
 	List<Instr> siFaux;
-	int etiquetteNb;
+
+
 	String cond = "_";
 	String varLecture1= "_";
 	String varLecture2= "_";
 	
 	public InstrIf(List<List <Instr>> commands, String var1, String var2, String var3) {
 		super(null, var1, var2, var3);
+		
 		ListIterator<List<Instr>> ite = commands.listIterator();
 		if(ite.hasNext())
 			siVrai = ite.next();
@@ -43,6 +45,7 @@ public class InstrIf extends Instr{
 	public String getCond(){
 		return cond;
 	}
+	
 	
 	
 	public String toString(){

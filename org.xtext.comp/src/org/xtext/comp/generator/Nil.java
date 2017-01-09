@@ -17,10 +17,10 @@ import org.xtext.comp.wh.ExprEq;
 import org.xtext.comp.wh.ExprSimple;
 import org.xtext.comp.wh.Input;
 
-public class Nil implements Expr {
+public class Nil implements ExprSimple {
 
 	public String toString(){
-		return "Nil";
+		return "nil";
 	}
 	@Override
 	public EClass eClass() {
@@ -136,20 +136,6 @@ public class Nil implements Expr {
 		
 	}
 
-
-
-	@Override
-	public ExprEq getExprEq() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setExprEq(ExprEq value) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	@Override
 	public void setExpr(Expr value) {
 		// TODO Auto-generated method stub
@@ -160,6 +146,55 @@ public class Nil implements Expr {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	@Override
+	public String getStr() {
+		// TODO Auto-generated method stub
+		return "nil";
+	}
+	@Override
+	public void setStr(String value) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public String getVarSimple() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void setVarSimple(String value) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public String getSym() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void setSym(String value) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public String getNameFunction() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void setNameFunction(String value) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public Input getVars() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void setVars(Input value) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

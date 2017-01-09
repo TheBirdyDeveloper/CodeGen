@@ -3,7 +3,6 @@ package org.xtext.comp.generator;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -33,10 +32,11 @@ import org.xtext.comp.wh.While;
 
 import com.ibm.icu.impl.Pair;
 
+
 public class GenTable {
 
 	SymTable table_m;
-	List<String> listFonctionsSymboles;
+	List<String> listSymboles;
 	
 	// à modifier : la liste des instructions est dans la liste des etiquettes
 	HashMap<Code,List<Instr>> listCode3Adr; 
@@ -47,7 +47,8 @@ public class GenTable {
 	
 	GenTable (SymTable table){
 		table_m = table;
-		listFonctionsSymboles=new LinkedList<String>();
+
+		listSymboles=new LinkedList<String>();
 		//listFonctions = new HashMap<String, HashMap<String, Etiquette>>();
 		environmentFonctions = new HashMap<String, LocalEnvironment>();
 		
@@ -56,13 +57,17 @@ public class GenTable {
 		this.initialize();
 		this.parseFunDecl();
 	}
-	
+	public Expr getExpr(String name, String key){
+		return this.environmentFonctions.get(name).getExpr(key);
+	}
 	private void initialize() {
 		Iterator<String> ite = table_m.getNames().iterator();
 		while(ite.hasNext()){
 			String next = ite.next();
-			listFonctionsSymboles.add((String) next); 
-			if(table_m.get(next).isFunction())
+
+			if(!table_m.get(next).isFunction())
+				listSymboles.add((String) next); 
+			else if(table_m.get(next).isFunction())
 				funDecl.put(next,new Code(next, table_m.get(next).nbInput(), table_m.get(next).nbOutput(),table_m.get(next).getCommands()));
 		}		
 	}
@@ -103,6 +108,7 @@ public class GenTable {
 	}
 
 	private void createEnvironment(String functionName) {
+
 		
 		LocalEnvironment environment = new LocalEnvironment(this.table_m.get(functionName).getInputs(),this.table_m.get(functionName).getOutputs(),this.table_m.get(functionName).getVariables());
 		this.environmentFonctions.put(functionName, environment);
@@ -119,7 +125,19 @@ public class GenTable {
 
 		listCode3Adr.put(code, listInstr);
 	}
+
+	public void createInstr(Code code,EList<Command> listCommands) {
+		
+		//listCode3Adr.put(code, code3Adr); va être remplacé
+		HashMap<String,Etiquette> mapEtiquettes = new HashMap<String,Etiquette>();
+		
+		List<Instr> listInstr = this.createListInstr(code.getName(),listCommands);
+
+		listCode3Adr.put(code, listInstr);
+	}
 	
+	
+
 	
 	public List<Instr> createListInstr(String string, EList<Command> listCommands){
 		
@@ -150,16 +168,15 @@ public class GenTable {
 				ListIterator<String> iteVar = var.listIterator();
 				
 				List<Instr> instrAffect = new LinkedList<Instr>();
-				int cpt = 0;
+
 				while(iteExpr.hasNext()){
 					String place = this.evaluateExpr(functionName, iteExpr.next(), instrAffect);
-					instrAffect.add(new InstrAffect(null, iteVar.next(), place, null,false));
-					cpt++;
+					instrAffect.add(new InstrAffect(null, this.environmentFonctions.get(functionName).getCorres(iteVar.next()), place, null,false));
 				}
-				if(cpt>1)
+				if(instrAffect.size()>1)
 					listInstr.add(new InstrAffect(instrAffect,null,null,null,true));
 				else
-					listInstr.add(new InstrAffect(instrAffect,null,null,null,false));
+					listInstr.add(instrAffect.get(0));
 				}
 						
 			else if(nextCommand.getCmd() instanceof While){
@@ -170,6 +187,8 @@ public class GenTable {
 				//Etiquette condEtiquette = new Etiquette();
 				//listEtiquettes.add(condEtiquette);
 				String place = this.evaluateExpr(functionName,expression, listInstr);
+
+				
 				List<Instr> siVrai = new LinkedList<Instr>();
 				List<Instr> siFaux = new LinkedList<Instr>();
 				
@@ -211,16 +230,14 @@ public class GenTable {
 			String place = null;
 			if(expr instanceof ExprSimple){
 				if(((ExprSimple) expr).getVarSimple()!=null){
-					place = ((ExprSimple) expr).getVarSimple();
+
+					place = this.environmentFonctions.get(functionName).putExpr(expr);
 				}
 				else if(((ExprSimple) expr).getStr()!=null){
-					place = ((ExprSimple) expr).getStr();
+					place = this.environmentFonctions.get(functionName).putExpr(expr);
 				}
 				else if(((ExprSimple) expr).getSym()!=null){
-					if(!this.environmentFonctions.get(functionName).temp.containsKey(((ExprSimple) expr).getSym()))
 						place = this.environmentFonctions.get(functionName).putExpr(expr);
-					else
-						place = ((ExprSimple) expr).getSym();
 				}
 			}
 			else if(expr instanceof ExprAnd){
@@ -235,34 +252,18 @@ public class GenTable {
 				place = this.environmentFonctions.get(functionName).putExpr(expr);
 				instructions.add(new InstrOr(null,place,arg1,arg2));
 			}
-			else if(expr instanceof ExprCons || expr instanceof Cons){
+
+			else if(expr instanceof ExprCons){
 				//String arg1 = evaluateExpr(functionName,((ExprCons) expr).getExpr(),instructions);
-				EList<Expr> listExpr=null;
+						
 				String arg1 = null;
-				String arg2 = null;
+				String arg2 = null;	
 				
-				if(expr instanceof ExprCons)
-					listExpr = ((ExprCons) expr).getArg();
-				if(expr instanceof Cons)
-					listExpr = ((Cons) expr).getArg();
+				TreeIterator<EObject> ite = expr.eAllContents();
 				
-				int size = listExpr.size();
-				if(size>2){
-					ListIterator<Expr> ite = listExpr.listIterator();
-					if(ite.hasNext()){
-						arg1 = this.evaluateExpr(functionName, (Expr) ite.next(), instructions);
-						listExpr.remove(0);
-						arg2 =this.evaluateExpr(functionName, new Cons(listExpr),instructions);
-					}
-				}
-				else{
-					ListIterator<Expr> ite = listExpr.listIterator();
-					if(ite.hasNext()){
-						arg1 = this.evaluateExpr(functionName, (Expr) ite.next(), instructions);
-					}
-					if(ite.hasNext()){
-						arg2 = this.evaluateExpr(functionName, (Expr) ite.next(), instructions);
-						}
+				arg1 = this.evaluateExpr(functionName, (Expr) ite.next(), instructions);		
+				if(ite.hasNext()){
+					arg2 =this.evaluateExpr(functionName, (Expr) ite.next(),instructions);
 				}
 				
 				
@@ -271,6 +272,15 @@ public class GenTable {
 			}
 			else if(expr instanceof ExprList){
 				
+
+			}else if(expr instanceof ExprEq){
+				System.out.println("cest une éalité bb");
+				String arg1 = this.environmentFonctions.get(functionName).putExpr(((ExprEq)expr).getArg1());
+				String arg2 = this.environmentFonctions.get(functionName).putExpr(((ExprEq)expr).getArg2());
+				
+				place = this.environmentFonctions.get(functionName).putExpr(expr);
+				instructions.add(new InstrEq(null, place, arg1, arg2));
+
 			}
 			else if(expr instanceof ExprHd){
 				
