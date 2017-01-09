@@ -681,26 +681,6 @@ public class WhPackageImpl extends EPackageImpl implements WhPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getExprSimple_NameFunction()
-  {
-    return (EAttribute)exprSimpleEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getExprSimple_Vars()
-  {
-    return (EReference)exprSimpleEClass.getEStructuralFeatures().get(4);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getExprAnd()
   {
     return exprAndEClass;
@@ -1000,8 +980,6 @@ public class WhPackageImpl extends EPackageImpl implements WhPackage
     createEAttribute(exprSimpleEClass, EXPR_SIMPLE__STR);
     createEAttribute(exprSimpleEClass, EXPR_SIMPLE__VAR_SIMPLE);
     createEAttribute(exprSimpleEClass, EXPR_SIMPLE__SYM);
-    createEAttribute(exprSimpleEClass, EXPR_SIMPLE__NAME_FUNCTION);
-    createEReference(exprSimpleEClass, EXPR_SIMPLE__VARS);
 
     exprAndEClass = createEClass(EXPR_AND);
     createEReference(exprAndEClass, EXPR_AND__ARG1);
@@ -1130,8 +1108,6 @@ public class WhPackageImpl extends EPackageImpl implements WhPackage
     initEAttribute(getExprSimple_Str(), ecorePackage.getEString(), "str", null, 0, 1, ExprSimple.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getExprSimple_VarSimple(), ecorePackage.getEString(), "varSimple", null, 0, 1, ExprSimple.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getExprSimple_Sym(), ecorePackage.getEString(), "sym", null, 0, 1, ExprSimple.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getExprSimple_NameFunction(), ecorePackage.getEString(), "nameFunction", null, 0, 1, ExprSimple.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getExprSimple_Vars(), this.getInput(), null, "vars", null, 0, 1, ExprSimple.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(exprAndEClass, ExprAnd.class, "ExprAnd", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getExprAnd_Arg1(), this.getExprSimple(), null, "arg1", null, 0, 1, ExprAnd.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

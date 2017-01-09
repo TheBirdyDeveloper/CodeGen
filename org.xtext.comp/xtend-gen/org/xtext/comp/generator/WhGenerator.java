@@ -32,6 +32,8 @@ public class WhGenerator extends AbstractGenerator {
   
   private final int globalIndent = 3;
   
+  private String funName;
+  
   @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
   }
@@ -47,8 +49,10 @@ public class WhGenerator extends AbstractGenerator {
     {
       Set<Code> _keySet = map.keySet();
       for(final Code fun : _keySet) {
+        _builder.append(this.funName = fun.name, "");
+        _builder.newLineIfNotEmpty();
         _builder.append("function ");
-        _builder.append(fun.name, "");
+        _builder.append(this.funName, "");
         _builder.append("(");
         LocalEnvironment _get = this.genTable.environmentFonctions.get(fun.name);
         HashMap<String, Expr> _inputs = _get.getInputs();
@@ -95,7 +99,7 @@ public class WhGenerator extends AbstractGenerator {
     if ((instr instanceof InstrIf)) {
       return this.genIf(((InstrIf)instr), pIndent);
     }
-    return null;
+    return "TODO";
   }
   
   public String genIf(final InstrIf instr, final int pIndent) {
@@ -103,11 +107,11 @@ public class WhGenerator extends AbstractGenerator {
     {
       String parentIndent = this.makeIndent(pIndent);
       int indent = (pIndent + this.globalIndent);
+      String cond = "";
       StringConcatenation _builder = new StringConcatenation();
       _builder.append(parentIndent, "");
       _builder.append("if ");
-      String _cond = instr.getCond();
-      _builder.append(_cond, "");
+      _builder.append(cond, "");
       _builder.append(" then ");
       _builder.newLineIfNotEmpty();
       List<Instr> _siVrai = instr.getSiVrai();

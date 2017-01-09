@@ -568,31 +568,13 @@ public interface WhPackage extends EPackage
   int EXPR_SIMPLE__SYM = EXPR_FEATURE_COUNT + 2;
 
   /**
-   * The feature id for the '<em><b>Name Function</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXPR_SIMPLE__NAME_FUNCTION = EXPR_FEATURE_COUNT + 3;
-
-  /**
-   * The feature id for the '<em><b>Vars</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXPR_SIMPLE__VARS = EXPR_FEATURE_COUNT + 4;
-
-  /**
    * The number of structural features of the '<em>Expr Simple</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EXPR_SIMPLE_FEATURE_COUNT = EXPR_FEATURE_COUNT + 5;
+  int EXPR_SIMPLE_FEATURE_COUNT = EXPR_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link org.xtext.comp.wh.impl.ExprAndImpl <em>Expr And</em>}' class.
@@ -1390,28 +1372,6 @@ public interface WhPackage extends EPackage
   EAttribute getExprSimple_Sym();
 
   /**
-   * Returns the meta object for the attribute '{@link org.xtext.comp.wh.ExprSimple#getNameFunction <em>Name Function</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name Function</em>'.
-   * @see org.xtext.comp.wh.ExprSimple#getNameFunction()
-   * @see #getExprSimple()
-   * @generated
-   */
-  EAttribute getExprSimple_NameFunction();
-
-  /**
-   * Returns the meta object for the containment reference '{@link org.xtext.comp.wh.ExprSimple#getVars <em>Vars</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Vars</em>'.
-   * @see org.xtext.comp.wh.ExprSimple#getVars()
-   * @see #getExprSimple()
-   * @generated
-   */
-  EReference getExprSimple_Vars();
-
-  /**
    * Returns the meta object for class '{@link org.xtext.comp.wh.ExprAnd <em>Expr And</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2016,22 +1976,6 @@ public interface WhPackage extends EPackage
      * @generated
      */
     EAttribute EXPR_SIMPLE__SYM = eINSTANCE.getExprSimple_Sym();
-
-    /**
-     * The meta object literal for the '<em><b>Name Function</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute EXPR_SIMPLE__NAME_FUNCTION = eINSTANCE.getExprSimple_NameFunction();
-
-    /**
-     * The meta object literal for the '<em><b>Vars</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference EXPR_SIMPLE__VARS = eINSTANCE.getExprSimple_Vars();
 
     /**
      * The meta object literal for the '{@link org.xtext.comp.wh.impl.ExprAndImpl <em>Expr And</em>}' class.

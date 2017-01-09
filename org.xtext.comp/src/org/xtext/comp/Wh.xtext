@@ -56,11 +56,11 @@ While:
 
 Expr:
 	ExprAnd | ExprOr | ExprSimple | ExprCons | 
-	ExprList | ExprHd | ExprTl | ExprSym | ExprNot | ExprEq |'(' expr=Expr ')'
+	ExprList | ExprHd | ExprTl | ExprNot | ExprSym |ExprEq |'(' expr=Expr ')'
 ;
 
 ExprSimple:
-	=>str=NIL | varSimple=VARIABLE | sym=SYMBOLE | '(' nameFunction=SYMBOLE vars=Input ')'//pas de fonction dans les param
+	=>str=NIL | varSimple=VARIABLE | sym=SYMBOLE //pas de fonction dans les param
 ;
 
 ExprAnd:

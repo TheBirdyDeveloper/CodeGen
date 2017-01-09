@@ -27,6 +27,7 @@ public class LocalEnvironment {
 		this.temp.put("0", new Nil());
 		this.initializeTemp(this.temp,variables);
 		this.initializeOutput(this.outputs,outputs);
+		this.initializeOutput(this.inputs,inputs);
 	}
 	
 	public Expr getExpr(String key){
@@ -45,7 +46,7 @@ public class LocalEnvironment {
 	private void initializeOutput(HashMap<String,Expr> map, HashMap<String, Integer> variables) {
 		for(Entry<String,Integer> entry : variables.entrySet()){
 			if(!this.correspondances.containsKey(entry.getKey())){
-				this.correspondances.put(entry.getKey(), Integer.toString(cpt));
+				this.correspondances.put(entry.getKey(), "X"+Integer.toString(cpt));
 				cpt++;
 			}
 			map.put(this.correspondances.get(entry.getKey()), (Expr) new Nil());
@@ -53,7 +54,7 @@ public class LocalEnvironment {
 	}
 	private void initializeTemp(HashMap<String,Expr> map, HashMap<String, Integer> variables) {
 		for(Entry<String,Integer> entry : variables.entrySet()){
-			this.correspondances.put(entry.getKey(), Integer.toString(cpt));
+			this.correspondances.put(entry.getKey(), "X"+Integer.toString(cpt));
 			map.put(Integer.toString(cpt), (Expr) new Nil());
 			cpt++;
 		}
