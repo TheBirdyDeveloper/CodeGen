@@ -25,15 +25,13 @@ public class SymTable {
 
 	private TreeIterator<EObject> tree;
 	private TreeIterator<EObject> treeF;
-	//HashMap<String,Input> appelTable;//Table des appels
-	private Set<Paire> appelTable;
+	private Set<Paire<String, LExpr>> appelTable;
 	private HashMap<String,FunctionEnvironment> symTable;
 
 
 	public SymTable(Resource resource){
 		this.tree = resource.getAllContents().next().eAllContents();
-		//this.appelTable = new HashMap<String,Input>();
-		this.appelTable =new HashSet<Paire>();
+		this.appelTable =new HashSet<Paire<String, LExpr>>();
 		this.symTable = new HashMap<String,FunctionEnvironment>();
 		this.createFunctionMap();
 	}
@@ -69,6 +67,22 @@ public class SymTable {
 					}
 				}
 			}
+
+			else if(next instanceof Expr){
+				String symbole = ((Expr) next).getNameFunction();
+				LExpr appel = ((Expr) next).getVars();
+				if (symbole != null){
+					if(!(symTable.containsKey(symbole))){
+						symTable.put(symbole, new FunctionEnvironment((ExprSimple) next));
+					}else{
+						symTable.put(symbole, symTable.get(symbole));
+						symTable.get(symbole).setNbOccur(symTable.get(symbole).nbOccur+1);
+					}
+				}
+				if (appel != null){
+					appelTable.add(new Paire<String, LExpr>(((Expr) next).getNameFunction(), appel));
+				}
+			}
 		}
 	}
 
@@ -77,9 +91,9 @@ public class SymTable {
 	}
 
 	public void toStringError(){
-		for (Paire current : appelTable){
+		for (Paire<String, LExpr> current : appelTable){
 			if(symTable.get(current.getLeft()) != null){
-				if(((Input) (current).getRight()).getVars().size() != symTable.get(current.getLeft()).nbInput){
+				if(nbLexpr((LExpr)current.getRight()) != symTable.get(current.getLeft()).nbInput){//fonction pour compter le nombre de paramètres
 					System.out.println("La fonction "+current.getLeft()+" n'est pas appelée avec le bon nombre de paramètres ("+symTable.get(current.getLeft()).nbInput+" attendus)");
 				}
 			}
@@ -91,12 +105,25 @@ public class SymTable {
 		return;
 	}
 
+	private int nbLexpr(LExpr lexpr){
+
+		try{
+			lexpr.getExpr1();
+		}
+		catch(Exception e){	
+			return 0;
+		}
+
+		return nbLexpr(lexpr.getExpr2()) +1;
+	}
+
+
 	public String toStringAppels(){
 		String result ="";
 		result+="{";
 		if(!appelTable.isEmpty()){
-			for (Paire current : appelTable){
-				result+=current.getLeft() + " : "+ ((Input) (current.getRight())).getVars().toString()+" ";
+			for (Paire<String, LExpr> current : appelTable){
+				result+=current.getLeft() + " : "+ ((LExpr) (current.getRight())).toString()+" ";//rendre lisible
 			}
 		}
 		result+="}";
