@@ -56,7 +56,7 @@ While:
 
 Expr:
 	ExprAnd | ExprOr | ExprSimple | ExprCons | 
-	ExprList | ExprHd | ExprTl | ExprSym | ExprNot | ExprEq |'(' expr=Expr ')' // modification ExprEq
+	ExprList | ExprHd | ExprTl | ExprSym | ExprNot | exprEq=ExprEq |'(' expr=Expr ')'
 ;
 
 ExprSimple:

@@ -3,7 +3,6 @@ package org.xtext.comp.generator;
 import org.xtext.comp.wh.Command;
 
 public class InstrCons extends Instr {
-	
 	String codop;
 	String varEcriture = "_";
 	String varLecture1= "_";
