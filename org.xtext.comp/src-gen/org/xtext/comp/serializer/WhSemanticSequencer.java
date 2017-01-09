@@ -229,6 +229,7 @@ public class WhSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     Expr returns ExprEq
 	 *     ExprEq returns ExprEq
 	 *
 	 * Constraint:
@@ -371,10 +372,16 @@ public class WhSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Expr returns Expr
 	 *
 	 * Constraint:
-	 *     (exprEq=ExprEq | expr=Expr)
+	 *     expr=Expr
 	 */
 	protected void sequence_Expr(ISerializationContext context, Expr semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, WhPackage.Literals.EXPR__EXPR) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WhPackage.Literals.EXPR__EXPR));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getExprAccess().getExprExprParserRuleCall_10_1_0(), semanticObject.getExpr());
+		feeder.finish();
 	}
 	
 	

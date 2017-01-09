@@ -54,7 +54,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Wh.ecore#//While/cmds"/>
     </genClasses>
     <genClasses ecoreClass="Wh.ecore#//Expr">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Wh.ecore#//Expr/exprEq"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Wh.ecore#//Expr/expr"/>
     </genClasses>
     <genClasses ecoreClass="Wh.ecore#//ExprSimple">

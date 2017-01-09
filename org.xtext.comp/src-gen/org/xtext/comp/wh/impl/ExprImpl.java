@@ -13,7 +13,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.xtext.comp.wh.Expr;
-import org.xtext.comp.wh.ExprEq;
 import org.xtext.comp.wh.WhPackage;
 
 /**
@@ -24,7 +23,6 @@ import org.xtext.comp.wh.WhPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.xtext.comp.wh.impl.ExprImpl#getExprEq <em>Expr Eq</em>}</li>
  *   <li>{@link org.xtext.comp.wh.impl.ExprImpl#getExpr <em>Expr</em>}</li>
  * </ul>
  *
@@ -32,16 +30,6 @@ import org.xtext.comp.wh.WhPackage;
  */
 public class ExprImpl extends MinimalEObjectImpl.Container implements Expr
 {
-  /**
-   * The cached value of the '{@link #getExprEq() <em>Expr Eq</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getExprEq()
-   * @generated
-   * @ordered
-   */
-  protected ExprEq exprEq;
-
   /**
    * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -71,54 +59,6 @@ public class ExprImpl extends MinimalEObjectImpl.Container implements Expr
   protected EClass eStaticClass()
   {
     return WhPackage.Literals.EXPR;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ExprEq getExprEq()
-  {
-    return exprEq;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetExprEq(ExprEq newExprEq, NotificationChain msgs)
-  {
-    ExprEq oldExprEq = exprEq;
-    exprEq = newExprEq;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, WhPackage.EXPR__EXPR_EQ, oldExprEq, newExprEq);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setExprEq(ExprEq newExprEq)
-  {
-    if (newExprEq != exprEq)
-    {
-      NotificationChain msgs = null;
-      if (exprEq != null)
-        msgs = ((InternalEObject)exprEq).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - WhPackage.EXPR__EXPR_EQ, null, msgs);
-      if (newExprEq != null)
-        msgs = ((InternalEObject)newExprEq).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - WhPackage.EXPR__EXPR_EQ, null, msgs);
-      msgs = basicSetExprEq(newExprEq, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, WhPackage.EXPR__EXPR_EQ, newExprEq, newExprEq));
   }
 
   /**
@@ -179,8 +119,6 @@ public class ExprImpl extends MinimalEObjectImpl.Container implements Expr
   {
     switch (featureID)
     {
-      case WhPackage.EXPR__EXPR_EQ:
-        return basicSetExprEq(null, msgs);
       case WhPackage.EXPR__EXPR:
         return basicSetExpr(null, msgs);
     }
@@ -197,8 +135,6 @@ public class ExprImpl extends MinimalEObjectImpl.Container implements Expr
   {
     switch (featureID)
     {
-      case WhPackage.EXPR__EXPR_EQ:
-        return getExprEq();
       case WhPackage.EXPR__EXPR:
         return getExpr();
     }
@@ -215,9 +151,6 @@ public class ExprImpl extends MinimalEObjectImpl.Container implements Expr
   {
     switch (featureID)
     {
-      case WhPackage.EXPR__EXPR_EQ:
-        setExprEq((ExprEq)newValue);
-        return;
       case WhPackage.EXPR__EXPR:
         setExpr((Expr)newValue);
         return;
@@ -235,9 +168,6 @@ public class ExprImpl extends MinimalEObjectImpl.Container implements Expr
   {
     switch (featureID)
     {
-      case WhPackage.EXPR__EXPR_EQ:
-        setExprEq((ExprEq)null);
-        return;
       case WhPackage.EXPR__EXPR:
         setExpr((Expr)null);
         return;
@@ -255,8 +185,6 @@ public class ExprImpl extends MinimalEObjectImpl.Container implements Expr
   {
     switch (featureID)
     {
-      case WhPackage.EXPR__EXPR_EQ:
-        return exprEq != null;
       case WhPackage.EXPR__EXPR:
         return expr != null;
     }

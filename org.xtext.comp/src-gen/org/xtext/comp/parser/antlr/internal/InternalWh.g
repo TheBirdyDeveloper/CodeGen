@@ -1044,25 +1044,14 @@ ruleExpr returns [EObject current=null]
 			afterParserOrEnumRuleCall();
 		}
 		    |
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getExprAccess().getExprEqExprEqParserRuleCall_9_0());
-				}
-				lv_exprEq_9_0=ruleExprEq
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getExprRule());
-					}
-					set(
-						$current,
-						"exprEq",
-						lv_exprEq_9_0,
-						"org.xtext.comp.Wh.ExprEq");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
+		{
+			newCompositeNode(grammarAccess.getExprAccess().getExprEqParserRuleCall_9());
+		}
+		this_ExprEq_9=ruleExprEq
+		{
+			$current = $this_ExprEq_9.current;
+			afterParserOrEnumRuleCall();
+		}
 		    |
 		(
 			otherlv_10='('

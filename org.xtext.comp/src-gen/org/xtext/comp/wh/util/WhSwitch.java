@@ -247,6 +247,7 @@ public class WhSwitch<T> extends Switch<T>
       {
         ExprEq exprEq = (ExprEq)theEObject;
         T result = caseExprEq(exprEq);
+        if (result == null) result = caseExpr(exprEq);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }

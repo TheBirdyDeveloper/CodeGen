@@ -55,12 +55,12 @@ While:
 ;
 
 Expr:
-	expr = ExprAnd | expr = ExprOr | expr =ExprSimple | expr=ExprCons | 
-	expr=ExprList | expr=ExprHd | expr=ExprTl | expr=ExprSym | expr=ExprNot | exprEq=ExprEq |'(' expr=Expr ')'
+	ExprAnd | ExprOr | ExprSimple | ExprCons | 
+	ExprList | ExprHd | ExprTl | ExprSym | ExprNot | exprEq=ExprEq |'(' expr=Expr ')'
 ;
 
 ExprSimple:
-	=>str=NIL | varSimple=VARIABLE | sym=SYMBOLE  | '(' nameFunction=SYMBOLE vars=Input ')'//pas de fonction dans les param
+	=>str=NIL | varSimple=VARIABLE | sym=SYMBOLE | '(' nameFunction=SYMBOLE vars=Input ')'//pas de fonction dans les param
 ;
 
 ExprAnd:
@@ -72,7 +72,7 @@ ExprOr:
 ;
 
 ExprCons:
-	'(''cons' arg1=Expr arg2=Expr ')'
+	'(''cons' arg+=Expr (arg+=Expr)*')' // ATTENTION MODIFICATION : LISTE D'ARGUMENTS  cons a doit marcher : liste d'arguments
 ;
 
 ExprList:

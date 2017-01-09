@@ -501,8 +501,7 @@ public class WhGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cExprTlParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		private final RuleCall cExprSymParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
 		private final RuleCall cExprNotParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
-		private final Assignment cExprEqAssignment_9 = (Assignment)cAlternatives.eContents().get(9);
-		private final RuleCall cExprEqExprEqParserRuleCall_9_0 = (RuleCall)cExprEqAssignment_9.eContents().get(0);
+		private final RuleCall cExprEqParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
 		private final Group cGroup_10 = (Group)cAlternatives.eContents().get(10);
 		private final Keyword cLeftParenthesisKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
 		private final Assignment cExprAssignment_10_1 = (Assignment)cGroup_10.eContents().get(1);
@@ -510,12 +509,11 @@ public class WhGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_10_2 = (Keyword)cGroup_10.eContents().get(2);
 		
 		//Expr:
-		//	ExprAnd | ExprOr | ExprSimple | ExprCons | ExprList | ExprHd | ExprTl | ExprSym | ExprNot | exprEq=ExprEq | '('
-		//	expr=Expr ')';
+		//	ExprAnd | ExprOr | ExprSimple | ExprCons | ExprList | ExprHd | ExprTl | ExprSym | ExprNot | ExprEq | '(' expr=Expr
+		//	')';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//ExprAnd | ExprOr | ExprSimple | ExprCons | ExprList | ExprHd | ExprTl | ExprSym | ExprNot | exprEq=ExprEq | '('
-		//expr=Expr ')'
+		//ExprAnd | ExprOr | ExprSimple | ExprCons | ExprList | ExprHd | ExprTl | ExprSym | ExprNot | ExprEq | '(' expr=Expr ')'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//ExprAnd
@@ -545,11 +543,8 @@ public class WhGrammarAccess extends AbstractGrammarElementFinder {
 		//ExprNot
 		public RuleCall getExprNotParserRuleCall_8() { return cExprNotParserRuleCall_8; }
 		
-		//exprEq=ExprEq
-		public Assignment getExprEqAssignment_9() { return cExprEqAssignment_9; }
-		
 		//ExprEq
-		public RuleCall getExprEqExprEqParserRuleCall_9_0() { return cExprEqExprEqParserRuleCall_9_0; }
+		public RuleCall getExprEqParserRuleCall_9() { return cExprEqParserRuleCall_9; }
 		
 		//'(' expr=Expr ')'
 		public Group getGroup_10() { return cGroup_10; }
@@ -1150,8 +1145,8 @@ public class WhGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Expr:
-	//	ExprAnd | ExprOr | ExprSimple | ExprCons | ExprList | ExprHd | ExprTl | ExprSym | ExprNot | exprEq=ExprEq | '('
-	//	expr=Expr ')';
+	//	ExprAnd | ExprOr | ExprSimple | ExprCons | ExprList | ExprHd | ExprTl | ExprSym | ExprNot | ExprEq | '(' expr=Expr
+	//	')';
 	public ExprElements getExprAccess() {
 		return pExpr;
 	}

@@ -631,19 +631,9 @@ public class WhPackageImpl extends EPackageImpl implements WhPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getExpr_ExprEq()
-  {
-    return (EReference)exprEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getExpr_Expr()
   {
-    return (EReference)exprEClass.getEStructuralFeatures().get(1);
+    return (EReference)exprEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1004,7 +994,6 @@ public class WhPackageImpl extends EPackageImpl implements WhPackage
     createEReference(whileEClass, WHILE__CMDS);
 
     exprEClass = createEClass(EXPR);
-    createEReference(exprEClass, EXPR__EXPR_EQ);
     createEReference(exprEClass, EXPR__EXPR);
 
     exprSimpleEClass = createEClass(EXPR_SIMPLE);
@@ -1084,6 +1073,7 @@ public class WhPackageImpl extends EPackageImpl implements WhPackage
     exprTlEClass.getESuperTypes().add(this.getExpr());
     exprSymEClass.getESuperTypes().add(this.getExpr());
     exprNotEClass.getESuperTypes().add(this.getExpr());
+    exprEqEClass.getESuperTypes().add(this.getExpr());
 
     // Initialize classes and features; add operations and parameters
     initEClass(whEClass, Wh.class, "Wh", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1134,7 +1124,6 @@ public class WhPackageImpl extends EPackageImpl implements WhPackage
     initEReference(getWhile_Cmds(), this.getCommands(), null, "cmds", null, 0, 1, While.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(exprEClass, Expr.class, "Expr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getExpr_ExprEq(), this.getExprEq(), null, "exprEq", null, 0, 1, Expr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getExpr_Expr(), this.getExpr(), null, "expr", null, 0, 1, Expr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(exprSimpleEClass, ExprSimple.class, "ExprSimple", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
