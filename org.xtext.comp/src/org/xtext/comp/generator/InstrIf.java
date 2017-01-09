@@ -11,10 +11,6 @@ public class InstrIf extends Instr{
 	List<Instr> siVrai;
 	List<Instr> siFaux;
 
-
-	String cond = "_";
-	String varLecture1= "_";
-	String varLecture2= "_";
 	
 	public InstrIf(List<List <Instr>> commands, String var1, String var2, String var3) {
 		super(null, var1, var2, var3);
@@ -26,13 +22,6 @@ public class InstrIf extends Instr{
 			siFaux = ite.next();
 		else
 			siFaux=null;
-
-		if (var1 != null)
-			this.cond = var1;
-		if (var2 != null)
-			this.varLecture1 = var2;
-		if (var3 != null)
-			this.varLecture2 = var3;
 	}
 	public List<Instr> getSiVrai(){
 		return siVrai;
@@ -43,12 +32,12 @@ public class InstrIf extends Instr{
 	}
 	
 	public String getCond(){
-		return cond;
+		return varEcriture;
 	}
 	
 	
 	
 	public String toString(){
-		return "<If,"+this.cond+","+this.varLecture1+","+this.varLecture2+">" + siVrai.toString() + siFaux.toString();
+		return "<If,"+this.varEcriture+","+this.varLecture1+","+this.varLecture2+">" + siVrai.toString() + siFaux.toString();
 	}
 }

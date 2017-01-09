@@ -13,7 +13,7 @@ public class LocalEnvironment {
 
 	HashMap<String,Expr> inputs;
 	HashMap<String,Expr> outputs;
-	HashMap<String,Expr> temp;
+	HashMap<String,Instr> temp;
 	HashMap<String,String> correspondances;
 	int cpt;
 	
@@ -22,24 +22,17 @@ public class LocalEnvironment {
 		this.correspondances = new HashMap<String,String>();
 		this.inputs = new HashMap<String,Expr>();
 		this.outputs = new HashMap<String,Expr>();
-		this.temp = new HashMap<String,Expr>();
+		this.temp = new HashMap<String,Instr>();
 		
-		this.temp.put("0", new Nil());
+		this.temp.put("0",new InstrVar("nil",null,null,null));
 		this.initializeTemp(this.temp,variables);
 		this.initializeOutput(this.outputs,outputs);
+		this.initializeOutput(this.inputs,inputs);
 	}
 	
 	public Expr getExpr(String key){
-		String val = key;
-		if(this.correspondances.containsKey(key))
-			val = this.correspondances.get(key);
-		
-		if(this.inputs.containsKey(val))
-			return this.inputs.get(val);
-		else if(this.temp.containsKey(val))
-			return this.temp.get(val);
-		else
-			return this.outputs.get(val);
+		return null;
+	
 	}
 	
 	private void initializeOutput(HashMap<String,Expr> map, HashMap<String, Integer> variables) {
@@ -51,11 +44,9 @@ public class LocalEnvironment {
 			map.put(this.correspondances.get(entry.getKey()), (Expr) new Nil());
 		}
 	}
-	private void initializeTemp(HashMap<String,Expr> map, HashMap<String, Integer> variables) {
+	private void initializeTemp(HashMap<String,Instr> map, HashMap<String, Integer> variables) {
 		for(Entry<String,Integer> entry : variables.entrySet()){
-			this.correspondances.put(entry.getKey(), Integer.toString(cpt));
-			map.put(Integer.toString(cpt), (Expr) new Nil());
-			cpt++;
+			
 		}
 		
 	}
@@ -71,7 +62,7 @@ public class LocalEnvironment {
 	public String toString(){
 		String result = "Table des correspondances : "+this.correspondances.toString()+"\n";
 		result+=this.inputs.toString()+", ";
-		for(Entry<String,Expr> entry : temp.entrySet()){
+		for(Entry<String, Instr> entry : temp.entrySet()){
 			result+= entry.getKey().toString()+"=";
 			if(entry.getValue() instanceof ExprSimple){
 				if(((ExprSimple)entry.getValue()).getSym()!=null)
@@ -92,15 +83,20 @@ public class LocalEnvironment {
 		return result;
 	}
 	
-	public void setExpr(String name, Expr expr){
-		this.temp.put(name, expr);
-	}
+
 	
 	public String getCorres(String key){
 		return this.correspondances.get(key);
 	}
 	
-	public String putExpr(Expr expr){
+	public String putInstr(Instr instr){
+		int indice = this.temp.size();
+		String string = Integer.toString(indice);
+		
+		this.temp.put(string, instr);
+		return string;
+	}
+	public String putInstr(Expr expr){
 		int indice = (this.temp.size());
 		String string =Integer.toString(indice); 
 		
@@ -112,28 +108,26 @@ public class LocalEnvironment {
 				found = true;
 			}
 			else if(((ExprSimple) expr).getVarSimple()!=null){
-				string = this.correspondances.get(((ExprSimple) expr).getVarSimple());
+				string = ((ExprSimple) expr).getVarSimple();
 				found = true;
 			}
 			else if(((ExprSimple) expr).getSym()!=null){
 				val =((ExprSimple) expr).getSym(); 
 			
 				if(!found){
-					for(Entry<String,Expr> entry : temp.entrySet()){
-						if( (entry.getValue() instanceof ExprSimple) && val.equals(((ExprSimple) entry.getValue()).getSym())){
+					for(Entry<String, Instr> entry : temp.entrySet()){
+						if( (entry.getValue() instanceof InstrVar) && ((InstrVar)entry.getValue()).getVar() == val){
 							string = entry.getKey();
 							found=true;
+							System.out.println("Trouvé" + val);
 						}
 					}
 				}
-				if(!found)
-					this.temp.put(string, expr);
+				if(!found){
+					this.temp.put(string, new InstrVar(val,null,null,null));
+				}
 			}
 		}
-		else{
-			this.temp.put(string, expr);
-		}
-		
 		return string;
 	}
 

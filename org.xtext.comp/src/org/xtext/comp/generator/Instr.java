@@ -8,22 +8,20 @@ import org.xtext.comp.wh.If;
 
 public abstract class Instr {
 
-	
-	List<Instr> instructions;
+	String codop;
+	String varEcriture = "_";
+	String varLecture1= "_";
+	String varLecture2= "_";
+
 	public Instr(String codop, String var1, String var2, String var3){
-		instructions = new LinkedList<Instr>();
+		this.codop=null;
+		if(var1!=null)
+			this.varEcriture = var1;
+		if(var2!=null)
+			this.varLecture1 = var2;
+		if(var3!=null)
+			this.varLecture2 = var3;
 	}
 	
-	public void add(Instr instr){
-		this.instructions.add(instr);
-	}
-	
-	public List<Instr> getInstr(){
-		return this.instructions;
-	}
-	
-	public String toString(){
-		return instructions.toString();
-	}
 
 }

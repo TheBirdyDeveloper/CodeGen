@@ -3,10 +3,6 @@ package org.xtext.comp.generator;
 public class InstrAnd extends Instr{
 	
 	String codop;
-	int etiquetteNb;
-	String varEcriture;
-	String varLecture1;
-	String varLecture2;
 	
 	public InstrAnd(String codop, String var1, String var2, String var3) {
 		super(codop, var1, var2, var3);

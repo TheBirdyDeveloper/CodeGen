@@ -10,23 +10,11 @@ public class InstrAffect extends Instr {
 	
 	List<Instr> instr;
 	boolean isMultiple = false;
-	String varEcriture = "_";
-	String varLecture1 = "_";
-	String varLecture2 = "_";
 	public InstrAffect(List<Instr> instrs, String var1, String var2, String var3, boolean isMultiple) {
 		super(null, var1, var2, var3);
 		this.isMultiple = isMultiple;
 		if(instrs!=null)
 			instr = instrs;
-
-		if(var1!=null)
-			this.varEcriture = var1;
-		if(var2!=null)
-			this.varLecture1 = var2;
-		if(var3!=null)
-			this.varLecture2 = var3;
-		
-
 	}
 	
 	public List<Instr> getInstr(){
