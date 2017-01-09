@@ -60,8 +60,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Wh.ecore#//ExprSimple/str"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Wh.ecore#//ExprSimple/varSimple"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Wh.ecore#//ExprSimple/sym"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Wh.ecore#//ExprSimple/nameFunction"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Wh.ecore#//ExprSimple/vars"/>
     </genClasses>
     <genClasses ecoreClass="Wh.ecore#//ExprAnd">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Wh.ecore#//ExprAnd/arg1"/>

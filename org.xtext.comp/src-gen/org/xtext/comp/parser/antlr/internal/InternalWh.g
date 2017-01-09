@@ -1027,20 +1027,20 @@ ruleExpr returns [EObject current=null]
 		}
 		    |
 		{
-			newCompositeNode(grammarAccess.getExprAccess().getExprSymParserRuleCall_7());
+			newCompositeNode(grammarAccess.getExprAccess().getExprNotParserRuleCall_7());
 		}
-		this_ExprSym_7=ruleExprSym
+		this_ExprNot_7=ruleExprNot
 		{
-			$current = $this_ExprSym_7.current;
+			$current = $this_ExprNot_7.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
 		{
-			newCompositeNode(grammarAccess.getExprAccess().getExprNotParserRuleCall_8());
+			newCompositeNode(grammarAccess.getExprAccess().getExprSymParserRuleCall_8());
 		}
-		this_ExprNot_8=ruleExprNot
+		this_ExprSym_8=ruleExprSym
 		{
-			$current = $this_ExprNot_8.current;
+			$current = $this_ExprSym_8.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
@@ -1160,54 +1160,6 @@ ruleExprSimple returns [EObject current=null]
 						"org.xtext.comp.Wh.SYMBOLE");
 				}
 			)
-		)
-		    |
-		(
-			otherlv_3='('
-			{
-				newLeafNode(otherlv_3, grammarAccess.getExprSimpleAccess().getLeftParenthesisKeyword_3_0());
-			}
-			(
-				(
-					lv_nameFunction_4_0=RULE_SYMBOLE
-					{
-						newLeafNode(lv_nameFunction_4_0, grammarAccess.getExprSimpleAccess().getNameFunctionSYMBOLETerminalRuleCall_3_1_0());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getExprSimpleRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"nameFunction",
-							lv_nameFunction_4_0,
-							"org.xtext.comp.Wh.SYMBOLE");
-					}
-				)
-			)
-			(
-				(
-					{
-						newCompositeNode(grammarAccess.getExprSimpleAccess().getVarsInputParserRuleCall_3_2_0());
-					}
-					lv_vars_5_0=ruleInput
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getExprSimpleRule());
-						}
-						set(
-							$current,
-							"vars",
-							lv_vars_5_0,
-							"org.xtext.comp.Wh.Input");
-						afterParserOrEnumRuleCall();
-					}
-				)
-			)
-			otherlv_6=')'
-			{
-				newLeafNode(otherlv_6, grammarAccess.getExprSimpleAccess().getRightParenthesisKeyword_3_3());
-			}
 		)
 	)
 ;

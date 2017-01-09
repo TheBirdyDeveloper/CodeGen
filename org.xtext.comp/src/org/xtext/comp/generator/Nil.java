@@ -176,24 +176,4 @@ public class Nil implements ExprSimple {
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
-	public String getNameFunction() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public void setNameFunction(String value) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public Input getVars() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public void setVars(Input value) {
-		// TODO Auto-generated method stub
-		
-	}
 }

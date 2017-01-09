@@ -328,7 +328,7 @@ public class WhSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     ExprSimple returns ExprSimple
 	 *
 	 * Constraint:
-	 *     (str=NIL | varSimple=VARIABLE | sym=SYMBOLE | (nameFunction=SYMBOLE vars=Input))
+	 *     (str=NIL | varSimple=VARIABLE | sym=SYMBOLE)
 	 */
 	protected void sequence_ExprSimple(ISerializationContext context, ExprSimple semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

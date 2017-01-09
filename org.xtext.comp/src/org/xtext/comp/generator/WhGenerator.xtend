@@ -19,6 +19,7 @@ import org.eclipse.xtext.generator.IGeneratorContext
 class WhGenerator extends AbstractGenerator {
 	private GenTable genTable;
 	private final int globalIndent = 3;
+	private String funName;
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		//N'est pas utilisÃ©e
 	}
@@ -28,16 +29,18 @@ class WhGenerator extends AbstractGenerator {
     	fsa.generateFile(outputName, genTable.listCode3Adr.genCode3Adr)
 	}
 	
-	def String genCode3Adr(HashMap<Code, List<Instr>> map)
+	def String genCode3Adr(HashMap<Code, List<Instr>> map){
 		'''
 		«FOR fun : map.keySet()»
-			function «fun.name»(«printList(genTable.environmentFonctions.get(fun.name).getInputs().keySet(),", ")»)
-			«genCommands(map.get(fun),globalIndent)»
-			
-			return «printList(genTable.environmentFonctions.get(fun.name).getOutputs().keySet(),", ")»
-			end
+		«funName = fun.name»
+		function «funName»(«printList(genTable.environmentFonctions.get(fun.name).getInputs().keySet(),", ")»)
+		«genCommands(map.get(fun),globalIndent)»
+		
+		return «printList(genTable.environmentFonctions.get(fun.name).getOutputs().keySet(),", ")»
+		end
 		«ENDFOR»
 		'''
+		}
 	
 	
 	def String genCommands(List<Instr> instrs, int indent)
@@ -51,14 +54,16 @@ class WhGenerator extends AbstractGenerator {
 	{
 		if(instr instanceof InstrNop)	return "";
 		if(instr instanceof InstrIf)    return genIf(instr,pIndent);
+		return "TODO"
 	}
 
 	
 	def String genIf(InstrIf instr, int pIndent){
 		var parentIndent = makeIndent(pIndent)
 	    var indent = pIndent + globalIndent
+	    var cond = "";
 		'''
-		«parentIndent»if «instr.getCond» then 
+		«parentIndent»if «cond» then 
 		«genCommands(instr.getSiVrai(), indent)»
 		«IF !instr.getSiFaux().empty»
 		«parentIndent»else 

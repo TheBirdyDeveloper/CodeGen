@@ -38,7 +38,7 @@ public class LocalEnvironment {
 	private void initializeOutput(HashMap<String,Expr> map, HashMap<String, Integer> variables) {
 		for(Entry<String,Integer> entry : variables.entrySet()){
 			if(!this.correspondances.containsKey(entry.getKey())){
-				this.correspondances.put(entry.getKey(), Integer.toString(cpt));
+				this.correspondances.put(entry.getKey(), "X"+Integer.toString(cpt));
 				cpt++;
 			}
 			map.put(this.correspondances.get(entry.getKey()), (Expr) new Nil());
@@ -46,7 +46,9 @@ public class LocalEnvironment {
 	}
 	private void initializeTemp(HashMap<String,Instr> map, HashMap<String, Integer> variables) {
 		for(Entry<String,Integer> entry : variables.entrySet()){
-			
+			this.correspondances.put(entry.getKey(), "X"+Integer.toString(cpt));
+			map.put(Integer.toString(cpt), (Expr) new Nil());
+			cpt++;
 		}
 		
 	}

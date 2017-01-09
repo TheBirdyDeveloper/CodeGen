@@ -60,7 +60,6 @@ public class SymTable {
 			}
 			else if(next instanceof ExprSimple){
 				String symbole = ((ExprSimple) next).getSym();
-				Input appel = ((ExprSimple) next).getVars();
 				if (symbole != null){
 					if(!(symTable.containsKey(symbole))){
 						symTable.put(symbole, new FunctionEnvironment((ExprSimple) next));
@@ -68,9 +67,6 @@ public class SymTable {
 						symTable.put(symbole, symTable.get(symbole));
 						symTable.get(symbole).setNbOccur(symTable.get(symbole).nbOccur+1);
 					}
-				}
-				else if (appel != null){
-					appelTable.add(new Paire(((ExprSimple) next).getNameFunction(), appel));
 				}
 			}
 		}

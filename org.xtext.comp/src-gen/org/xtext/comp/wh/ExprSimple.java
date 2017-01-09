@@ -16,8 +16,6 @@ package org.xtext.comp.wh;
  *   <li>{@link org.xtext.comp.wh.ExprSimple#getStr <em>Str</em>}</li>
  *   <li>{@link org.xtext.comp.wh.ExprSimple#getVarSimple <em>Var Simple</em>}</li>
  *   <li>{@link org.xtext.comp.wh.ExprSimple#getSym <em>Sym</em>}</li>
- *   <li>{@link org.xtext.comp.wh.ExprSimple#getNameFunction <em>Name Function</em>}</li>
- *   <li>{@link org.xtext.comp.wh.ExprSimple#getVars <em>Vars</em>}</li>
  * </ul>
  *
  * @see org.xtext.comp.wh.WhPackage#getExprSimple()
@@ -103,57 +101,5 @@ public interface ExprSimple extends Expr
    * @generated
    */
   void setSym(String value);
-
-  /**
-   * Returns the value of the '<em><b>Name Function</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Name Function</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Name Function</em>' attribute.
-   * @see #setNameFunction(String)
-   * @see org.xtext.comp.wh.WhPackage#getExprSimple_NameFunction()
-   * @model
-   * @generated
-   */
-  String getNameFunction();
-
-  /**
-   * Sets the value of the '{@link org.xtext.comp.wh.ExprSimple#getNameFunction <em>Name Function</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Name Function</em>' attribute.
-   * @see #getNameFunction()
-   * @generated
-   */
-  void setNameFunction(String value);
-
-  /**
-   * Returns the value of the '<em><b>Vars</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Vars</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Vars</em>' containment reference.
-   * @see #setVars(Input)
-   * @see org.xtext.comp.wh.WhPackage#getExprSimple_Vars()
-   * @model containment="true"
-   * @generated
-   */
-  Input getVars();
-
-  /**
-   * Sets the value of the '{@link org.xtext.comp.wh.ExprSimple#getVars <em>Vars</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Vars</em>' containment reference.
-   * @see #getVars()
-   * @generated
-   */
-  void setVars(Input value);
 
 } // ExprSimple
