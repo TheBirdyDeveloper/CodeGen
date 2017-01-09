@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.xtext.comp.wh.Affect;
 import org.xtext.comp.wh.Command;
@@ -30,7 +31,7 @@ import org.xtext.comp.wh.If;
 import org.xtext.comp.wh.Nop;
 import org.xtext.comp.wh.While;
 
-import com.ibm.icu.impl.Pair;
+
 
 
 public class GenTable {
@@ -119,26 +120,13 @@ public class GenTable {
 	public void createInstr(Code code,EList<Command> listCommands) {
 		
 		//listCode3Adr.put(code, code3Adr); va être remplacé
-		HashMap<String,Etiquette> mapEtiquettes = new HashMap<String,Etiquette>();
 		
 		List<Instr> listInstr = this.createListInstr(code.getName(),listCommands);
 
 		listCode3Adr.put(code, listInstr);
 	}
 
-	public void createInstr(Code code,EList<Command> listCommands) {
-		
-		//listCode3Adr.put(code, code3Adr); va être remplacé
-		HashMap<String,Etiquette> mapEtiquettes = new HashMap<String,Etiquette>();
-		
-		List<Instr> listInstr = this.createListInstr(code.getName(),listCommands);
 
-		listCode3Adr.put(code, listInstr);
-	}
-	
-	
-
-	
 	public List<Instr> createListInstr(String string, EList<Command> listCommands){
 		
 		
@@ -253,18 +241,33 @@ public class GenTable {
 				instructions.add(new InstrOr(null,place,arg1,arg2));
 			}
 
-			else if(expr instanceof ExprCons){
+			else if(expr instanceof ExprCons || expr instanceof Cons){
 				//String arg1 = evaluateExpr(functionName,((ExprCons) expr).getExpr(),instructions);
 						
+				EList<Expr> listExpr;
+				
+				if(expr instanceof ExprCons)
+					listExpr = ((ExprCons) expr).getArg();
+				else
+					listExpr = ((Cons) expr).getArg();
+				
 				String arg1 = null;
 				String arg2 = null;	
 				
-				TreeIterator<EObject> ite = expr.eAllContents();
 				
-				arg1 = this.evaluateExpr(functionName, (Expr) ite.next(), instructions);		
-				if(ite.hasNext()){
-					arg2 =this.evaluateExpr(functionName, (Expr) ite.next(),instructions);
+				ListIterator<Expr> iteExpr = listExpr.listIterator();
+				
+				if(listExpr.size()>2){
+				arg1 = this.evaluateExpr(functionName, (Expr) iteExpr.next(), instructions);
+				listExpr.remove(0);
+				arg2 =this.evaluateExpr(functionName, (new Cons(listExpr)),instructions);
 				}
+				else{
+					arg1 = this.evaluateExpr(functionName, (Expr) iteExpr.next(), instructions);
+					if(iteExpr.hasNext())
+						arg2=this.evaluateExpr(functionName, iteExpr.next(), instructions);
+				}
+
 				
 				
 				place = this.environmentFonctions.get(functionName).putExpr(expr);

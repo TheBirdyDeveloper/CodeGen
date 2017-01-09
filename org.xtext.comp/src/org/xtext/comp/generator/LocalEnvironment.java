@@ -44,6 +44,10 @@ public class LocalEnvironment {
 	
 	private void initializeOutput(HashMap<String,Expr> map, HashMap<String, Integer> variables) {
 		for(Entry<String,Integer> entry : variables.entrySet()){
+			if(!this.correspondances.containsKey(entry.getKey())){
+				this.correspondances.put(entry.getKey(), Integer.toString(cpt));
+				cpt++;
+			}
 			map.put(this.correspondances.get(entry.getKey()), (Expr) new Nil());
 		}
 	}
