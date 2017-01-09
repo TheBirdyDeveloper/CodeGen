@@ -70,7 +70,6 @@ public class Cons implements Expr{
 
 	@Override
 	public TreeIterator<EObject> eAllContents() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
