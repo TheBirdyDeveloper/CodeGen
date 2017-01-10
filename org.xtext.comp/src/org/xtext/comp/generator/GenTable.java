@@ -22,7 +22,6 @@ import org.xtext.comp.wh.ExprHd;
 import org.xtext.comp.wh.ExprList;
 import org.xtext.comp.wh.ExprNot;
 import org.xtext.comp.wh.ExprSimple;
-import org.xtext.comp.wh.ExprSym;
 import org.xtext.comp.wh.ExprTl;
 import org.xtext.comp.wh.For;
 import org.xtext.comp.wh.If;
@@ -155,10 +154,22 @@ public class GenTable {
 				
 				List<Instr> instrAffect = new LinkedList<Instr>();
 				
-				while(iteExpr.hasNext()){
-					String place = this.evaluateExpr(functionName, iteExpr.next(), instrAffect);
-					instrAffect.add(new InstrAffect(null, this.environmentFonctions.get(functionName).getAdrVar(iteVar.next()) , place, null,false));
+				while(iteExpr.hasNext() || iteVar.hasNext()){
+					String arg1=null;
+					String arg2=null;
+					if(iteExpr.hasNext()){
+						arg1=this.evaluateExpr(functionName, iteExpr.next(), instrAffect);
+					}
+					else{
+						arg1 ="0";
+					}
+					if(iteVar.hasNext()){
+						arg2=this.environmentFonctions.get(functionName).getAdrVar(iteVar.next());
+					}
+			
+					instrAffect.add(new InstrAffect(null, arg2 , arg1, null,false));
 				}
+				
 				if(instrAffect.size()>1)
 					listInstr.add(new InstrAffect(instrAffect,null,null,null,true));
 				else
@@ -272,24 +283,40 @@ public class GenTable {
 					arg1 = this.evaluateExpr(functionName, (Expr) iteExpr.next(), instructions);
 					if(iteExpr.hasNext())
 						arg2=this.evaluateExpr(functionName, iteExpr.next(), instructions);
+					else
+						arg2="0";
 				}
 
 				
 				
-				place = this.environmentFonctions.get(functionName).putInstr(new InstrCons(null,place,arg1,arg2));
+				place = this.environmentFonctions.get(functionName).putInstr(new InstrCons(null,null,arg1,arg2));
 			}
 			else if(expr instanceof ExprList){
+				EList<Expr> listExpr = ((ExprList)expr).getArg();
+				String arg1;
+				String arg2;
 				
+				if(listExpr.size()==1){
+					arg1 = this.evaluateExpr(functionName, listExpr.get(0), instructions);
+					place = this.environmentFonctions.get(functionName).putInstr(new InstrCons(null,null,arg1,"0"));
+				}
+				else{
+					arg1 = this.evaluateExpr(functionName, listExpr.get(0), instructions);
+					listExpr.remove(0);
+					arg2 = this.evaluateExpr(functionName, new Cons(listExpr), instructions);
+					place = this.environmentFonctions.get(functionName).putInstr(new InstrCons(null,null,arg1,arg2));
+				}
 
 			}
 			else if(expr instanceof ExprHd){
-				
+				String arg = this.evaluateExpr(functionName, ((ExprHd)expr).getArg(), instructions);
+				place = this.environmentFonctions.get(functionName).putInstr(new InstrHd(null,null,arg,null));
 			}
 			else if(expr instanceof ExprTl){
-				
+				String arg = this.evaluateExpr(functionName, ((ExprTl)expr).getArg(), instructions);
+				place = this.environmentFonctions.get(functionName).putInstr(new InstrTl(null,null,arg,null));
 			}
-			else if(expr instanceof ExprSym){
-			}
+
 			else if(expr instanceof ExprNot){
 				String arg = this.evaluateExpr(functionName, ((ExprNot) expr).getArg1(), instructions);
 				

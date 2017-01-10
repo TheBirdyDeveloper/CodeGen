@@ -1,0 +1,106 @@
+grammar org.xtext.comp.Wh with org.eclipse.xtext.common.Terminals
+
+generate wh "http://www.xtext.org/comp/Wh"
+
+Wh :
+    elements+=Program;
+  
+ 
+Program: 
+	 (functions+=Function)*
+;
+
+Function:
+	'function' name=SYMBOLE ':' definition=Definition
+;
+Definition:
+	'read' input=Input '%' commands=Commands '%' 'write' output=Output
+;
+
+Input:
+	vars+=VARIABLE (',' vars+=VARIABLE)*
+;
+
+Output:
+	vars+=VARIABLE (',' vars+=VARIABLE)*
+;
+
+Commands:
+	commands+=Command (';' commands+=Command)*
+;
+
+Command:
+   cmd=(Nop | Affect | If | For | While)
+;
+
+If:
+	'if' expr=Expr 'then' commands1=Commands ('else' commands2=Commands)? 'fi'
+;
+
+
+Nop:
+	nop='nop'
+;
+
+Affect:
+	vars+=VARIABLE (',' vars+=VARIABLE)* ':=' exprs+=Expr (',' exprs+=Expr)*
+;
+
+For:
+	'for' expr=Expr 'do' cmds=Commands 'od'
+;
+
+While:
+	'while' expr=Expr 'do' cmds=Commands 'od'
+;
+
+Expr:
+	ExprCond | ExprSimple | ExprCons | 
+	ExprList | ExprHd | ExprTl | ExprNot | '(' nameFunction=SYMBOLE vars+=Expr (vars+=Expr)* ')'
+;
+
+ExprSimple:
+	=>str=NIL | varSimple=VARIABLE | sym=SYMBOLE //pas de fonction dans les param
+;
+
+
+
+ExprCond : 
+	'(' arg1=Expr cond=('and'|'or'|'=?') arg2=Expr ')'
+;
+
+ExprCons:
+	'(''cons' arg+=Expr (arg+=Expr)+')' // ATTENTION MODIFICATION : LISTE D'ARGUMENTS  cons a doit marcher : liste d'arguments
+;
+
+ExprList:
+	'(' 'list' arg+=Expr (arg+=Expr)+')'
+;
+
+ExprHd:
+	'(' 'hd' arg=Expr ')'
+;
+
+ExprTl:
+	'(' 'tl' arg=Expr')'
+;
+
+ExprNot:
+	'not' arg1=ExprCond
+;
+
+
+
+
+terminal NIL:
+	'Nil' | 'nil'
+;
+
+
+terminal VARIABLE:
+	'A'..'Z' ID?
+;
+
+terminal SYMBOLE:
+	'a'..'z' ID?
+;

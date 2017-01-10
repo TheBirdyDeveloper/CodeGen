@@ -6,7 +6,6 @@ import java.util.Map.Entry;
 
 import org.xtext.comp.wh.Expr;
 import org.xtext.comp.wh.ExprSimple;
-import org.xtext.comp.wh.ExprSym;
 import org.xtext.comp.wh.impl.ExprSimpleImpl;
 
 public class LocalEnvironment {
@@ -15,10 +14,9 @@ public class LocalEnvironment {
 	HashMap<String,Expr> outputs;
 	HashMap<String,Instr> temp;
 	HashMap<String,String> correspondances;
-	int cpt;
+	static int cpt = 1;
 	
 	public LocalEnvironment(HashMap<String,Integer> inputs, HashMap<String,Integer> outputs, HashMap<String,Integer> variables){
-		cpt = 1;
 		this.correspondances = new HashMap<String,String>();
 		this.inputs = new HashMap<String,Expr>();
 		this.outputs = new HashMap<String,Expr>();

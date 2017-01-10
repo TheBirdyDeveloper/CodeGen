@@ -8,7 +8,6 @@ import org.xtext.comp.wh.ExprCons;
 import org.xtext.comp.wh.ExprHd;
 import org.xtext.comp.wh.ExprList;
 import org.xtext.comp.wh.ExprNot;
-import org.xtext.comp.wh.ExprSym;
 import org.xtext.comp.wh.ExprTl;
 
 public class Etiquette {
