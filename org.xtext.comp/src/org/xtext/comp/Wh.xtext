@@ -104,4 +104,3 @@ terminal VARIABLE:
 terminal SYMBOLE:
 	'a'..'z' ID?
 ;
->>>>>>> b08fe6aa8853ed7fabf115ad31e33575e1041f59
