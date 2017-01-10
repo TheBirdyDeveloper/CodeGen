@@ -55,20 +55,18 @@ While:
 ;
 
 Expr:
-	ExprAnd | ExprOr | ExprSimple | ExprCons | 
-	ExprList | ExprHd | ExprTl | ExprNot | ExprSym |ExprEq |'(' expr=Expr ')'
+	ExprCond | ExprSimple | ExprCons | 
+	ExprList | ExprHd | ExprTl | ExprNot | '(' nameFunction=SYMBOLE vars+=Expr (vars+=Expr)* ')'
 ;
 
 ExprSimple:
 	=>str=NIL | varSimple=VARIABLE | sym=SYMBOLE //pas de fonction dans les param
 ;
 
-ExprAnd:
-	arg1=ExprSimple 'and' arg2=Expr 
-;
 
-ExprOr:
-	arg1=ExprSimple 'or' arg2=Expr
+
+ExprCond : 
+	'(' arg1=Expr cond=('and'|'or'|'=?') arg2=Expr ')'
 ;
 
 ExprCons:
@@ -87,17 +85,11 @@ ExprTl:
 	'(' 'tl' arg=Expr')'
 ;
 
-ExprSym:
-	'(' arg1=SYMBOLE arg2+=Expr (arg2+=Expr)* ')'
-;
-
 ExprNot:
-	'not' arg1=ExprEq
+	'not' arg1=ExprCond
 ;
 
-ExprEq:
-	 arg1=ExprSimple '=?' arg2=ExprSimple
-;
+
 
 
 terminal NIL:
@@ -112,3 +104,4 @@ terminal VARIABLE:
 terminal SYMBOLE:
 	'a'..'z' ID?
 ;
+>>>>>>> b08fe6aa8853ed7fabf115ad31e33575e1041f59

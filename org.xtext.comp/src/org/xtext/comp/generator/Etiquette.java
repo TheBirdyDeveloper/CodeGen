@@ -4,13 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.xtext.comp.wh.Expr;
-import org.xtext.comp.wh.ExprAnd;
 import org.xtext.comp.wh.ExprCons;
-import org.xtext.comp.wh.ExprEq;
 import org.xtext.comp.wh.ExprHd;
 import org.xtext.comp.wh.ExprList;
 import org.xtext.comp.wh.ExprNot;
-import org.xtext.comp.wh.ExprOr;
 import org.xtext.comp.wh.ExprSym;
 import org.xtext.comp.wh.ExprTl;
 

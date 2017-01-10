@@ -43,6 +43,13 @@ public class LocalEnvironment {
 			map.put(this.correspondances.get(entry.getKey()), (Expr) new Nil());
 		}
 	}
+	
+	public String newVar(){
+		String newVar = "X"+Integer.toString(cpt);
+		String result = this.putInstr(new InstrVar(newVar,null,null,null));
+		cpt++;
+		return result;
+	}
 	private void initializeTemp(HashMap<String,Instr> map, HashMap<String, Integer> variables) {
 		for(Entry<String,Integer> entry : variables.entrySet()){
 			this.correspondances.put(entry.getKey(), "X"+Integer.toString(cpt));

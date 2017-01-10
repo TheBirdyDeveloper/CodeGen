@@ -7,9 +7,6 @@ public class InstrAnd extends Instr{
 	public InstrAnd(String codop, String var1, String var2, String var3) {
 		super(codop, var1, var2, var3);
 		this.codop ="AND";
-		this.varEcriture = var1;
-		this.varLecture1 = var2;
-		this.varLecture2 = var3;
 	}
 	
 	public String getEcriture(){
