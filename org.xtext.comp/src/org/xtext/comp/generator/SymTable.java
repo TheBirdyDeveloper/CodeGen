@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package org.xtext.comp.generator;
 
 import java.util.ArrayList;

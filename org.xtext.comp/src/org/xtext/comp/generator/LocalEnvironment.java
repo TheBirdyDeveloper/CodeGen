@@ -6,7 +6,6 @@ import java.util.Map.Entry;
 
 import org.xtext.comp.wh.Expr;
 import org.xtext.comp.wh.ExprSimple;
-import org.xtext.comp.wh.ExprSym;
 import org.xtext.comp.wh.impl.ExprSimpleImpl;
 
 public class LocalEnvironment {

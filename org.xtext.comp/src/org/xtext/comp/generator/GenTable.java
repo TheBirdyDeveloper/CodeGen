@@ -22,7 +22,6 @@ import org.xtext.comp.wh.ExprHd;
 import org.xtext.comp.wh.ExprList;
 import org.xtext.comp.wh.ExprNot;
 import org.xtext.comp.wh.ExprSimple;
-import org.xtext.comp.wh.ExprSym;
 import org.xtext.comp.wh.ExprTl;
 import org.xtext.comp.wh.For;
 import org.xtext.comp.wh.If;
@@ -287,8 +286,6 @@ public class GenTable {
 			}
 			else if(expr instanceof ExprTl){
 				
-			}
-			else if(expr instanceof ExprSym){
 			}
 			else if(expr instanceof ExprNot){
 				String arg = this.evaluateExpr(functionName, ((ExprNot) expr).getArg1(), instructions);
