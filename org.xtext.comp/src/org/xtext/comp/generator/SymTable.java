@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package org.xtext.comp.generator;
 
 import java.util.ArrayList;
@@ -117,5 +118,4 @@ public class SymTable {
 		result+="}";
 		return result;
 	}
-
 }
