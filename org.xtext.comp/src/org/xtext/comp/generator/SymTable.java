@@ -25,15 +25,13 @@ public class SymTable {
 
 	private TreeIterator<EObject> tree;
 	private TreeIterator<EObject> treeF;
-	//HashMap<String,Input> appelTable;//Table des appels
-	private Set<Paire> appelTable;
+	private Set<Paire<String, List<Expr>>> appelTable;
 	private HashMap<String,FunctionEnvironment> symTable;
 
 
 	public SymTable(Resource resource){
 		this.tree = resource.getAllContents().next().eAllContents();
-		//this.appelTable = new HashMap<String,Input>();
-		this.appelTable =new HashSet<Paire>();
+		this.appelTable =new HashSet<Paire<String, List<Expr>>>();
 		this.symTable = new HashMap<String,FunctionEnvironment>();
 		this.createFunctionMap();
 	}
@@ -54,7 +52,7 @@ public class SymTable {
 					if(!(symTable.containsKey(fName))){
 						symTable.put(fName, new FunctionEnvironment((Function) listeFunctions.get(j), fName));
 					}else{
-						throw new Error("Cette fonction existe dÃ©ja");
+						throw new Error("Cette fonction existe déja");
 					}
 				}
 			}
@@ -69,6 +67,22 @@ public class SymTable {
 					}
 				}
 			}
+
+			else if(next instanceof Expr){
+				String symbole = ((Expr) next).getNameFunction();
+				List<Expr> appel = ((Expr) next).getVars();
+				if (symbole != null){
+					if(!(symTable.containsKey(symbole))){
+						symTable.put(symbole, new FunctionEnvironment((ExprSimple) next));
+					}else{
+						symTable.put(symbole, symTable.get(symbole));
+						symTable.get(symbole).setNbOccur(symTable.get(symbole).nbOccur+1);
+					}
+				}
+				if (appel != null){
+					appelTable.add(new Paire<String, List<Expr>>(((Expr) next).getNameFunction(), appel));
+				}
+			}
 		}
 	}
 
@@ -77,26 +91,27 @@ public class SymTable {
 	}
 
 	public void toStringError(){
-		for (Paire current : appelTable){
+		for (Paire<String, List<Expr>> current : appelTable){
 			if(symTable.get(current.getLeft()) != null){
-				if(((Input) (current).getRight()).getVars().size() != symTable.get(current.getLeft()).nbInput){
-					System.out.println("La fonction "+current.getLeft()+" n'est pas appelÃ©e avec le bon nombre de paramÃ¨tres ("+symTable.get(current.getLeft()).nbInput+" attendus)");
+				if(current.getRight().size() != symTable.get(current.getLeft()).nbInput){//fonction pour compter le nombre de paramètres
+					System.out.println("La fonction "+current.getLeft()+" n'est pas appelée avec le bon nombre de paramètres ("+symTable.get(current.getLeft()).nbInput+" attendus)");
 				}
 			}
 			else{
-				throw new Error("La fonction "+current.getLeft()+" n'a pas Ã©tÃ© dÃ©clarÃ©e");
+				throw new Error("La fonction "+current.getLeft()+" n'a pas été déclarée");
 			}
 		}
 
 		return;
 	}
 
+
 	public String toStringAppels(){
 		String result ="";
 		result+="{";
 		if(!appelTable.isEmpty()){
-			for (Paire current : appelTable){
-				result+=current.getLeft() + " : "+ ((Input) (current.getRight())).getVars().toString()+" ";
+			for (Paire<String, List<Expr>> current : appelTable){
+				result+=current.getLeft() + " : "+ ((List<Expr>) (current.getRight())).toString()+" ";//rendre lisible
 			}
 		}
 		result+="}";

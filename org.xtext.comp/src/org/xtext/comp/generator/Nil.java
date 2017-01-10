@@ -13,7 +13,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.xtext.comp.wh.Expr;
-import org.xtext.comp.wh.ExprEq;
 import org.xtext.comp.wh.ExprSimple;
 import org.xtext.comp.wh.Input;
 
@@ -137,16 +136,6 @@ public class Nil implements ExprSimple {
 	}
 
 	@Override
-	public void setExpr(Expr value) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public Expr getExpr() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
 	public String getStr() {
 		// TODO Auto-generated method stub
 		return "nil";
@@ -175,5 +164,20 @@ public class Nil implements ExprSimple {
 	public void setSym(String value) {
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public String getNameFunction() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void setNameFunction(String value) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public EList<Expr> getVars() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

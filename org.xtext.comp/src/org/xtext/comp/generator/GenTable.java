@@ -16,13 +16,11 @@ import org.xtext.comp.wh.Affect;
 import org.xtext.comp.wh.Command;
 import org.xtext.comp.wh.Commands;
 import org.xtext.comp.wh.Expr;
-import org.xtext.comp.wh.ExprAnd;
+import org.xtext.comp.wh.ExprCond;
 import org.xtext.comp.wh.ExprCons;
-import org.xtext.comp.wh.ExprEq;
 import org.xtext.comp.wh.ExprHd;
 import org.xtext.comp.wh.ExprList;
 import org.xtext.comp.wh.ExprNot;
-import org.xtext.comp.wh.ExprOr;
 import org.xtext.comp.wh.ExprSimple;
 import org.xtext.comp.wh.ExprSym;
 import org.xtext.comp.wh.ExprTl;
@@ -189,12 +187,7 @@ public class GenTable {
 				ifInstr.add(siVrai);
 				ifInstr.add(siFaux);
 				InstrIf instr = (new InstrIf(ifInstr, place, null, null));
-				listInstr.add(instr);
-				
-				
-					
-
-				
+				listInstr.add(instr);		
 			}    
 			else if(nextCommand.getCmd() instanceof For){
 				For forCommand = ((For) (nextCommand.getCmd()));
@@ -205,13 +198,13 @@ public class GenTable {
 				
 				this.parseCommands(functionName, commandsFor.getCommands(), instrFor);
 				String place = this.evaluateExpr(functionName, expr, listInstr);
-				System.out.println("La place du for"+place);
-				listInstr.add(new InstrFor(instrFor,place,null,null));
+				String condTemp = this.environmentFonctions.get(functionName).newVar();
+				
+				listInstr.add(new InstrAffect(null,condTemp,place,null,false));
+				listInstr.add(new InstrFor(instrFor,condTemp,null,null));
 				
 			}
 		}
-
-		
 	}
 
 	
@@ -231,15 +224,26 @@ public class GenTable {
 					place = this.environmentFonctions.get(functionName).putInstr(expr);
 				}
 			}
-			else if(expr instanceof ExprAnd){
-				String arg1 = evaluateExpr(functionName,((ExprAnd) expr).getArg1(),instructions);
-				String arg2 = evaluateExpr(functionName,((ExprAnd) expr).getArg2(),instructions);
-				place = this.environmentFonctions.get(functionName).putInstr(new InstrAnd(null,place,arg1,arg2));
-			}
-			else if(expr instanceof ExprOr){
-				String arg1 = evaluateExpr(functionName,((ExprOr) expr).getArg1(),instructions);
-				String arg2 = evaluateExpr(functionName,((ExprOr) expr).getArg2(),instructions);
+			else if(expr instanceof ExprCond){
+				if(((ExprCond)expr).getCond().equals("and")){
+					String arg1 = evaluateExpr(functionName,((ExprCond) expr).getArg1(),instructions);
+					String arg2 = evaluateExpr(functionName,((ExprCond) expr).getArg2(),instructions);
+					place = this.environmentFonctions.get(functionName).putInstr(new InstrAnd(null,place,arg1,arg2));
+				}
+				
+				else if(((ExprCond)expr).getCond().equals("or")){
+				String arg1 = evaluateExpr(functionName,((ExprCond) expr).getArg1(),instructions);
+				String arg2 = evaluateExpr(functionName,((ExprCond) expr).getArg2(),instructions);
 				place = this.environmentFonctions.get(functionName).putInstr(new InstrOr(null,place,arg1,arg2));
+				
+				}
+				else if(((ExprCond)expr).getCond().equals("=?")){
+
+					String arg1 = this.evaluateExpr(functionName,(((ExprCond)expr).getArg1()), instructions);
+					String arg2 = this.evaluateExpr(functionName,(((ExprCond)expr).getArg2()), instructions);
+					
+					place = this.environmentFonctions.get(functionName).putInstr(new InstrEq(null,null,arg1,arg2));
+				}
 			}
 
 			else if(expr instanceof ExprCons || expr instanceof Cons){
@@ -257,6 +261,7 @@ public class GenTable {
 				
 				
 				ListIterator<Expr> iteExpr = listExpr.listIterator();
+				
 				
 				if(listExpr.size()>2){
 				arg1 = this.evaluateExpr(functionName, (Expr) iteExpr.next(), instructions);
@@ -276,14 +281,6 @@ public class GenTable {
 			else if(expr instanceof ExprList){
 				
 
-			}else if(expr instanceof ExprEq){
-				System.out.println("cest une éalité bb");
-				String arg1 = this.environmentFonctions.get(functionName).putInstr(((ExprEq)expr).getArg1());
-				String arg2 = this.environmentFonctions.get(functionName).putInstr(((ExprEq)expr).getArg2());
-				
-				place = this.environmentFonctions.get(functionName).putInstr(expr);
-				instructions.add(new InstrEq(null, place, arg1, arg2));
-
 			}
 			else if(expr instanceof ExprHd){
 				
@@ -294,6 +291,9 @@ public class GenTable {
 			else if(expr instanceof ExprSym){
 			}
 			else if(expr instanceof ExprNot){
+				String arg = this.evaluateExpr(functionName, ((ExprNot) expr).getArg1(), instructions);
+				
+				place = this.environmentFonctions.get(functionName).putInstr(new InstrNot(null,null,arg,null));
 				
 			}
 		return place;

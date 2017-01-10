@@ -136,21 +136,24 @@ public class Cons implements ExprCons {
 		// TODO Auto-generated method stub
 
 	}
-
-	@Override
-	public Expr getExpr() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setExpr(Expr value) {
-		// TODO Auto-generated method stub
-
-	}
 	@Override
 	public EList<Expr> getArg() {
 		return arg;
+	}
+	@Override
+	public String getNameFunction() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void setNameFunction(String value) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public EList<Expr> getVars() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
