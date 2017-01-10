@@ -55,16 +55,31 @@ While:
 ;
 
 Expr:
+<<<<<<< HEAD
+	ExprCond | ExprSimple | ExprCons | 
+	ExprList | ExprHd | ExprTl | ExprNot | '(' nameFunction=SYMBOLE vars+=Expr (vars+=Expr)* ')'
+=======
 	ExprSimple | ExprCons | 
 	ExprList | ExprHd | ExprTl | ExprNot | 
 	ExprCond | //Englobe le and, le or et le eq
 	'(' nameFunction=SYMBOLE vars=LExpr ')'//Correspond à ExprSym
+>>>>>>> cd2eddb52f4eeb1ca56732e323dfbe0e7fba5064
 ;
 
 LExpr:
 	expr1=Expr (expr2=LExpr)?
 ;
 
+<<<<<<< HEAD
+
+
+ExprCond : 
+	'(' arg1=Expr cond=('and'|'or'|'=?') arg2=Expr ')'
+;
+
+ExprCons:
+	'(''cons' arg+=Expr (arg+=Expr)+')' // ATTENTION MODIFICATION : LISTE D'ARGUMENTS  cons a doit marcher : liste d'arguments
+=======
 ExprSimple:
 	=>str=NIL | varSimple=VARIABLE | sym=SYMBOLE
 ;
@@ -75,6 +90,7 @@ ExprCond:
 
 ExprCons:
 	'(''cons' arg=LExpr')' // ATTENTION MODIFICATION : LISTE D'ARGUMENTS  cons a doit marcher : liste d'arguments
+>>>>>>> cd2eddb52f4eeb1ca56732e323dfbe0e7fba5064
 ;
 
 ExprList:
@@ -90,8 +106,15 @@ ExprTl:
 ;
 
 ExprNot:
+<<<<<<< HEAD
+	'not' arg1=ExprCond
+;
+
+
+=======
 	'(''not' arg1=ExprCond')'
 ;
+>>>>>>> cd2eddb52f4eeb1ca56732e323dfbe0e7fba5064
 
 
 terminal NIL:
