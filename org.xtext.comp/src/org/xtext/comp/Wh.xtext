@@ -72,7 +72,7 @@ ExprOr:
 ;
 
 ExprCons:
-	'(''cons' arg+=Expr (arg+=Expr)*')' // ATTENTION MODIFICATION : LISTE D'ARGUMENTS  cons a doit marcher : liste d'arguments
+	'(''cons' arg+=Expr (arg+=Expr)+')' // ATTENTION MODIFICATION : LISTE D'ARGUMENTS  cons a doit marcher : liste d'arguments
 ;
 
 ExprList:

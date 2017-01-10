@@ -32,9 +32,8 @@ class WhGenerator extends AbstractGenerator {
 	def String genCode3Adr(HashMap<Code, List<Instr>> map){
 		'''
 		«FOR fun : map.keySet()»
-		«funName = fun.name»
-		function «funName»(«printList(genTable.environmentFonctions.get(fun.name).getInputs().keySet(),", ")»)
-		«genCommands(map.get(fun),globalIndent)»
+		function «fun.getName»(«printList(genTable.environmentFonctions.get(fun.name).getInputs().keySet(),", ")»)
+		«genCommands(map.get(fun),globalIndent,fun.getName)»
 		
 		return «printList(genTable.environmentFonctions.get(fun.name).getOutputs().keySet(),", ")»
 		end
@@ -43,34 +42,62 @@ class WhGenerator extends AbstractGenerator {
 		}
 	
 	
-	def String genCommands(List<Instr> instrs, int indent)
+	def String genCommands(List<Instr> instrs, int indent,String funName)
 		'''
 		«FOR instr : instrs»
-		«genCommand(instr, indent)»
+		«genCommand(instr, indent, funName)»
 		«ENDFOR»
 		'''
 	
-	def String genCommand(Instr instr, int pIndent)
+	def String genCommand(Instr instr, int pIndent, String funName)
 	{
 		if(instr instanceof InstrNop)	return "";
-		if(instr instanceof InstrIf)    return genIf(instr,pIndent);
+		if(instr instanceof InstrVar)	return genVar(instr, pIndent, funName);
+		if(instr instanceof InstrIf)    return genIf(instr,pIndent, funName);
+		if(instr instanceof InstrOr)	return genOr(instr, pIndent, funName);
+		if(instr instanceof InstrAnd)	return genAnd(instr, pIndent, funName);
+		if(instr instanceof InstrCons)	return genCons(instr, pIndent, funName);
 		return "TODO"
 	}
 
+	def String genVar(InstrVar instr, int pIndent,String funName){
+		return instr.getVar;
+	}
 	
-	def String genIf(InstrIf instr, int pIndent){
+	def String genIf(InstrIf instr, int pIndent,String funName){
 		var parentIndent = makeIndent(pIndent)
 	    var indent = pIndent + globalIndent
-	    var cond = "";
+	    var cond = genTable.getInstr(funName,instr.cond);
+	    var condStr = genCommand(cond,0,funName);
 		'''
-		«parentIndent»if «cond» then 
-		«genCommands(instr.getSiVrai(), indent)»
+		«parentIndent»if «condStr» then 
+		«genCommands(instr.getSiVrai(), indent, funName)»
 		«IF !instr.getSiFaux().empty»
 		«parentIndent»else 
-		«genCommands(instr.getSiFaux(),indent)»
+		«genCommands(instr.getSiFaux(),indent, funName)»
 		«ENDIF»
 		«parentIndent»end
 		'''
+	}
+	
+	def String genOr(InstrOr instr, int pIndent, String funName){
+		var expr1 = genTable.getInstr(funName, instr.getExpr1());
+		var expr2 = genTable.getInstr(funName, instr.getExpr2());
+		return "("+genCommand(expr1, pIndent,funName) + " or "+genCommand(expr2,pIndent,funName)+")";
+	}
+	
+	def String genAnd(InstrAnd instr, int pIndent, String funName){
+		var expr1 = genTable.getInstr(funName, instr.getExpr1());
+		var expr2 = genTable.getInstr(funName, instr.getExpr2());
+		return "("+genCommand(expr1, pIndent,funName) + " and "+genCommand(expr2,pIndent,funName)+")";
+	}
+	
+	def String genCons(InstrCons instr, int pIndent, String funName){
+		var expr1 = genTable.getInstr(funName, instr.varLecture1);
+		var expr2 = genTable.getInstr(funName, instr.varLecture2);
+		return "{ hd = "+genCommand(expr1,pIndent,funName)+", tl = "+genCommand(expr2,pIndent,funName)+" }";
+		
+		
 	}
 	
 	
