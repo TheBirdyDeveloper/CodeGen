@@ -101,7 +101,9 @@ public class LocalEnvironment {
 		return res;
 	}
 
-	
+	public boolean isVariable(String adr){
+		return this.correspondances.containsKey(adr);	
+	}
 	public String getCorres(String key){
 		return this.correspondances.get(key);
 	}
