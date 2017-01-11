@@ -17,12 +17,14 @@ public class SymTable {
 
 
 	private TreeIterator<EObject> tree;
+	private TreeIterator<EObject> tree2;
 	private Set<Paire<String, List<Expr>>> appelTable;
 	private HashMap<String,FunctionEnvironment> symTable;
 
 
 	public SymTable(Resource resource){
 		this.tree = resource.getAllContents().next().eAllContents();
+		this.tree2 = resource.getAllContents().next().eAllContents();
 		this.appelTable =new HashSet<Paire<String, List<Expr>>>();
 		this.symTable = new HashMap<String,FunctionEnvironment>();
 		this.createFunctionMap();
@@ -39,7 +41,7 @@ public class SymTable {
 			EObject next = tree.next();
 			if(next instanceof Program){
 				EList<Function> listeFunctions = ((Program)next).getFunctions();
-				for (int j=0; j<listeFunctions.size()-1; j++){
+				for (int j=0; j<listeFunctions.size(); j++){
 					String fName = ((Function) listeFunctions.get(j)).getName();
 					if(!(symTable.containsKey(fName))){
 						symTable.put(fName, new FunctionEnvironment((Function) listeFunctions.get(j), fName));
@@ -47,22 +49,10 @@ public class SymTable {
 						throw new Error("Cette fonction existe déja");
 					}
 				}
-
-				try{
-					String fNameFinal = ((Function) listeFunctions.get(listeFunctions.size()-1)).getName();
-					if(!(symTable.containsKey(fNameFinal))){
-						symTable.put("main", new FunctionEnvironment((Function) listeFunctions.get(listeFunctions.size()-1), "main"));
-					}else{
-						throw new Error("Cette fonction existe déja");
-					}
-				}
-				catch (Exception e){
-					System.out.println("le programme ne contient pas de fonction");
-				}
 			}
 		}
-		while(tree.hasNext()){//initialisation des symboles
-			EObject next = tree.next();
+		while(tree2.hasNext()){//initialisation des symboles
+			EObject next = tree2.next();
 
 			if(next instanceof ExprSimple){
 				String symbole = ((ExprSimple) next).getSym();
@@ -81,8 +71,7 @@ public class SymTable {
 				List<Expr> appel = ((Expr) next).getVars();
 				if (symbole != null){
 					if(!(symTable.containsKey(symbole))){
-						//symTable.put(symbole, new FunctionEnvironment((ExprSimple) next));
-						throw new Error("Cette fonction n'existe pas : "+symbole);
+						throw new Error("Cette fonction n'existe pas");
 					}else{
 						symTable.put(symbole, symTable.get(symbole));
 						symTable.get(symbole).setNbOccur(symTable.get(symbole).nbOccur+1);
