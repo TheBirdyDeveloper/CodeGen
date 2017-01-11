@@ -51,7 +51,7 @@ public class SymTable {
 				try{
 					String fNameFinal = ((Function) listeFunctions.get(listeFunctions.size()-1)).getName();
 					if(!(symTable.containsKey(fNameFinal))){
-						symTable.put("main", new FunctionEnvironment((Function) listeFunctions.get(listeFunctions.size()-1), fNameFinal));
+						symTable.put("main", new FunctionEnvironment((Function) listeFunctions.get(listeFunctions.size()-1), "main"));
 					}else{
 						throw new Error("Cette fonction existe déja");
 					}
