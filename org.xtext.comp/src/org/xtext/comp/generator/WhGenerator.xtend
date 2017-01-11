@@ -28,8 +28,16 @@ class WhGenerator extends AbstractGenerator {
 	
 	def void doGenerate(GenTable genTable, IFileSystemAccess2 fsa, String outputName) {
 		this.genTable = genTable;
-    	fsa.generateFile(outputName, genTable.listCode3Adr.genCode3Adr)
+		var corps = genTable.listCode3Adr.genCode3Adr
+		if(needEqual) corps = entete + corps
+    	fsa.generateFile(outputName, corps)
 	}
+	
+	def String entete()
+	'''
+	require('luaLib/equals')
+	
+	'''
 	
 	def String genCode3Adr(HashMap<Code, List<Instr>> map){
 		'''
@@ -40,9 +48,6 @@ class WhGenerator extends AbstractGenerator {
 		return «printList(genTable.environmentFonctions.get(fun.name).getOutputs().keySet(),", ")»
 		end
 		«ENDFOR»
-		«IF needEqual»
-		«equalsFun»
-		«ENDIF»
 		'''
 		}
 	
@@ -64,6 +69,11 @@ class WhGenerator extends AbstractGenerator {
 		if(instr instanceof InstrCons)	return genCons(instr, pIndent, funName);
 		if(instr instanceof InstrAffect)	return genAffect(instr, pIndent, funName);
 		if(instr instanceof InstrEq)	return genEq(instr, pIndent, funName);
+		if(instr instanceof InstrNot)	return genNot(instr, pIndent, funName);
+		if(instr instanceof InstrFor)	return genFor(instr, pIndent, funName);
+		if(instr instanceof InstrWhile)	return genWhile(instr, pIndent, funName);
+		/*if(instr instanceof InstrTl)	return genTl(instr, pIndent, funName);
+		if(instr instanceof InstrHd)	return genHd(instr, pIndent, funName);*/
 		return "TODO"
 	}
 
@@ -139,20 +149,49 @@ class WhGenerator extends AbstractGenerator {
 		
 	}
 	
-	
-	def String printList(Set<String> list, String delim){
-		
-		var res = ""
-    	if(list.size > 1){
-    		for(i:0..list.size-2){
-    			res+= list.get(i)+delim
-    		}
-    		res += list.get(list.size-1)
-    	}    	
-    	return res
+	def String genNot(InstrNot instr, int pIndent, String funName){
+		var expr = genCommand(genTable.getInstr(funName,instr.varLecture1),pIndent,funName);
+		return "not "+expr;
 	}
 	
-	def String printList(List<String> list, String delim){
+	/*def String genTl(InstrTl instr, int pIndent, String funName){
+		
+	}
+	
+	def String genTl(InstrHd instr, int pIndent, String funName){
+		
+	}
+	
+	def String genSym(InstrSym instr, int pIndent, String funName){
+		
+	}*/
+	
+	def String genWhile(InstrWhile instr, int pIndent, String funName){
+		var parentIndent = makeIndent(pIndent)
+	    var indent = pIndent + globalIndent
+	    var cond = genCommand(genTable.getInstr(funName,instr.varEcriture),0,funName)
+	    /* 
+		'''
+		while «cond» do
+		«makeIndent(indent)»«genCommands(instr.getInstr(),indent,funName)»
+		«parentIndent»end
+		'''*/
+		return "";
+	}
+	
+	def String genFor(InstrFor instr, int pIndent, String funName){
+		var parentIndent = makeIndent(pIndent)
+	    var indent = pIndent + globalIndent
+	    var cond = genCommand(genTable.getInstr(funName,instr.varEcriture),0,funName) 
+		'''
+		while «cond» do
+		«makeIndent(indent)»«genCommands(instr.getInstr(),indent,funName)»
+		«makeIndent(indent)»«cond» = «cond».tl --Décrémentation de la condition du For
+		«parentIndent»end
+		'''
+	}
+	
+	def String printList(Iterable<String> list, String delim){
 		
 		var res = ""
     	if(list.size > 1){
@@ -170,38 +209,5 @@ class WhGenerator extends AbstractGenerator {
     		if(i<indent) res+=" ";
     	}
     	return res
-    }
-    
-    def String equalsFun(){
-    	return "function equals(o1, o2, ignore_mt)
-    if o1 == o2 then return true end
-    local o1Type = type(o1)
-    local o2Type = type(o2)
-    if o1Type ~= o2Type then return false end
-    if o1Type ~= 'table' then return false end
-
-    if not ignore_mt then
-        local mt1 = getmetatable(o1)
-        if mt1 and mt1.__eq then
-            --compare using built in method
-            return o1 == o2
-        end
-    end
-
-    local keySet = {}
-
-    for key1, value1 in pairs(o1) do
-        local value2 = o2[key1]
-        if value2 == nil or equals(value1, value2, ignore_mt) == false then
-            return false
-        end
-        keySet[key1] = true
-    end
-
-    for key2, _ in pairs(o2) do
-        if not keySet[key2] then return false end
-    end
-    return true
-end";
     }
 }
