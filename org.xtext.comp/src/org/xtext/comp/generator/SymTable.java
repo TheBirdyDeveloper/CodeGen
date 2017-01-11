@@ -1,5 +1,6 @@
 package org.xtext.comp.generator;
 
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -11,11 +12,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.xtext.comp.wh.*;
 
+
 public class SymTable {
 
 
 	private TreeIterator<EObject> tree;
-	private TreeIterator<EObject> treeF;
 	private Set<Paire<String, List<Expr>>> appelTable;
 	private HashMap<String,FunctionEnvironment> symTable;
 
@@ -38,13 +39,25 @@ public class SymTable {
 			EObject next = tree.next();
 			if(next instanceof Program){
 				EList<Function> listeFunctions = ((Program)next).getFunctions();
-				for (int j=0; j<listeFunctions.size(); j++){
+				for (int j=0; j<listeFunctions.size()-1; j++){
 					String fName = ((Function) listeFunctions.get(j)).getName();
 					if(!(symTable.containsKey(fName))){
 						symTable.put(fName, new FunctionEnvironment((Function) listeFunctions.get(j), fName));
 					}else{
-						throw new Error("Cette fonction existe déja");
+						throw new Error("Cette fonction existe dÃ©ja");
 					}
+				}
+
+				try{
+					String fNameFinal = ((Function) listeFunctions.get(listeFunctions.size()-1)).getName();
+					if(!(symTable.containsKey(fNameFinal))){
+						symTable.put("main", new FunctionEnvironment((Function) listeFunctions.get(listeFunctions.size()-1), fNameFinal));
+					}else{
+						throw new Error("Cette fonction existe dÃ©ja");
+					}
+				}
+				catch (Exception e){
+					System.out.println("le programme ne contient pas de fonction");
 				}
 			}
 			else if(next instanceof ExprSimple){
@@ -69,9 +82,11 @@ public class SymTable {
 						symTable.put(symbole, symTable.get(symbole));
 						symTable.get(symbole).setNbOccur(symTable.get(symbole).nbOccur+1);
 					}
-				}
-				if (appel != null){
-					appelTable.add(new Paire<String, List<Expr>>(((Expr) next).getNameFunction(), appel));
+
+					if (appel != null){
+
+						appelTable.add(new Paire<String, List<Expr>>(((Expr) next).getNameFunction(), appel));
+					}
 				}
 			}
 		}
@@ -84,12 +99,12 @@ public class SymTable {
 	public void toStringError(){
 		for (Paire<String, List<Expr>> current : appelTable){
 			if(symTable.get(current.getLeft()) != null){
-				if(current.getRight().size() != symTable.get(current.getLeft()).nbInput){//fonction pour compter le nombre de paramètres
-					System.out.println("La fonction "+current.getLeft()+" n'est pas appelée avec le bon nombre de paramètres ("+symTable.get(current.getLeft()).nbInput+" attendus)");
+				if(current.getRight().size() != symTable.get(current.getLeft()).nbInput){//fonction pour compter le nombre de paramÃ¨tres
+					System.out.println("La fonction "+current.getLeft()+" n'est pas appelÃ©e avec le bon nombre de paramÃ¨tres ("+symTable.get(current.getLeft()).nbInput+" attendus)");
 				}
 			}
 			else{
-				throw new Error("La fonction "+current.getLeft()+" n'a pas été déclarée");
+				throw new Error("La fonction "+current.getLeft()+" n'a pas Ã©tÃ© dÃ©clarÃ©e");
 			}
 		}
 
@@ -108,5 +123,4 @@ public class SymTable {
 		result+="}";
 		return result;
 	}
-
 }
