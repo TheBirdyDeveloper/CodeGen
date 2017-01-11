@@ -77,7 +77,7 @@ public class SymTable {
 				List<Expr> appel = ((Expr) next).getVars();
 				if (symbole != null){
 					if(!(symTable.containsKey(symbole))){
-						throw new Error("Cette fonction n'existe pas");
+						throw new Error("Cette fonction n'existe pas : "+symbole);
 					}else{
 						symTable.put(symbole, symTable.get(symbole));
 						symTable.get(symbole).setNbOccur(symTable.get(symbole).nbOccur+1);

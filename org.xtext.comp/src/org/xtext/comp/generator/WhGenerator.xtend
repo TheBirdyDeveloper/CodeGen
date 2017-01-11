@@ -22,6 +22,9 @@ class WhGenerator extends AbstractGenerator {
 	private final int globalIndent = 3;
 	private String funName;
 	private boolean needEqual = false;
+	private boolean needHd = false;
+	private boolean needTl = false;
+	
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		//N'est pas utilisÃ©e
 	}
@@ -35,10 +38,9 @@ class WhGenerator extends AbstractGenerator {
 	
 	def String entete()
 	'''
-	require('luaLib/equals')
-	require('luaLib/hd')
-	require('luaLib/tl')
-	
+	«IF needEqual»require('luaLib/equals')«ENDIF»
+	«IF needHd»require('luaLib/hd')«ENDIF»
+	«IF needTl»require('luaLib/tl')«ENDIF»
 	'''
 	
 	def String launch()
@@ -166,12 +168,14 @@ class WhGenerator extends AbstractGenerator {
 	}
 	
 	def String genTl(InstrTl instr, int pIndent, String funName){
-		var expr = genCommand(genTable.getInstr(funName,instr.varLecture1),0,funName)
+		var expr = genCommand(genTable.getInstr(funName,instr.varLecture1),0,funName);
+		needTl=true;
 		return "tl("+expr+")";
 	}
 	
 	def String genHd(InstrHd instr, int pIndent, String funName){
-		var expr = genCommand(genTable.getInstr(funName,instr.varLecture1),0,funName)
+		var expr = genCommand(genTable.getInstr(funName,instr.varLecture1),0,funName);
+		needHd=true;
 		return "hd("+expr+")";
 	}
 	
