@@ -315,11 +315,15 @@ public class GenTable {
 			}
 			else if(expr instanceof ExprHd){
 				String arg = this.evaluateExpr(functionName, ((ExprHd)expr).getArg(), instructions);
-				place = environnement.putInstr(new InstrHd(null,null,arg,null));
+				String condTemp = environnement.newVar();
+				environnement.putInstr(new InstrAffect(null,condTemp,arg,null,false));
+				place = environnement.putInstr(new InstrHd(null,null,condTemp,null));
 			}
 			else if(expr instanceof ExprTl){
 				String arg = this.evaluateExpr(functionName, ((ExprTl)expr).getArg(), instructions);
-				place = environnement.putInstr(new InstrTl(null,null,arg,null));
+				String condTemp = environnement.newVar();
+				environnement.putInstr(new InstrAffect(null,condTemp,arg,null,false));
+				place = environnement.putInstr(new InstrTl(null,null,condTemp,null));
 			}
 
 			else if(expr instanceof ExprNot){
