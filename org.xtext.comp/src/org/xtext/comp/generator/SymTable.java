@@ -35,7 +35,7 @@ public class SymTable {
 		return symTable.keySet();
 	}
 	public void createFunctionMap(){
-		while(tree.hasNext()){
+		while(tree.hasNext()){//initialisation de toutes les fonctions
 			EObject next = tree.next();
 			if(next instanceof Program){
 				EList<Function> listeFunctions = ((Program)next).getFunctions();
@@ -60,7 +60,11 @@ public class SymTable {
 					System.out.println("le programme ne contient pas de fonction");
 				}
 			}
-			else if(next instanceof ExprSimple){
+		}
+		while(tree.hasNext()){//initialisation des symboles
+			EObject next = tree.next();
+
+			if(next instanceof ExprSimple){
 				String symbole = ((ExprSimple) next).getSym();
 				if (symbole != null){
 					if(!(symTable.containsKey(symbole))){
@@ -77,6 +81,7 @@ public class SymTable {
 				List<Expr> appel = ((Expr) next).getVars();
 				if (symbole != null){
 					if(!(symTable.containsKey(symbole))){
+						//symTable.put(symbole, new FunctionEnvironment((ExprSimple) next));
 						throw new Error("Cette fonction n'existe pas");
 					}else{
 						symTable.put(symbole, symTable.get(symbole));
