@@ -1,6 +1,5 @@
 package org.xtext.comp.generator;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -10,15 +9,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.xtext.generator.GeneratorDelegate;
-import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
-import org.eclipse.xtext.validation.IResourceValidator;
 import org.xtext.comp.wh.*;
-import org.xtext.comp.wh.impl.ProgramImpl;
-
-import com.google.inject.Inject;
-import com.google.inject.Provider;
 
 public class SymTable {
 

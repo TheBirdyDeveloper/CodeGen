@@ -4,7 +4,6 @@
 package org.xtext.comp.generator
 
 import java.util.HashMap
-import java.util.LinkedList
 import java.util.List
 import java.util.Set
 import org.eclipse.emf.ecore.resource.Resource
@@ -21,7 +20,6 @@ class WhGenerator extends AbstractGenerator {
 	private GenTable genTable;
 	private final int globalIndent = 3;
 	private String funName;
-	private boolean needEqual = false;
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		//N'est pas utilisÃ©e
 	}
@@ -34,125 +32,49 @@ class WhGenerator extends AbstractGenerator {
 	def String genCode3Adr(HashMap<Code, List<Instr>> map){
 		'''
 		«FOR fun : map.keySet()»
-		function «fun.getName»(«printList(genTable.environmentFonctions.get(fun.name).getInputs().keySet(),", ")»)
-		«genCommands(map.get(fun),globalIndent,fun.getName)»
+		«funName = fun.name»
+		function «funName»(«printList(genTable.environmentFonctions.get(fun.name).getInputs().keySet(),", ")»)
+		«genCommands(map.get(fun),globalIndent)»
 		
 		return «printList(genTable.environmentFonctions.get(fun.name).getOutputs().keySet(),", ")»
 		end
 		«ENDFOR»
-		«IF needEqual»
-		«equalsFun»
-		«ENDIF»
 		'''
 		}
 	
 	
-	def String genCommands(List<Instr> instrs, int indent,String funName)
+	def String genCommands(List<Instr> instrs, int indent)
 		'''
 		«FOR instr : instrs»
-		«makeIndent(indent)»«genCommand(instr, indent, funName)»
+		«genCommand(instr, indent)»
 		«ENDFOR»
 		'''
 	
-	def String genCommand(Instr instr, int pIndent, String funName)
+	def String genCommand(Instr instr, int pIndent)
 	{
 		if(instr instanceof InstrNop)	return "";
-		if(instr instanceof InstrVar)	return genVar(instr, pIndent, funName);
-		if(instr instanceof InstrIf)    return genIf(instr,pIndent, funName);
-		if(instr instanceof InstrOr)	return genOr(instr, pIndent, funName);
-		if(instr instanceof InstrAnd)	return genAnd(instr, pIndent, funName);
-		if(instr instanceof InstrCons)	return genCons(instr, pIndent, funName);
-		if(instr instanceof InstrAffect)	return genAffect(instr, pIndent, funName);
-		if(instr instanceof InstrEq)	return genEq(instr, pIndent, funName);
+		if(instr instanceof InstrIf)    return genIf(instr,pIndent);
 		return "TODO"
 	}
 
-	def String genVar(InstrVar instr, int pIndent,String funName){
-		return instr.getVar;
-	}
 	
-	def String genIf(InstrIf instr, int pIndent,String funName){
+	def String genIf(InstrIf instr, int pIndent){
 		var parentIndent = makeIndent(pIndent)
 	    var indent = pIndent + globalIndent
-	    var cond = genTable.getInstr(funName,instr.cond);
-	    var condStr = genCommand(cond,0,funName);
+	    var cond = "";
 		'''
-		if «condStr» then 
-		«genCommands(instr.getSiVrai(), indent, funName)»
+		«parentIndent»if «cond» then 
+		«genCommands(instr.getSiVrai(), indent)»
 		«IF !instr.getSiFaux().empty»
 		«parentIndent»else 
-		«genCommands(instr.getSiFaux(),indent, funName)»
+		«genCommands(instr.getSiFaux(),indent)»
 		«ENDIF»
 		«parentIndent»end
 		'''
 	}
 	
-	def String genOr(InstrOr instr, int pIndent, String funName){
-		var expr1 = genTable.getInstr(funName, instr.getExpr1());
-		var expr2 = genTable.getInstr(funName, instr.getExpr2());
-		return "("+genCommand(expr1, pIndent,funName) + " or "+genCommand(expr2,pIndent,funName)+")";
-	}
-	
-	def String genAnd(InstrAnd instr, int pIndent, String funName){
-		var expr1 = genTable.getInstr(funName, instr.getExpr1());
-		var expr2 = genTable.getInstr(funName, instr.getExpr2());
-		return "("+genCommand(expr1, pIndent,funName) + " and "+genCommand(expr2,pIndent,funName)+")";
-	}
-	
-	def String genCons(InstrCons instr, int pIndent, String funName){
-		var expr1 = genTable.getInstr(funName, instr.varLecture1);
-		var expr2 = genTable.getInstr(funName, instr.varLecture2);
-		return "{ hd = "+genCommand(expr1,pIndent,funName)+", tl = "+genCommand(expr2,pIndent,funName)+" }";
-	}
-	
-	def String genAffect(InstrAffect instr, int pIndent, String funName){
-		var res = "";
-		if(instr.isMultiple){
-			var listGauche = new LinkedList<String>();
-			var listDroite = new LinkedList<String>();	
-			for (affect : instr.getInstr)
-			{
-				listGauche.add(genCommand(genTable.getInstr(funName,affect.varEcriture),pIndent,funName));
-				listDroite.add(genCommand(genTable.getInstr(funName,affect.varLecture1),pIndent,funName));
-			}
-			res = printList(listGauche,", ");
-			res += "=";
-			res += printList(listDroite,", ");
-			
-			listGauche = null;
-			listDroite = null;	
-		} else {
-			res += genCommand(genTable.getInstr(funName,instr.varEcriture),pIndent,funName);
-			res += "=";
-			res += genCommand(genTable.getInstr(funName,instr.varLecture1),pIndent,funName);
-		}
-		
-		return res;
-	}
-	
-	def String genEq(InstrEq instr, int pIndent, String funName){
-		var expr1 = genCommand(genTable.getInstr(funName,instr.varLecture1),pIndent,funName);
-		var expr2 = genCommand(genTable.getInstr(funName,instr.varLecture2),pIndent,funName);
-		needEqual = true;
-		return "equals("+expr1+","+expr2+",false)"
-		
-		
-	}
-	
 	
 	def String printList(Set<String> list, String delim){
-		
-		var res = ""
-    	if(list.size > 1){
-    		for(i:0..list.size-2){
-    			res+= list.get(i)+delim
-    		}
-    		res += list.get(list.size-1)
-    	}    	
-    	return res
-	}
-	
-	def String printList(List<String> list, String delim){
 		
 		var res = ""
     	if(list.size > 1){
@@ -170,38 +92,5 @@ class WhGenerator extends AbstractGenerator {
     		if(i<indent) res+=" ";
     	}
     	return res
-    }
-    
-    def String equalsFun(){
-    	return "function equals(o1, o2, ignore_mt)
-    if o1 == o2 then return true end
-    local o1Type = type(o1)
-    local o2Type = type(o2)
-    if o1Type ~= o2Type then return false end
-    if o1Type ~= 'table' then return false end
-
-    if not ignore_mt then
-        local mt1 = getmetatable(o1)
-        if mt1 and mt1.__eq then
-            --compare using built in method
-            return o1 == o2
-        end
-    end
-
-    local keySet = {}
-
-    for key1, value1 in pairs(o1) do
-        local value2 = o2[key1]
-        if value2 == nil or equals(value1, value2, ignore_mt) == false then
-            return false
-        end
-        keySet[key1] = true
-    end
-
-    for key2, _ in pairs(o2) do
-        if not keySet[key2] then return false end
-    end
-    return true
-end";
     }
 }

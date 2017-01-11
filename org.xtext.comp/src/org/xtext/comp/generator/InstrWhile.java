@@ -1,23 +1,22 @@
 package org.xtext.comp.generator;
 
-import org.xtext.comp.wh.Command;
+import java.util.List;
 
 public class InstrWhile extends Instr {
 	
-	String codop;
-	String varEcriture;
-	String varLecture1;
-	String varLecture2;
 	
-	public InstrWhile(String codop, String var1, String var2, String var3) {
-		super(codop, var1, var2, var3);
+	List<Instr> instrWhile;
+	public InstrWhile(List <Instr> commands, String var1, String var2, String var3) {
+		super(null, var1, var2, var3);
 		this.codop = "While";
-		this.varEcriture = "_";
-		this.varLecture1 = "_";
-		this.varLecture2 = "_";
+		this.instrWhile=commands;
 	}
 	
 	public String toString(){
 		return "<"+this.codop+","+this.varEcriture+","+this.varLecture1+","+this.varLecture2+">";
+	}
+	
+	public List<Instr> getInstr(){
+		return instrWhile;
 	}
 }

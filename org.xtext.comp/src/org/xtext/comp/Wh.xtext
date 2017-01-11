@@ -1,13 +1,12 @@
-<<<<<<< HEAD
 grammar org.xtext.comp.Wh with org.eclipse.xtext.common.Terminals
 
 generate wh "http://www.xtext.org/comp/Wh"
 
 Wh :
     elements+=Program;
-
-
-Program:
+  
+ 
+Program: 
 	 (functions+=Function)*
 ;
 
@@ -56,7 +55,7 @@ While:
 ;
 
 Expr:
-	ExprCond | ExprSimple | ExprCons |
+	ExprCond | ExprSimple | ExprCons | 
 	ExprList | ExprHd | ExprTl | ExprNot | '(' nameFunction=SYMBOLE vars+=Expr (vars+=Expr)* ')'
 ;
 
@@ -66,7 +65,7 @@ ExprSimple:
 
 
 
-ExprCond :
+ExprCond : 
 	'(' arg1=Expr cond=('and'|'or'|'=?') arg2=Expr ')'
 ;
 
@@ -104,3 +103,4 @@ terminal VARIABLE:
 
 terminal SYMBOLE:
 	'a'..'z' ID?
+;

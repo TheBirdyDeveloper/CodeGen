@@ -54,6 +54,7 @@ public class LocalEnvironment {
 			this.putInstr(new InstrVar("X"+Integer.toString(cpt),null,null,null));
 			cpt++;
 		}
+
 		
 	}
 
