@@ -29,23 +29,33 @@ class WhGenerator extends AbstractGenerator {
 	def void doGenerate(GenTable genTable, IFileSystemAccess2 fsa, String outputName) {
 		this.genTable = genTable;
 		var corps = genTable.listCode3Adr.genCode3Adr
-		if(needEqual) corps = entete + corps
+		corps = entete + corps + launch
     	fsa.generateFile(outputName, corps)
 	}
 	
 	def String entete()
 	'''
 	require('luaLib/equals')
+	require('luaLib/hd')
+	require('luaLib/tl')
 	
 	'''
 	
+	def String launch()
+	'''
+	function launch_main()
+		local values = {main(PARAMS)}
+		print(unpack(values))
+	end
+	'''
+	//«printList(genTable.environmentFonctions.get(fun.name).getOutputs().keySet(),", ")»
 	def String genCode3Adr(HashMap<Code, List<Instr>> map){
 		'''
 		«FOR fun : map.keySet()»
 		function «fun.getName»(«printList(genTable.environmentFonctions.get(fun.name).getInputs().keySet(),", ")»)
 		«genCommands(map.get(fun),globalIndent,fun.getName)»
 		
-		return «printList(genTable.environmentFonctions.get(fun.name).getOutputs().keySet(),", ")»
+		return «printList(genTable.environmentFonctions.get(fun.name).getOutputs().keySet(),",")»
 		end
 		«ENDFOR»
 		'''
@@ -72,8 +82,9 @@ class WhGenerator extends AbstractGenerator {
 		if(instr instanceof InstrNot)	return genNot(instr, pIndent, funName);
 		if(instr instanceof InstrFor)	return genFor(instr, pIndent, funName);
 		if(instr instanceof InstrWhile)	return genWhile(instr, pIndent, funName);
-		/*if(instr instanceof InstrTl)	return genTl(instr, pIndent, funName);
-		if(instr instanceof InstrHd)	return genHd(instr, pIndent, funName);*/
+		if(instr instanceof InstrTl)	return genTl(instr, pIndent, funName);
+		if(instr instanceof InstrHd)	return genHd(instr, pIndent, funName);
+		if(instr instanceof InstrFun)	return genFun(instr, pIndent, funName);
 		return "TODO"
 	}
 
@@ -154,29 +165,35 @@ class WhGenerator extends AbstractGenerator {
 		return "not "+expr;
 	}
 	
-	/*def String genTl(InstrTl instr, int pIndent, String funName){
-		
+	def String genTl(InstrTl instr, int pIndent, String funName){
+		var expr = genCommand(genTable.getInstr(funName,instr.varLecture1),0,funName)
+		return "tl("+expr+")";
 	}
 	
-	def String genTl(InstrHd instr, int pIndent, String funName){
-		
+	def String genHd(InstrHd instr, int pIndent, String funName){
+		var expr = genCommand(genTable.getInstr(funName,instr.varLecture1),0,funName)
+		return "hd("+expr+")";
 	}
 	
-	def String genSym(InstrSym instr, int pIndent, String funName){
-		
-	}*/
+	def String genFun(InstrFun instr, int pIndent, String funName){
+		var fun = genTable.getInstr(funName,instr.varLecture1);
+		var listParam = new LinkedList<String>();
+		for (p : instr.getParam()){
+			listParam.add(genCommand(genTable.getInstr(funName,p),0,funName))
+		}
+		var params = printList(listParam,", ");
+		return fun+"("+params+")"
+	}
 	
 	def String genWhile(InstrWhile instr, int pIndent, String funName){
 		var parentIndent = makeIndent(pIndent)
 	    var indent = pIndent + globalIndent
-	    var cond = genCommand(genTable.getInstr(funName,instr.varEcriture),0,funName)
-	    /* 
+	    var cond = genCommand(genTable.getInstr(funName,instr.varEcriture),0,funName) 
 		'''
 		while «cond» do
-		«makeIndent(indent)»«genCommands(instr.getInstr(),indent,funName)»
+		«genCommands(instr.getInstr(),indent,funName)»
 		«parentIndent»end
-		'''*/
-		return "";
+		'''
 	}
 	
 	def String genFor(InstrFor instr, int pIndent, String funName){
@@ -194,12 +211,16 @@ class WhGenerator extends AbstractGenerator {
 	def String printList(Iterable<String> list, String delim){
 		
 		var res = ""
-    	if(list.size > 1){
-    		for(i:0..list.size-2){
-    			res+= list.get(i)+delim
+		var i =0;
+    	for(item : list){
+    		if(i < list.size()-1){
+    			res += item + delim	
+    		} else {
+    			res += item
     		}
-    		res += list.get(list.size-1)
-    	}    	
+    		i=i+1;
+    		
+    	}
     	return res
 	}
 	
