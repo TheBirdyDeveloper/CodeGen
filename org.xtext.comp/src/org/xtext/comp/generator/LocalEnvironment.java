@@ -67,7 +67,7 @@ public class LocalEnvironment {
 	}
 	
 	public String toString(){
-		String result = "Table des correspondances : "+this.correspondances.toString()+"\n";
+		String result = "Table des variables : "+this.correspondances.toString()+"\n";
 		result+=this.inputs.toString()+", ";
 		for(Entry<String, Instr> entry : temp.entrySet()){
 			result+= entry.getKey().toString()+"=";

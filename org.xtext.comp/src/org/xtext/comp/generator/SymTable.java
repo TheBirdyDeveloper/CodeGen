@@ -16,6 +16,7 @@ import org.xtext.comp.wh.*;
 public class SymTable {
 
 
+	private String mainFunction;
 	private TreeIterator<EObject> tree;
 	private TreeIterator<EObject> tree2;
 	private Set<Paire<String, List<Expr>>> appelTable;
@@ -30,6 +31,9 @@ public class SymTable {
 		this.createFunctionMap();
 	}
 
+	public String getMain(){
+		return this.mainFunction;
+	}
 	public FunctionEnvironment get(String key){
 		return symTable.get(key);
 	}
@@ -41,6 +45,7 @@ public class SymTable {
 			EObject next = tree.next();
 			if(next instanceof Program){
 				EList<Function> listeFunctions = ((Program)next).getFunctions();
+				mainFunction = listeFunctions.get(listeFunctions.size()-1).getName();
 				for (int j=0; j<listeFunctions.size(); j++){
 					String fName = ((Function) listeFunctions.get(j)).getName();
 					if(!(symTable.containsKey(fName))){
@@ -49,6 +54,7 @@ public class SymTable {
 						throw new Error("Cette fonction existe déja");
 					}
 				}
+				
 			}
 		}
 		while(tree2.hasNext()){//initialisation des symboles

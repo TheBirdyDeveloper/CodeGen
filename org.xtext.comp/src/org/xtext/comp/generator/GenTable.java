@@ -31,22 +31,21 @@ public class GenTable {
 	SymTable table_m;
 	List<String> listSymboles;
 	
-	// à modifier : la liste des instructions est dans la liste des etiquettes
+	
+	
 	HashMap<Code,List<Instr>> listCode3Adr; 
-	
 	HashMap<String,Code> funDecl;
-	//HashMap<String, HashMap<String, Etiquette>> listFonctions;
 	HashMap<String, LocalEnvironment> environmentFonctions;
-	
+	HashMap<String,String> functionCorrespondances;
+	String mainFunction;
 	GenTable (SymTable table){
 		table_m = table;
-
+		mainFunction=table_m.getMain();
 		listSymboles=new LinkedList<String>();
-		//listFonctions = new HashMap<String, HashMap<String, Etiquette>>();
 		environmentFonctions = new HashMap<String, LocalEnvironment>();
-		
 		funDecl = new HashMap<String,Code>();
 		listCode3Adr = new HashMap<Code,List<Instr>>();
+		functionCorrespondances=new HashMap<String,String>();
 		this.initialize();
 		this.parseFunDecl();
 	}
@@ -55,18 +54,27 @@ public class GenTable {
 	}
 	private void initialize() {
 		Iterator<String> ite = table_m.getNames().iterator();
+		int cpt = 2;
 		while(ite.hasNext()){
 			String next = ite.next();
-
 			if(!table_m.get(next).isFunction())
 				listSymboles.add((String) next); 
-			else if(table_m.get(next).isFunction())
-				funDecl.put(next,new Code(next, table_m.get(next).nbInput(), table_m.get(next).nbOutput(),table_m.get(next).getCommands()));
+			else if(table_m.get(next).isFunction()){
+				if(next.equals(mainFunction)){
+					functionCorrespondances.put(next, "F1");
+					funDecl.put("F1",new Code("F1", table_m.get(next).nbInput(), table_m.get(next).nbOutput(),table_m.get(next).getCommands()));
+				}
+				else{
+					functionCorrespondances.put(next, "F"+cpt);
+					funDecl.put("F"+cpt,new Code("F"+cpt, table_m.get(next).nbInput(), table_m.get(next).nbOutput(),table_m.get(next).getCommands()));
+					cpt++;
+				}
+			}
 		}		
 	}
 
 	public String nomsToString(){
-		String code3AdrString = "";
+		String code3AdrString="Table des fonctions :"+this.functionCorrespondances.toString()+"\n\n";
 		for(Entry<Code, List<Instr>> entry : listCode3Adr.entrySet()){
 			Code functionCode = entry.getKey();
 			List<Instr> value = entry.getValue();
@@ -100,11 +108,20 @@ public class GenTable {
 		}
 	}
 
-	private void createEnvironment(String functionName) {
+	private String getRealName(String corres){
+		String real = "";
+		for(Entry<String,String> entry : functionCorrespondances.entrySet()){
+			if(entry.getValue().equals(corres))
+				real = entry.getKey();
+		}
+		return real;
+	}
+	private void createEnvironment(String function) {
 
-		
+		String functionName = this.getRealName(function);
 		LocalEnvironment environment = new LocalEnvironment(this.table_m.get(functionName).getInputs(),this.table_m.get(functionName).getOutputs(),this.table_m.get(functionName).getVariables());
-		this.environmentFonctions.put(functionName, environment);
+		
+		this.environmentFonctions.put(this.functionCorrespondances.get(functionName), environment);
 		
 		
 	}
@@ -329,7 +346,7 @@ public class GenTable {
 				
 			}
 			else if(expr.getNameFunction()!=null){
-				String arg = environnement.putInstr(new InstrVar(expr.getNameFunction(),null,null,null));
+				String arg = environnement.putInstr(new InstrVar(this.functionCorrespondances.get(expr.getNameFunction()),null,null,null));
 				
 				LinkedList<String> inputs = new LinkedList<String>();
 				EList<Expr> vars = expr.getVars();
