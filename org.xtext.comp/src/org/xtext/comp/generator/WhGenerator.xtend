@@ -45,10 +45,10 @@ class WhGenerator extends AbstractGenerator {
 	
 	def String launch()
 	'''
-	function launch_main()
-		local values = {F1(PARAMS)}
-		print(unpack(values))
-	end
+	
+	local values = {F1(PARAMS)}
+	print(unpack(values))
+	
 	'''
 	//«printList(genTable.environmentFonctions.get(fun.name).getOutputs().keySet(),", ")»
 	def String genCode3Adr(HashMap<Code, List<Instr>> map){
