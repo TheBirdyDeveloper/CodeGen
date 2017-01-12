@@ -1,0 +1,7 @@
+function isZero : read X % if X then B := nil else B := (cons nil nil) fi % write B
+
+function incr : read X % X := (cons nil X) % write X
+
+function decr : read X % X := (tl X) % write X
+
+function addR : read X, Y % if (isZero Y) then S := X else S := (incr (addR X (decr Y))) fi % write S

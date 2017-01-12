@@ -72,7 +72,7 @@ public class Main {
 		WhGenerator wh = new WhGenerator();
 		wh.doGenerate(gentable, fileAccess, outputFileName);
 	
-		System.out.println(gentable.nomsToString());
+		//System.out.println(gentable.nomsToString());
 		
 		/*System.out.println("\nTable des Symboles :\n"+symtable.toStringSymboles());
 		System.out.println("\nTable des Appels :\n"+symtable.toStringAppels());

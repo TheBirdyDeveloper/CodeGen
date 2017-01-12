@@ -38,6 +38,7 @@ class WhGenerator extends AbstractGenerator {
 	
 	def String entete()
 	'''
+	require('luaLib/print')
 	«IF needEqual»require('luaLib/equals')«ENDIF»
 	«IF needHd»require('luaLib/hd')«ENDIF»
 	«IF needTl»require('luaLib/tl')«ENDIF»
@@ -47,7 +48,10 @@ class WhGenerator extends AbstractGenerator {
 	'''
 	
 	local values = {F1(PARAMS)}
-	print(unpack(values))
+	
+	for k, v in pairs( values ) do
+	   print(k,printUniq(v))
+	end
 	
 	'''
 	//«printList(genTable.environmentFonctions.get(fun.name).getOutputs().keySet(),", ")»

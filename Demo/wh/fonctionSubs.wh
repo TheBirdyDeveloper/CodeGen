@@ -1,0 +1,3 @@
+function decr : read X % X := (tl X) % write X
+
+function subs : read X, Y % D := X ; for Y do D := (decr D) od % write D

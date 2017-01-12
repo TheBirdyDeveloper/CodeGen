@@ -1,0 +1,11 @@
+function isNotZero : read X % if X then B := (cons nil nil) else B := nil fi % write B
+
+function incr : read X % X := (cons nil X) % write X
+
+function decr : read X % X := (tl X) % write X
+
+function add : read X, Y % S := X ; for Y do S := (incr S) od % write S
+
+function mult : read X, Y % P := nil ; for Y do P := (add X P) od % write P
+
+function fact : read X % F := (cons nil nil) ; while (isNotZero X) do X, F := (decr X), (mult F X) od % write F
