@@ -51,7 +51,7 @@ public class SymTable {
 					if(!(symTable.containsKey(fName))){
 						symTable.put(fName, new FunctionEnvironment((Function) listeFunctions.get(j), fName));
 					}else{
-						throw new Error("Cette fonction existe déja");
+						throw new Error("Cette fonction existe deja : "+fName);
 					}
 				}
 				
@@ -77,7 +77,7 @@ public class SymTable {
 				List<Expr> appel = ((Expr) next).getVars();
 				if (symbole != null){
 					if(!(symTable.containsKey(symbole))){
-						throw new Error("Cette fonction n'existe pas");
+						throw new Error("Cette fonction n'existe pas : "+symbole);
 					}else{
 						symTable.put(symbole, symTable.get(symbole));
 						symTable.get(symbole).setNbOccur(symTable.get(symbole).nbOccur+1);
@@ -100,11 +100,11 @@ public class SymTable {
 		for (Paire<String, List<Expr>> current : appelTable){
 			if(symTable.get(current.getLeft()) != null){
 				if(current.getRight().size() != symTable.get(current.getLeft()).nbInput){//fonction pour compter le nombre de paramètres
-					System.out.println("La fonction "+current.getLeft()+" n'est pas appelée avec le bon nombre de paramètres ("+symTable.get(current.getLeft()).nbInput+" attendus)");
+					System.out.println("La fonction "+current.getLeft()+" n'est pas appelee avec le bon nombre de parametres ("+symTable.get(current.getLeft()).nbInput+" attendus)");
 				}
 			}
 			else{
-				throw new Error("La fonction "+current.getLeft()+" n'a pas été déclarée");
+				throw new Error("La fonction "+current.getLeft()+" n'a pas été declaree");
 			}
 		}
 

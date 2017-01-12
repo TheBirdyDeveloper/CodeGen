@@ -46,7 +46,7 @@ class WhGenerator extends AbstractGenerator {
 	def String launch()
 	'''
 	function launch_main()
-		local values = {main(PARAMS)}
+		local values = {F1(PARAMS)}
 		print(unpack(values))
 	end
 	'''
@@ -87,7 +87,6 @@ class WhGenerator extends AbstractGenerator {
 		if(instr instanceof InstrTl)	return genTl(instr, pIndent, funName);
 		if(instr instanceof InstrHd)	return genHd(instr, pIndent, funName);
 		if(instr instanceof InstrFun)	return genFun(instr, pIndent, funName);
-		return "TODO"
 	}
 
 	def String genVar(InstrVar instr, int pIndent,String funName){
@@ -135,8 +134,10 @@ class WhGenerator extends AbstractGenerator {
 			var listDroite = new LinkedList<String>();	
 			for (affect : instr.getInstr)
 			{
-				listGauche.add(genCommand(genTable.getInstr(funName,affect.varEcriture),pIndent,funName));
-				listDroite.add(genCommand(genTable.getInstr(funName,affect.varLecture1),pIndent,funName));
+				var expr1 = genCommand(genTable.getInstr(funName,affect.varEcriture),pIndent,funName);
+				if(expr1 != null) listGauche.add(genCommand(genTable.getInstr(funName,affect.varEcriture),pIndent,funName));
+				var expr2 = genCommand(genTable.getInstr(funName,affect.varLecture1),pIndent,funName);
+				if(expr2 != null)listDroite.add(genCommand(genTable.getInstr(funName,affect.varLecture1),pIndent,funName));
 			}
 			res = printList(listGauche,", ");
 			res += "=";
