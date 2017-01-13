@@ -129,6 +129,7 @@ public class LocalEnvironment {
 			else{
 				if(((ExprSimple) expr).getSym()!=null){
 					val =((ExprSimple) expr).getSym();
+					val = "\""+val+"\"";
 				}
 				else if (((ExprSimple) expr).getVarSimple()!=null){
 					val = this.getCorres(((ExprSimple) expr).getVarSimple());
