@@ -54,7 +54,7 @@ public class Main {
 		resource = set.getResource(URI.createFileURI(inputFileName), true);
 		}
 		catch (Exception e){
-			throw new Error("Le fichier spécifié est introuvable");
+			throw new Error("Le fichier spécifié est introuvable : "+inputFileName);
 		}
 
 		// Validate the resource
