@@ -1,0 +1,2 @@
+function ff0 : read X % nop % write X
+function ff1 : read X % nop % write X

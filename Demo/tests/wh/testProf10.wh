@@ -1,0 +1,10 @@
+function ff0 : read X % nop % write X
+function ff1 : read X % nop % write X
+function ff2 : read X % nop % write X
+function ff3 : read X % nop % write X
+function ff4 : read X % nop % write X
+function ff5 : read X % nop % write X
+function ff6 : read X % nop % write X
+function ff7 : read X % nop % write X
+function ff8 : read X % nop % write X
+function ff9 : read X % nop % write X
