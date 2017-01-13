@@ -48,7 +48,14 @@ public class Main {
 	protected void runGenerator() {
 		// Load the resource
 		ResourceSet set = resourceSetProvider.get();
-		Resource resource = set.getResource(URI.createFileURI(inputFileName), true);
+		
+		Resource resource;
+		try{
+		resource = set.getResource(URI.createFileURI(inputFileName), true);
+		}
+		catch (Exception e){
+			throw new Error("Le fichier spécifié est introuvable");
+		}
 
 		// Validate the resource
 		List<Issue> list = validator.validate(resource, CheckMode.ALL, CancelIndicator.NullImpl);
@@ -94,7 +101,7 @@ public class Main {
 				+ "\t-o, --output file\n\t\t\tnom du fichier de sortie\n"
 				+ "\t-h, --help\n\t\t\taffiche l'aide";
 		String BUGS = "";
-		String SEE = "whpp";
+		String SEE = "whc";
 		String AUTHORS = "Écrit par Clément Guihaire - Pierre Marais - Mathieu Menuet - Marc Perret - Olivier Peurichard";
 		
 		man = "NOM\n\t"+NAME+separation+"SYNOPSIS\n\t"+SYNOPSIS+separation+"DESCRIPTION\n\t"+DESC+separation+"OPTIONS\n\t"+OPT+separation+"BUGS\n\t"
@@ -150,7 +157,7 @@ public class Main {
 	
 	private static void displayError(String msg){
 		System.out.println(msg);
-		formatter.printHelp("whpp", options);
+		formatter.printHelp("whc", options);
         System.exit(1);
 	}
 	
