@@ -21,13 +21,21 @@ char *concat_string(const char *s1, const char *s2)
      return s3;
 }
 
-char * recupParams(char * params, char * nameFile){
+char * recupParams(char * params[], char * nameFile){
    char * res;
-   if(params == NULL){
+	 int i = 2;
+   if(params[2] == NULL){
       res = "sed s/PARAMS/''/g ";
    }else{
       res = "sed s/PARAMS/'";
-      res = concat_string(res, params);
+			while(params[i]!= NULL){
+				res = concat_string(res, params[i]);
+				i++;
+				if(params[i] != NULL){
+					res = concat_string(res,", ");
+				}
+			}
+
       res = concat_string(res, "'/g ");
    }
 
@@ -48,7 +56,7 @@ void clean(){
 
 int main(int argc, char ** argv)
 {
-	char * params = recupParams(argv[2], argv[1]);
+	char * params = recupParams(argv, argv[1]);
 	exec_fic(params);
 	free(params);
 
